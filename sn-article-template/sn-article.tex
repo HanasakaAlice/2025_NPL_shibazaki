@@ -1,0 +1,968 @@
+%Version 3.1 December 2024
+% See section 11 of the User Manual for version history
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\documentclass[referee,sn-basic]{sn-jnl}% referee option is meant for double line spacing
+
+%%=======================================================%%
+%% to print line numbers in the margin use lineno option %%
+%%=======================================================%%
+
+%%\documentclass[lineno,pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%=========================================================================================%%
+%% the documentclass is set to pdflatex as default. You can delete it if not appropriate.  %%
+%%=========================================================================================%%
+
+%%\documentclass[sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%Note: the following reference styles support Namedate and Numbered referencing. By default the style follows the most common style. To switch between the options you can add or remove Numbered in the optional parenthesis. 
+%%The option is available for: sn-basic.bst, sn-chicago.bst%  
+ 
+%%\documentclass[pdflatex,sn-nature]{sn-jnl}% Style for submissions to Nature Portfolio journals
+%%\documentclass[pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}% Math and Physical Sciences Numbered Reference Style
+\usepackage{array}
+%%\documentclass[pdflatex,sn-mathphys-ay]{sn-jnl}% Math and Physical Sciences Author Year Reference Style
+%%\documentclass[pdflatex,sn-aps]{sn-jnl}% American Physical Society (APS) Reference Style
+%%\documentclass[pdflatex,sn-vancouver-num]{sn-jnl}% Vancouver Numbered Reference Style
+%%\documentclass[pdflatex,sn-vancouver-ay]{sn-jnl}% Vancouver Author Year Reference Style
+%%\documentclass[pdflatex,sn-apa]{sn-jnl}% APA Reference Style
+%%\documentclass[pdflatex,sn-chicago]{sn-jnl}% Chicago-based Humanities Reference Style
+
+%%%% Standard Packages
+%%<additional latex packages if required can be included here>
+
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+
+\usepackage{bm}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs} 
+
+
+%%%%
+
+%%%%%=============================================================================%%%%
+%%%%  Remarks: This template is provided to aid authors with the preparation
+%%%%  of original research articles intended for submission to journals published 
+%%%%  by Springer Nature. The guidance has been prepared in partnership with 
+%%%%  production teams to conform to Springer Nature technical requirements. 
+%%%%  Editorial and presentation requirements differ among journal portfolios and 
+%%%%  research disciplines. You may find sections in this template are irrelevant 
+%%%%  to your work and are empowered to omit any such section if allowed by the 
+%%%%  journal you intend to submit to. The submission guidelines and policies 
+%%%%  of the journal take precedence. A detailed User Manual is available in the 
+%%%%  template package for technical guidance.
+%%%%%=============================================================================%%%%
+
+%% as per the requirement new theorem styles can be included as shown below
+\theoremstyle{thmstyleone}%
+\newtheorem{theorem}{Theorem}%  meant for continuous numbers
+%%\newtheorem{theorem}{Theorem}[section]% meant for sectionwise numbers
+%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+\newtheorem{proposition}[theorem]{Proposition}% 
+%%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
+
+\theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+\theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}
+
+\raggedbottom
+%%\unnumbered% uncomment this for unnumbered level heads
+
+\begin{document}
+
+\title[Article Title]{Accurate and Robust Positive-Unlabeled Learning against Adversarial Perturbations}
+
+%%=============================================================%%
+%% GivenName	-> \fnm{Joergen W.}
+%% Particle	-> \spfx{van der} -> surname prefix
+%% FamilyName	-> \sur{Ploeg}
+%% Suffix	-> \sfx{IV}
+%% \author*[1,2]{\fnm{Joergen W.} \spfx{van der} \sur{Ploeg} 
+%%  \sfx{IV}}\email{iauthor@gmail.com}
+%%=============================================================%%
+
+\author*[1]{\fnm{Ryo} \sur{Shibazaki}}\email{ryo.shibazaki0517@chiba-u.jp}
+
+\author[2]{\fnm{Kazuhiko} \sur{Kawamoto}}\email{kawa@faculty.chiba-u.jp}
+
+\author[2]{\fnm{Hiroshi} \sur{Kera}}\email{kera@chiba-u.jp}
+
+\affil*[1]{\orgdiv{Graduate School of Science and Engineering}, \orgname{Chiba University},
+\orgaddress{\street{1-33 Yayoich\={o}, Inage-ku}, \city{Chiba-shi}, \postcode{263-8522}, \state{Chiba}, \country{Japan}}}
+
+\affil[2]{\orgdiv{Graduate School of Informatics}, \orgname{Chiba University},
+\orgaddress{\street{1-33 Yayoich\={o}, Inage-ku}, \city{Chiba-shi}, \postcode{263-8522}, \state{Chiba}, \country{Japan}}}
+
+%%==================================%%
+%% Sample for unstructured abstract %%
+%%==================================%%
+
+\abstract{Labeling costs are high in domains such as medical image analysis, where Positive and Unlabeled (PU) learning, which trains using only positive and unlabeled data, is effective. Medical images often contain small perturbations due to sensor noise and variations in acquisition conditions, which can cause a classifier to misclassify images that should be positive as negative. Therefore, in settings where even minor misclassifications may lead to critical misdiagnoses, high robustness is required.
+In this study, we focus on adversarial perturbations, which are known as worst-case noise among such perturbations, and aim to improve robustness within the PU learning framework. However, directly applying standard adversarial training methods to PU learning often severely degrades standard accuracy, making the trade-off between robustness and standard accuracy more pronounced. To address this issue, we propose PU-TRADES, a new learning method that extends the TRADES framework and integrates it with PU learning. Our method introduces label-independent adversarial perturbations and optimizes the balance between robustness and standard accuracy by combining a PU loss with a Kullback–Leibler loss.
+Furthermore, we theoretically derive an upper bound on the estimation error for the proposed loss and clarify conditions under which PU learning can outperform supervised learning when the number of unlabeled samples is sufficiently large. Finally, experiments on multiple benchmark datasets and a medical imaging dataset demonstrate that the proposed method provides an effective framework for robust learning in PU settings.}
+
+%%================================%%
+%% Sample for structured abstract %%
+%%================================%%
+
+% \abstract{\textbf{Purpose:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+
+% \textbf{Methods:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+
+% \textbf{Results:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.
+
+% \textbf{Conclusion:} The abstract serves both as a general introduction to the topic and as a brief, non-technical summary of the main results and their implications. The abstract must not include subheadings (unless expressly permitted in the journal's Instructions to Authors), equations or citations. As a guide the abstract should not exceed 200 words. Most journals do not set a hard limit however authors are advised to check the author instructions for the journal they are submitting to.}
+
+\keywords{positive-unlabeled learning, adversarial robustness, risk estimation, empirical risk minimization}
+
+
+%%\pacs[JEL Classification]{D8, H51}
+
+%%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
+
+\maketitle
+
+% ========================================================================
+\section{Introduction} \label{ch:intro}
+
+% TODO
+% Refer to Fig.~\ref{fig:cil}.
+% Add an explanation of class-incremental learning for the master's thesis version.
+
+In recent years, machine learning has achieved remarkable success across a wide range of tasks, driven by advances in large-scale data and high-capacity models. However, in real-world applications, it is often difficult to obtain high-quality ...; moreover, in settings where the training set contains only positive and unlabeled data, one must learn from incomplete information in which the unlabeled set is a mixture of true positives and negatives. Therefore, unlike fully supervised learning, PU learning requires careful risk estimation and additional techniques to stabilize training.
+
+Furthermore, in practical applications, robustness is an essential requirement in addition to label scarcity. In particular, medical images and sensor data are affected by variations in acquisition conditions, noise, and device ... We focus on adversarial perturbations\cite{Goodfellow2014ExplainingAH} and aim to improve robustness within the PU learning framework.
+
+However, in preliminary experiments, directly applying adversarial training\cite{Madry2017TowardsDL}—a standard approach to enhancing resilience against adversarial perturbations—to PU learning can substantially degrade classification performance on clean data.
+This is because, although unlabeled data contain a mixture of true positives and negatives, they are treated uniformly as negatives in the loss.
+As a result, the objectives of adversarial perturbation optimization and classification become misaligned, which destabilizes the updates associated with the unlabeled term. Figure~\ref{fig:cil} illustrates the relationship between clean accuracy and adversarial accuracy when PGD-based adversarial training is naively applied to PU learning.
+In particular, on CIFAR-10, adversarial accuracy improves while clean accuracy drops significantly. These observations indicate that, under the PU setting, introducing adversarial training may impair clean accuracy, which remains a key challenge.
+
+In this study, we extend the TRADES framework\cite{zhang2019theoretically}, a representative adversarial training method, and propose a new learning method, PU-TRADES, by integrating it with PU learning.
+Our approach handles adversarial perturbations in a label-independent manner and combines a PU loss with a Kullback--Leibler loss, aiming to improve robustness while suppressing degradation in clean accuracy.
+
+
+
+\begin{figure}[t]
+  \centering
+
+  % --- scatter ---
+  \includegraphics[width=0.92\linewidth]{sn-article-template/final_clean_scatter.pdf}
+
+  \vspace{1.0ex}
+
+  % --- table ---
+  \small
+  \setlength{\tabcolsep}{5pt}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{l cc c cc c}
+    \hline
+     & \multicolumn{3}{c}{FashionMNIST} & \multicolumn{3}{c}{CIFAR-10} \\
+     \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    Method & Clean & Adv & $\Delta$Clean & Clean & Adv & $\Delta$Clean \\
+    \hline
+    uPU      & 0.937 & 0.190 & --     & 0.850 & 0.114 & -- \\
+    nnPU     & \textbf{0.948} & 0.001 & --     & \textbf{0.887} & 0.001 & -- \\
+    uPU+PGD  & 0.935 & 0.843 & -0.002 & 0.802 & 0.714 & -0.048 \\
+    nnPU+PGD & 0.930 & 0.860 & -0.018 & 0.732 & 0.686 & \textbf{-0.155} \\
+    \hline
+  \end{tabular}
+
+  \caption{Performance changes when PGD-based adversarial training is naively applied to PU learning (FashionMNIST / CIFAR-10).
+  Left: a scatter plot showing the relationship between clean accuracy and adversarial accuracy for each method.
+  Right: a numerical summary and the change in clean accuracy, $\Delta$Clean, before and after applying PGD (difference from the corresponding PU method without PGD).
+  While PGD substantially improves adversarial accuracy, it degrades clean accuracy; this degradation is particularly pronounced for nnPU on CIFAR-10, where clean accuracy drops from $0.887$ to $0.732$ ($\Delta$Clean$=-0.155$).}
+  \label{fig:cil}
+\end{figure}
+
+
+
+To validate the effectiveness of the proposed method, we conducted experiments on multiple benchmark datasets and medical imaging data. We evaluated both clean accuracy and ... and compared them with baseline methods. The results show that the proposed method substantially improves robustness to adversarial perturbations while maintaining accuracy on clean data.
+
+In addition, we performed a theoretical analysis to better understand robustness in PU learning. Specifically, under binary classification with linear classifiers and adversarial perturbations, we derived upper bounds on the estimation error of the risks minimized by supervised learning and PU learning, thereby clarifying conditions under which PU learning can be advantageous over supervised learning. These conditions are consistent with practical scenarios, and they suggest that simply increasing the amount of unlabeled data can potentially achieve higher robustness than supervised learning.
+
+Our contributions are summarized as follows.
+\begin{itemize}
+\item We propose a new learning framework (PU-TRADES) that integrates TRADES-style regularization into PU learning, improving robustness to adversarial perturbations while maintaining classification accuracy on clean samples.
+\item Assuming linear classifiers under adversarial perturbations, we derive upper bounds on the estimation error of the risks minimized by supervised learning and PU learning, and theoretically identify conditions under which PU learning becomes more favorable than supervised learning.
+\item Through experiments on benchmark datasets and medical imaging data, we empirically demonstrate that the proposed method acquires robustness to adversarial samples while preserving clean accuracy.
+\end{itemize}
+
+% ========================================================================
+
+\section{Related Work} \label{ch:related}
+% 2--3 pages
+% Add a bit more detail on each method ...
+
+In this chapter, we review prior studies related to this work, focusing on (i) Positive-Unlabeled (PU) learning and (ii) adversarial training. We then summarize existing research that combines PU learning with adversarial robustness.
+
+\subsection{Positive-Unlabeled (PU) Learning}
+PU learning is a classification framework in which only positive-labeled and unlabeled data are available. A representative line of work is risk-estimation-based PU learning, which constructs an (unbiased) estimator of the supervised classification risk using the class prior and the mixture structure of the unlabeled set.
+In particular, uPU (unbiased PU learning) estimates the true risk without bias, while nnPU (non-negative PU learning) introduces a non-negativity constraint to prevent the empirical risk from becoming negative, thereby mitigating overfitting.
+Many extensions have also been proposed, including methods that exploit high-confidence samples from the unlabeled set and approaches that incorporate various correction mechanisms.
+
+\subsection{Adversarial Training}
+Adversarial examples are inputs that are intentionally perturbed to cause a model to misclassify, and they have attracted extensive attention as a major threat to machine learning systems.
+A standard defense is adversarial training, which improves robustness by training the model on adversarially perturbed samples. Representative methods such as PGD-based adversarial training can be formulated as a min--max optimization problem consisting of an outer minimization (parameter optimization) and an inner maximization (perturbation generation).
+In addition, TRADES \cite{zhang2019theoretically} is a prominent method that introduces a regularization term based on the Kullback--Leibler divergence between the model outputs on clean and perturbed inputs, aiming to balance clean accuracy and adversarial robustness.
+
+% \subsection{PU Learning with Adversarial Robustness}
+% Several recent studies have explored robust learning under weak supervision, including settings related to PU learning. However, naively applying adversarial training to PU learning is non-trivial, because the unlabeled set contains a mixture of true positives and negatives, which can lead to unstable updates and substantial degradation in clean accuracy.
+% In this study, we extend the TRADES framework to the PU learning setting and propose a method that achieves strong robustness under the constraints inherent to PU learning.
+
+\section{Preliminaries}\label{ch:preliminaries}
+
+  In this chapter, we introduce PU learning, adversarial examples and representative attacks, and adversarial training.
+  Hereafter, we refer to learning a binary classifier from fully labeled positive and negative data as Positive--Negative (PN) learning.
+
+\subsection{Positive-Unlabeled (PU) Learning}
+We denote the input space by $\mathcal{X} \subseteq \mathbb{R}^d$ and the label space by $\mathcal{Y}=\{-1,+1\}$.
+Let $p(\bm{x}, y)$ be the joint distribution over $(\mathcal{X},\mathcal{Y})$.
+Let the total number of samples be $n \in \mathbb{N}$, and
+let $n_{\mathrm{P}}$ and $n_{\mathrm{N}}$ denote the numbers of positive (P) and negative (N) samples, respectively.
+Each set is represented as follows:
+\begin{equation}
+\begin{aligned}
+\mathscr{X}_{\mathrm{P}} &= \{\boldsymbol{x}_i^{\mathrm{P}}\}_{i=1}^{n_{\mathrm{P}}}
+\stackrel{\text{i.i.d.}}{\sim} p_{\mathrm{P}}(\boldsymbol{x}), \\
+\mathscr{X}_{\mathrm{N}} &= \{\boldsymbol{x}_i^{\mathrm{N}}\}_{i=1}^{n_{\mathrm{N}}}
+\stackrel{\text{i.i.d.}}{\sim} p_{\mathrm{N}}(\boldsymbol{x}).
+\end{aligned}
+\end{equation}
+Here, $p_{\mathrm{P}}(\bm{x})$ and $p_{\mathrm{N}}(\bm{x})$ denote the class-conditional densities for the positive and negative classes, respectively.
+The full dataset $\mathscr{X}=\mathscr{X}_{\mathrm{P}} \cup \mathscr{X}_{\mathrm{N}}$ is written as
+\begin{equation}
+\begin{aligned}
+\mathscr{X} &= \{\boldsymbol{x}_i\}_{i=1}^{n} \stackrel{\text{i.i.d.}}{\sim} p(\boldsymbol{x}),\\
+p(\boldsymbol{x}) &= \pi_{\mathrm{P}}\, p_{\mathrm{P}}(\boldsymbol{x}) + \pi_{\mathrm{N}}\, p_{\mathrm{N}}(\boldsymbol{x}),
+\end{aligned}
+\end{equation}
+where $\pi_{\mathrm{P}}=p(y=+1)$ and $\pi_{\mathrm{N}}=...p(y=-1)$ are the class priors satisfying $\pi_{\mathrm{P}}+\pi_{\mathrm{N}}=1$.
+
+In PU learning, the training set consists of positive (P) samples and unlabeled (U) samples.
+Since the marginal distribution of unlabeled data is $p_{\mathrm{U}}(\bm{x})=\pi_{\mathrm{P}} p_{\mathrm{P}}(\bm{x})+\pi_{\mathrm{N}} p_{\mathrm{N}}(\bm{x})$, 
+letting $n_{\mathrm{U}}$ be the number of unlabeled samples, the unlabeled set is given by
+\begin{align}
+\mathscr{X}_{\mathrm{U}}
+&= \{\boldsymbol{x}_i^{\mathrm{U}}\}_{i=1}^{n_{\mathrm{U}}}
+\stackrel{\text{i.i.d.}}{\sim} p_{\mathrm{U}}(\boldsymbol{x})
+= p(\boldsymbol{x}).
+\end{align}
+That is, the unlabeled samples are drawn i.i.d. from the marginal distribution of inputs, which is a mixture of positive and negative class-conditional distributions.
+
+\noindent\textbf{Unbiased PU Learning (uPU).}
+uPU assumes that the positive class prior $\pi_{\mathrm{P}}$ is known and estimates the negative risk indirectly from the unlabeled data.
+Specifically, it minimizes the following empirical risk:
+\begin{align}
+\widehat{R}_{\mathrm{uPU}}(g)
+&=
+\frac{\pi_{\mathrm{P}}}{n_{\mathrm{P}}} \sum_{i=1}^{n_{\mathrm{P}}}
+\tilde{\ell}\!\left(g\!\left(\boldsymbol{x}_i^{\mathrm{P}}\right), +1\right)
+\;+\;
+\frac{1}{n_{\mathrm{U}}} \sum_{i=1}^{n_{\mathrm{U}}}
+\ell\!\left(g\!\left(\boldsymbol{x}_i^{\mathrm{U}}\right), -1\right).
+\end{align}
+Here, the composite loss $\tilde{\ell}(g(\boldsymbol{x}), y)$ is defined by
+$\tilde{\ell}(g(\boldsymbol{x}), y)
+=\ell(g(\boldsymbol{x}), y)-\ell(g(\boldsymbol{x}), -y)$.
+
+
+\noindent\textbf{Non-Negative PU Learning (nnPU).}
+nnPU was introduced to address the overfitting issue in uPU, where the empirical risk can take negative values\cite{Kiryo2017PositiveUnlabeledLW}.
+Specifically, when the estimated term involving the negative risk in PU learning becomes negative, nnPU clips its negative contribution to zero, yielding a non-negative risk estimator that keeps the overall estimate bounded below by $0$.
+This modification prevents the empirical risk from diverging to negative values during empirical minimization and enables stable training.
+The empirical risk of nnPU is defined as follows:
+\begin{equation}
+\begin{aligned}
+\widehat{R}_{\mathrm{nnPU}}(g)
+= {} & \frac{\pi_{\mathrm{P}}}{n_{\mathrm{P}}} \sum_{i=1}^{n_{\mathrm{P}}}
+\ell\left(g\left(\boldsymbol{x}_i^{\mathrm{P}}\right),+1\right) \\
+& + \max\Biggl\{0\,,
+- \frac{\pi_{\mathrm{P}}}{n_{\mathrm{P}}} \sum_{i=1}^{n_{\mathrm{P}}}
+\ell\left(g\left(\boldsymbol{x}_i^{\mathrm{P}}\right),-1\right)
++ \frac{1}{n_{\mathrm{U}}} \sum_{i=1}^{n_{\mathrm{U}}}
+\ell\left(g\left(\boldsymbol{x}_i^{\mathrm{U}}\right),-1\right)
+\Biggr\}.
+\end{aligned}
+\end{equation}
+
+
+\subsection{Adversarial Examples} \label{AE}
+
+
+  Adversarial examples are inputs constructed by adding small, carefully designed perturbations to an image that a classifier originally classified correctly, thereby intentionally causing misclassification...w2014ExplainingAH}. For example, Fig.~\ref{fig:advex} adds a tiny perturbation to a cat image and generates an adversarial example...
+
+
+  \begin{figure}[t]
+    \centering
+\includegraphics[width=\linewidth]{sn-article-template/goodfelow.pdf}
+    \caption{An example of generating adversarial examples. Starting from the clean image on the left, we add a small perturbation using PGD to obtain an adversarial input... The classifier correctly predicts the clean image as a cat (confidence 94.6\%), while it misclassifies the adversarial example as a dog (confidence 99.8\%). This illustrates that predictions can change drastically even when the input appears almost identical to humans\cite{Goodfellow2014ExplainingAH}.}
+    \label{fig:advex}
+  \end{figure}
+
+
+\subsection{Adversarial attack: FGSM and PGD}\label{AA}
+We refer to methods for generating adversarial examples as \emph{adversarial attacks}, and many variants have been studied. In this work, we focus on representative first-order attacks: the Fast Gradient Sign Method (FGSM)~\cite{Goodfellow2014ExplainingAH} and Projected Gradient Descent (PGD)~\cite{M...}. Here, $\mathrm{sign}:\mathbb{R} \rightarrow [-1,1]$ is applied element-wise to the argument vector.
+\begin{equation}
+\bm{x}'=\bm{x}+\epsilon\cdot\mathrm{sign}\left(\nabla_{\bm{x}}
+\ell(g(\bm{x};\bm{\theta}),y)\right)
+\label{fgsm}
+\end{equation}
+This produces an input that increases the loss when fed into the model. A stronger iterative variant of this method is PGD~\cite{...}, which updates the input in the direction that increases the loss with step size $\alpha$, similarly to FGSM, and then applies the projection $\Pi_{\mathcal{...}}$.
+In particular,
+\[
+\mathcal{B}_\infty(\bm{x},\epsilon):=\{\bm{z}\in\mathbb{R}^d \mid \|\bm{z}-\bm{x}\|_\infty \le \epsilon\}
+\]
+Then, $\Pi_{\mathcal{B}_\infty(\bm{x},\epsilon)}$ denotes the projection onto the $\ell_\infty$-ball, which guarantees $\|\bm{x}'-\bm{x}\|_\infty \le \epsilon$.
+Under this setting, the PGD update is given by:
+\begin{equation}
+\bm{x}^{\prime} \leftarrow \Pi_{\mathcal{B}_\infty(\bm{x},\epsilon)}
+\left[\bm{x}+\alpha\,\operatorname{sign}\left(\nabla_{\bm{x}} \ell(g(\bm{x} ; \bm{\theta}),y)\right)\right].
+\label{pgd}
+\end{equation}
+
+
+% In particular, $\operatorname{Clip}{(\bm{x}-\epsilon,\ \bm{x}+\epsilo...$ projects by restricting each component to the interval $[\bm{x}-\epsilon,\ \bm{x}+\epsilon]$, ensuring $|\bm{x}'-\bm...$.
+
+By repeating Eq.~\eqref{pgd} multiple times, we can generate samples that more strongly increase the loss within the $\epsilon$-ball.
+
+\subsection{Adversarial Training}\label{AT}
+
+Adversarial training improves model robustness by training on adversarial examples\cite{madry...}. It is typically formulated as the following min--max optimization problem: one first generates adversarial examples for each input, and then learns parameters that minimize the average loss over these adversarial inputs.
+\begin{equation}
+\min_{\boldsymbol{\theta}} \frac{1}{n} \sum_{i=1}^n
+\max_{\|\bm{x}_i^{\prime}-\bm{x}_i\|_\infty \le \epsilon}
+\ell\!\left(g(\bm{x}_i^{\prime};\boldsymbol{\theta}), y_i\right).
+\end{equation}
+In addition, as a method to further enhance robustness against adversarial examples,
+TRADES (TRadeoff-inspired Adversarial DEfense via Surrogate-loss minimization), proposed by Zhang \emph{et al.}\cite{zhang2019theoretically}, is a prominent approach.
+TRADES explicitly models the trade-off between accuracy on clean samples and robustness to adversarial samples,
+and aims to minimize the following loss function:
+\begin{equation}
+\begin{aligned}
+\mathcal{L}_{\mathrm{TR}}(\boldsymbol{\theta})
+    &= \frac{1}{n} \sum_{i=1}^n \Bigl[
+        \ell\bigl(g(\bm{x}_i ; \boldsymbol{\theta}), y_i \bigr)
+        \\&\quad
+        + \beta \cdot \max_{\|\bm{x}_i^{\prime} - \bm{x}_i\|_\infty \le \epsilon}
+        \ell_{\mathrm{KL}}\bigl(g(\bm{x}_i ; \boldsymbol{\theta}), g(\bm{x}_i^{\prime} ; \boldsymbol{\theta}) \bigr)
+    \Bigr].
+\end{aligned}
+\label{eq:trades_loss}
+\end{equation}
+Here, $\ell_{\mathrm{KL}}(\cdot,\cdot)$ denotes the Kullback--Leibler (KL) divergence between predictive distributions, i.e.,
+\[
+\ell_{\mathrm{KL}}\bigl(g(\bm{x}_i;\boldsymbol{\theta}),\,g(\bm{x}_i';\boldsymbol{\theta})\bigr)
+:= \mathrm{KL}\!\left(
+p_{\boldsymbol{\theta}}(\cdot\mid \bm{x}_i)\ \big\|\ p_{\boldsymbol{\theta}}(\cdot\mid \bm{x}_i')
+\right).
+\]
+
+
+The first term of Eq.~\eqref{eq:trades_loss},
+$\ell\bigl(g(\bm{x}_i ; \boldsymbol{\theta}), y_i \bigr)$, is
+the standard classification loss on the clean input $\bm{x}_i$.
+
+On the other hand, the second term
+$\ell_{\mathrm{KL}}\bigl(g(\bm{x}_i ; \boldsymbol{\theta}), g(\bm{x}_i^{\prime} ; \boldsymbol{\theta})\bigr)$
+constrains the model so that the output distributions for $\bm{x}_i$ and its perturbed version $\bm{x}_i^{\prime}$ are close,
+and this term plays a key role in improving robustness.
+Thus, TRADES is designed to enhance robustness while maintaining classification accuracy.
+In this study, we apply this framework to PU learning
+to achieve both high performance on clean samples and robustness to adversarial examples.
+
+
+
+
+\section{Accurate and Robust PU Learning}\label{ch:method}
+
+% ========================================================================
+
+In this chapter, we first clarify the issues that arise when uPU learning is naively combined with PGD-based adversarial training.
+We then propose a new learning method, PU+TRADES, which adapts the TRADES framework to PU learning.
+
+\subsection{uPU+PGD}
+
+In uPU learning, the empirical risk $\widehat{R}_{\mathrm{uPU}}(g)$ is estimated by minimizing
+\begin{align}
+\widehat{R}_{\mathrm{uPU}}(g)
+= \frac{\pi_{\mathrm{P}}}{n_{\mathrm{P}}}
+\sum_{i=1}^{n_{\mathrm{P}}}
+\tilde{\ell}\left(g\bigl(\boldsymbol{x}_i^{\mathrm{P}}\bigr),+1\right)
++ \frac{1}{n_{\mathrm{U}}}
+\sum_{i=1}^{n_{\mathrm{U}}}
+\ell\left(g\bigl(\boldsymbol{x}_i^{\mathrm{U}}\bigr),-1\right).
+\end{align}
+Here, the loss is taken differently for P and U samples, which can be summarized as
+\begin{align}
+\mathscr{L}(\boldsymbol{x}):=
+\begin{cases}
+\tilde{\ell}(g(\boldsymbol{x}), +1), & \boldsymbol{x} \in \mathscr{X}_{\mathrm{P}},\\[2pt]
+\ell(g(\boldsymbol{x}), -1),         & \boldsymbol{x} \in \mathscr{X}_{\mathrm{U}}.
+\end{cases}
+\label{eq:uPU_loss_piecewise}
+\end{align}
+Using this loss $\mathscr{L}$, we generate an adversarial example for each sample via PGD.
+A single PGD update step is given by
+\begin{align}
+\boldsymbol{x}^{\prime} \leftarrow
+\operatorname{Clip}_{(\boldsymbol{x}-\epsilon,\ \boldsymbol{x}+\epsilon)}
+\Bigl[\boldsymbol{x}^{\prime}+\alpha\,\operatorname{sign}\!\bigl(\nabla_{\boldsymbol{x}^{\prime}} \mathscr{L}(\boldsymbol{x}^{\prime})\bigr)\Bigr].
+\end{align}
+
+\subsection*{Issues with uPU+PGD}
+
+In uPU, the loss for unlabeled data is computed as if the label were always $y=-1$.
+However, in reality, the unlabeled set contains a mixture of positives and negatives.
+This property is incompatible with PGD-based adversarial training.
+
+\begin{itemize}
+  \item \textbf{Negative U samples.}
+  Since the loss $\ell(g(\boldsymbol{x}^{\mathrm{U}}), -1)$ is consistent with the true label, it pushes the input in a direction that increases the loss for the negative class.
+  Consequently, PGD generates appropriate adversarial perturbations, contributing to improved robustness.
+
+  \item \textbf{Positive U samples.}
+  If perturbations are generated using $\ell(g(\boldsymbol{x}^{\mathrm{U}}), -1)$ even though the sample is truly positive, PGD updates the input so as to maximize the \emph{negative-class} loss.
+  As a result, the input may be pushed not toward the decision boundary, but rather toward a region where it is classified as positive with higher confidence.
+  Therefore, PGD fails to produce perturbations in the “most misclassifiable direction,” and the training can break down.
+\end{itemize}
+
+Hence, to generate adversarial perturbations appropriately in PU learning, it is essential to use a \emph{label-independent} perturbation generation mechanism.
+This motivates PU+TRADES, introduced in the next section.
+
+% ----------------------------------------------------------
+
+\subsection{PU+TRADES}
+
+In this work, we propose \textbf{uPU+TRADES} and \textbf{nnPU+TRADES}, which integrate TRADES into uPU and nnPU, respectively.
+By introducing the TRADES framework into PU learning, we endow the model with robustness.
+
+The objective function of uPU+TRADES is given by
+\begin{equation}
+\min_{g}\left[
+\widehat{R}_{\mathrm{uPU}}(g)
++\beta \cdot \frac{1}{n} \sum_{i=1}^n
+\max_{\left\|\boldsymbol{x}^{\prime}-\boldsymbol{x}_i\right\|_{\infty} \leq \epsilon}
+\ell_{\mathrm{KL}}\left(g\left(\boldsymbol{x}_i\right)\ \|\ g\left(\boldsymbol{x}^{\prime}\right)\right)
+\right],
+\end{equation}
+and the objective function of nnPU+TRADES is given by
+\begin{equation}
+\min_{g}\left[
+\widehat{R}_{\mathrm{nnPU}}(g)
++\beta \cdot \frac{1}{n} \sum_{i=1}^n
+\max_{\left\|\boldsymbol{x}^{\prime}-\boldsymbol{x}_i\right\|_{\infty} \leq \epsilon}
+\ell_{\mathrm{KL}}\left(g\left(\boldsymbol{x}_i\right)\ \|\ g\left(\boldsymbol{x}^{\prime}\right)\right)
+\right].
+\end{equation}
+
+In binary classification, the network outputs a one-dimensional logit $g(\boldsymbol{x};\boldsymbol{\theta})$.
+We convert it into a Bernoulli probability vector and compute the KL divergence:
+\begin{align}
+p(\boldsymbol{x})=
+\bigl[\sigma(g(\boldsymbol{x}; \boldsymbol{\theta})),\, 1-\sigma(g(\boldsymbol{x}; \boldsymbol{\theta}))\bigr],
+\end{align}
+where $\sigma(\cdot)$ denotes the sigmoid function.
+The KL loss is then defined as
+\begin{equation}
+\begin{aligned}
+\ell_{\mathrm{KL}}\left(g\left(\boldsymbol{x}_i; \boldsymbol{\theta}\right), g\left(\boldsymbol{x}_i^{\prime}; \boldsymbol{\theta}\right)\right)
+&= \mathrm{KL}\bigl(p(\boldsymbol{x}_i)\,\|\,p(\boldsymbol{x}_i^{\prime})\bigr) \\
+&= \sum_{c \in \{0,1\}} p_c(\boldsymbol{x}_i)\,
+\log \frac{p_c(\boldsymbol{x}_i)}{p_c(\boldsymbol{x}_i^{\prime})}.
+\end{aligned}
+\end{equation}
+
+This term encourages the model outputs to remain stable under small perturbations of $\boldsymbol{x}_i$,
+thereby providing robustness against adversarial perturbations.
+
+
+\section{Equations}\label{sec4}
+
+Equations in \LaTeX\ can either be inline or on-a-line by itself (``display equations''). For
+inline equations use the \verb+$...$+ commands. E.g.: The equation
+$H\psi = E \psi$ is written via the command \verb+$H \psi = E \psi$+.
+
+For display equations (with auto generated equation numbers)
+one can use the equation or align environments:
+\begin{equation}
+\|\tilde{X}(k)\|^2 \leq\frac{\sum\limits_{i=1}^{p}\left\|\tilde{Y}_i(k)\right\|^2+\sum\limits_{j=1}^{q}\left\|\tilde{Z}_j(k)\right\|^2 }{p+q}.\label{eq1}
+\end{equation}
+where,
+\begin{align}
+D_\mu &=  \partial_\mu - ig \frac{\lambda^a}{2} A^a_\mu \nonumber \\
+F^a_{\mu\nu} &= \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + g f^{abc} A^b_\mu A^a_\nu \label{eq2}
+\end{align}
+Notice the use of \verb+\nonumber+ in the align environment at the end
+of each line, except the last, so as not to produce equation numbers on
+lines where no equation numbers are required. The \verb+\label{}+ command
+should only be used at the last line of an align environment where
+\verb+\nonumber+ is not used.
+\begin{equation}
+Y_\infty = \left( \frac{m}{\textrm{GeV}} \right)^{-3}
+    \left[ 1 + \frac{3 \ln(m/\textrm{GeV})}{15}
+    + \frac{\ln(c_2/5)}{15} \right]
+\end{equation}
+The class file also supports the use of \verb+\mathbb{}+, \verb+\mathscr{}+ and
+\verb+\mathcal{}+ commands. As such \verb+\mathbb{R}+, \verb+\mathscr{R}+
+and \verb+\mathcal{R}+ produces $\mathbb{R}$, $\mathscr{R}$ and $\mathcal{R}$
+respectively (refer Subsubsection~\ref{subsubsec2}).
+
+\section{Tables}\label{sec5}
+
+Tables can be inserted via the normal table and tabular environment. To put
+footnotes inside tables you should use \verb+\footnotetext[]{...}+ tag.
+The footnote appears just below the table itself (refer Tables~\ref{tab1} and \ref{tab2}). 
+For the corresponding footnotemark use \verb+\footnotemark[...]+
+
+\begin{table}[h]
+\caption{Caption text}\label{tab1}%
+\begin{tabular}{@{}llll@{}}
+\toprule
+Column 1 & Column 2  & Column 3 & Column 4\\
+\midrule
+row 1    & data 1   & data 2  & data 3  \\
+row 2    & data 4   & data 5\footnotemark[1]  & data 6  \\
+row 3    & data 7   & data 8  & data 9\footnotemark[2]  \\
+\botrule
+\end{tabular}
+\footnotetext{Source: This is an example of table footnote. This is an example of table footnote.}
+\footnotetext[1]{Example for a first table footnote. This is an example of table footnote.}
+\footnotetext[2]{Example for a second table footnote. This is an example of table footnote.}
+\end{table}
+
+\noindent
+The input format for the above table is as follows:
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{verbatim}
+\begin{table}[<placement-specifier>]
+\caption{<table-caption>}\label{<table-label>}%
+\begin{tabular}{@{}llll@{}}
+\toprule
+Column 1 & Column 2 & Column 3 & Column 4\\
+\midrule
+row 1 & data 1 & data 2	 & data 3 \\
+row 2 & data 4 & data 5\footnotemark[1] & data 6 \\
+row 3 & data 7 & data 8	 & data 9\footnotemark[2]\\
+\botrule
+\end{tabular}
+\footnotetext{Source: This is an example of table footnote. 
+This is an example of table footnote.}
+\footnotetext[1]{Example for a first table footnote.
+This is an example of table footnote.}
+\footnotetext[2]{Example for a second table footnote. 
+This is an example of table footnote.}
+\end{table}
+\end{verbatim}
+\bigskip
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+
+\begin{table}[h]
+\caption{Example of a lengthy table which is set to full textwidth}\label{tab2}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+\toprule%
+& \multicolumn{3}{@{}c@{}}{Element 1\footnotemark[1]} & \multicolumn{3}{@{}c@{}}{Element 2\footnotemark[2]} \\\cmidrule{2-4}\cmidrule{5-7}%
+Project & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ \\
+\midrule
+Element 3  & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$\\
+Element 4  & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$\\
+\botrule
+\end{tabular*}
+\footnotetext{Note: This is an example of table footnote. This is an example of table footnote this is an example of table footnote this is an example of~table footnote this is an example of table footnote.}
+\footnotetext[1]{Example for a first table footnote.}
+\footnotetext[2]{Example for a second table footnote.}
+\end{table}
+
+In case of double column layout, tables which do not fit in single column width should be set to full text width. For this, you need to use \verb+\begin{table*}+ \verb+...+ \verb+\end{table*}+ instead of \verb+\begin{table}+ \verb+...+ \verb+\end{table}+ environment. Lengthy tables which do not fit in textwidth should be set as rotated table. For this, you need to use \verb+\begin{sidewaystable}+ \verb+...+ \verb+\end{sidewaystable}+ instead of \verb+\begin{table*}+ \verb+...+ \verb+\end{table*}+ environment. This environment puts tables rotated to single column width. For tables rotated to double column width, use \verb+\begin{sidewaystable*}+ \verb+...+ \verb+\end{sidewaystable*}+.
+
+\begin{sidewaystable}
+\caption{Tables which are too long to fit, should be written using the ``sidewaystable'' environment as shown here}\label{tab3}
+\begin{tabular*}{\textheight}{@{\extracolsep\fill}lcccccc}
+\toprule%
+& \multicolumn{3}{@{}c@{}}{Element 1\footnotemark[1]}& \multicolumn{3}{@{}c@{}}{Element\footnotemark[2]} \\\cmidrule{2-4}\cmidrule{5-7}%
+Projectile & Energy	& $\sigma_{calc}$ & $\sigma_{expt}$ & Energy & $\sigma_{calc}$ & $\sigma_{expt}$ \\
+\midrule
+Element 3 & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$ \\
+Element 4 & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$ \\
+Element 5 & 990 A & 1168 & $1547\pm12$ & 780 A & 1166 & $1239\pm100$ \\
+Element 6 & 500 A & 961  & $922\pm10$  & 900 A & 1268 & $1092\pm40$ \\
+\botrule
+\end{tabular*}
+\footnotetext{Note: This is an example of table footnote this is an example of table footnote this is an example of table footnote this is an example of~table footnote this is an example of table footnote.}
+\footnotetext[1]{This is an example of table footnote.}
+\end{sidewaystable}
+
+\section{Figures}\label{sec6}
+
+As per the \LaTeX\ standards you need to use eps images for \LaTeX\ compilation and \verb+pdf/jpg/png+ images for \verb+PDFLaTeX+ compilation. This is one of the major difference between \LaTeX\ and \verb+PDFLaTeX+. Each image should be from a single input .eps/vector image file. Avoid using subfigures. The command for inserting images for \LaTeX\ and \verb+PDFLaTeX+ can be generalized. The package used to insert images in \verb+LaTeX/PDFLaTeX+ is the graphicx package. Figures can be inserted via the normal figure environment as shown in the below example:
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{verbatim}
+\begin{figure}[<placement-specifier>]
+\centering
+\includegraphics{<eps-file>}
+\caption{<figure-caption>}\label{<figure-label>}
+\end{figure}
+\end{verbatim}
+\bigskip
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{fig.eps}
+\caption{This is a widefig. This is an example of long caption this is an example of long caption  this is an example of long caption this is an example of long caption}\label{fig1}
+\end{figure}
+
+In case of double column layout, the above format puts figure captions/images to single column width. To get spanned images, we need to provide \verb+\begin{figure*}+ \verb+...+ \verb+\end{figure*}+.
+
+For sample purpose, we have included the width of images in the optional argument of \verb+\includegraphics+ tag. Please ignore this. 
+
+\section{Algorithms, Program codes and Listings}\label{sec7}
+
+Packages \verb+algorithm+, \verb+algorithmicx+ and \verb+algpseudocode+ are used for setting algorithms in \LaTeX\ using the format:
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{verbatim}
+\begin{algorithm}
+\caption{<alg-caption>}\label{<alg-label>}
+\begin{algorithmic}[1]
+. . .
+\end{algorithmic}
+\end{algorithm}
+\end{verbatim}
+\bigskip
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+
+You may refer above listed package documentations for more details before setting \verb+algorithm+ environment. For program codes, the ``verbatim'' package is required and the command to be used is \verb+\begin{verbatim}+ \verb+...+ \verb+\end{verbatim}+. 
+
+Similarly, for \verb+listings+, use the \verb+listings+ package. \verb+\begin{lstlisting}+ \verb+...+ \verb+\end{lstlisting}+ is used to set environments similar to \verb+verbatim+ environment. Refer to the \verb+lstlisting+ package documentation for more details.
+
+A fast exponentiation procedure:
+
+\lstset{texcl=true,basicstyle=\small\sf,commentstyle=\small\rm,mathescape=true,escapeinside={(*}{*)}}
+\begin{lstlisting}
+begin
+  for $i:=1$ to $10$ step $1$ do
+      expt($2,i$);  
+      newline() od                (*\textrm{Comments will be set flush to the right margin}*)
+where
+proc expt($x,n$) $\equiv$
+  $z:=1$;
+  do if $n=0$ then exit fi;
+     do if odd($n$) then exit fi;                 
+        comment: (*\textrm{This is a comment statement;}*)
+        $n:=n/2$; $x:=x*x$ od;
+     { $n>0$ };
+     $n:=n-1$; $z:=z*x$ od;
+  print($z$). 
+end
+\end{lstlisting}
+
+\begin{algorithm}
+\caption{Calculate $y = x^n$}\label{algo1}
+\begin{algorithmic}[1]
+\Require $n \geq 0 \vee x \neq 0$
+\Ensure $y = x^n$ 
+\State $y \Leftarrow 1$
+\If{$n < 0$}\label{algln2}
+        \State $X \Leftarrow 1 / x$
+        \State $N \Leftarrow -n$
+\Else
+        \State $X \Leftarrow x$
+        \State $N \Leftarrow n$
+\EndIf
+\While{$N \neq 0$}
+        \If{$N$ is even}
+            \State $X \Leftarrow X \times X$
+            \State $N \Leftarrow N / 2$
+        \Else[$N$ is odd]
+            \State $y \Leftarrow y \times X$
+            \State $N \Leftarrow N - 1$
+        \EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{minipage}{\hsize}%
+\lstset{frame=single,framexleftmargin=-1pt,framexrightmargin=-17pt,framesep=12pt,linewidth=0.98\textwidth,language=pascal}% Set your language (you can change the language for each code-block optionally)
+%%% Start your code-block
+\begin{lstlisting}
+for i:=maxint to 0 do
+begin
+{ do nothing }
+end;
+Write('Case insensitive ');
+Write('Pascal keywords.');
+\end{lstlisting}
+\end{minipage}
+
+\section{Cross referencing}\label{sec8}
+
+Environments such as figure, table, equation and align can have a label
+declared via the \verb+\label{#label}+ command. For figures and table
+environments use the \verb+\label{}+ command inside or just
+below the \verb+\caption{}+ command. You can then use the
+\verb+\ref{#label}+ command to cross-reference them. As an example, consider
+the label declared for Figure~\ref{fig1} which is
+\verb+\label{fig1}+. To cross-reference it, use the command 
+\verb+Figure \ref{fig1}+, for which it comes up as
+``Figure~\ref{fig1}''. 
+
+To reference line numbers in an algorithm, consider the label declared for the line number 2 of Algorithm~\ref{algo1} is \verb+\label{algln2}+. To cross-reference it, use the command \verb+\ref{algln2}+ for which it comes up as line~\ref{algln2} of Algorithm~\ref{algo1}.
+
+\subsection{Details on reference citations}\label{subsec7}
+
+Standard \LaTeX\ permits only numerical citations. To support both numerical and author-year citations this template uses \verb+natbib+ \LaTeX\ package. For style guidance please refer to the template user manual.
+
+Here is an example for \verb+\cite{...}+: \cite{bib1}. Another example for \verb+\citep{...}+: \citep{bib2}. For author-year citation mode, \verb+\cite{...}+ prints Jones et al. (1990) and \verb+\citep{...}+ prints (Jones et al., 1990).
+
+All cited bib entries are printed at the end of this article: \cite{bib3}, \cite{bib4}, \cite{bib5}, \cite{bib6}, \cite{bib7}, \cite{bib8}, \cite{bib9}, \cite{bib10}, \cite{bib11}, \cite{bib12} and \cite{bib13}.
+
+\section{Examples for theorem like environments}\label{sec10}
+
+For theorem like environments, we require \verb+amsthm+ package. There are three types of predefined theorem styles exists---\verb+thmstyleone+, \verb+thmstyletwo+ and \verb+thmstylethree+ 
+
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+\bigskip
+\begin{tabular}{|l|p{19pc}|}
+\hline
+\verb+thmstyleone+ & Numbered, theorem head in bold font and theorem text in italic style \\\hline
+\verb+thmstyletwo+ & Numbered, theorem head in roman font and theorem text in italic style \\\hline
+\verb+thmstylethree+ & Numbered, theorem head in bold font and theorem text in roman style \\\hline
+\end{tabular}
+\bigskip
+%%=============================================%%
+%% For presentation purpose, we have included  %%
+%% \bigskip command. Please ignore this.       %%
+%%=============================================%%
+
+For mathematics journals, theorem styles can be included as shown in the following examples:
+
+\begin{theorem}[Theorem subhead]\label{thm1}
+Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. 
+Example theorem text. Example theorem text. Example theorem text. Example theorem text. Example theorem text. 
+Example theorem text. 
+\end{theorem}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{proposition}
+Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. 
+Example proposition text. Example proposition text. Example proposition text. Example proposition text. Example proposition text. 
+\end{proposition}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{example}
+Phasellus adipiscing semper elit. Proin fermentum massa
+ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
+at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. 
+\end{example}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{remark}
+Phasellus adipiscing semper elit. Proin fermentum massa
+ac quam. Sed diam turpis, molestie vitae, placerat a, molestie nec, leo. Maecenas lacinia. Nam ipsum ligula, eleifend
+at, accumsan nec, suscipit a, ipsum. Morbi blandit ligula feugiat magna. Nunc eleifend consequat lorem. 
+\end{remark}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{definition}[Definition sub head]
+Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. Example definition text. 
+\end{definition}
+
+Additionally a predefined ``proof'' environment is available: \verb+\begin{proof}+ \verb+...+ \verb+\end{proof}+. This prints a ``Proof'' head in italic font style and the ``body text'' in roman font style with an open square at the end of each proof environment. 
+
+\begin{proof}
+Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. 
+\end{proof}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text. Sample body text.
+
+\begin{proof}[Proof of Theorem~{\upshape\ref{thm1}}]
+Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. Example for proof text. 
+\end{proof}
+
+\noindent
+For a quote environment, use \verb+\begin{quote}...\end{quote}+
+\begin{quote}
+Quoted text example. Aliquam porttitor quam a lacus. Praesent vel arcu ut tortor cursus volutpat. In vitae pede quis diam bibendum placerat. Fusce elementum
+convallis neque. Sed dolor orci, scelerisque ac, dapibus nec, ultricies ut, mi. Duis nec dui quis leo sagittis commodo.
+\end{quote}
+
+Sample body text. Sample body text. Sample body text. Sample body text. Sample body text (refer Figure~\ref{fig1}). Sample body text. Sample body text. Sample body text (refer Table~\ref{tab3}). 
+
+\section{Methods}\label{sec11}
+
+Topical subheadings are allowed. Authors must ensure that their Methods section includes adequate experimental and characterization data necessary for others in the field to reproduce their work. Authors are encouraged to include RIIDs where appropriate. 
+
+\textbf{Ethical approval declarations} (only required where applicable) Any article reporting experiment/s carried out on (i)~live vertebrate (or higher invertebrates), (ii)~humans or (iii)~human samples must include an unambiguous statement within the methods section that meets the following requirements: 
+
+\begin{enumerate}[1.]
+\item Approval: a statement which confirms that all experimental protocols were approved by a named institutional and/or licensing committee. Please identify the approving body in the methods section
+
+\item Accordance: a statement explicitly saying that the methods were carried out in accordance with the relevant guidelines and regulations
+
+\item Informed consent (for experiments involving humans or human tissue samples): include a statement confirming that informed consent was obtained from all participants and/or their legal guardian/s
+\end{enumerate}
+
+If your manuscript includes potentially identifying patient/participant information, or if it describes human transplantation research, or if it reports results of a clinical trial then  additional information will be required. Please visit (\url{https://www.nature.com/nature-research/editorial-policies}) for Nature Portfolio journals, (\url{https://www.springer.com/gp/authors-editors/journal-author/journal-author-helpdesk/publishing-ethics/14214}) for Springer Nature journals, or (\url{https://www.biomedcentral.com/getpublished/editorial-policies\#ethics+and+consent}) for BMC.
+
+\section{Discussion}\label{sec12}
+
+Discussions should be brief and focused. In some disciplines use of Discussion or `Conclusion' is interchangeable. It is not mandatory to use both. Some journals prefer a section `Results and Discussion' followed by a section `Conclusion'. Please refer to Journal-level guidance for any specific requirements. 
+
+\section{Conclusion}\label{sec13}
+
+Conclusions may be used to restate your hypothesis or research question, restate your major findings, explain the relevance and the added value of your work, highlight any limitations of your study, describe future directions for research and recommendations. 
+
+In some disciplines use of Discussion or 'Conclusion' is interchangeable. It is not mandatory to use both. Please refer to Journal-level guidance for any specific requirements. 
+
+\backmatter
+
+\bmhead{Supplementary information}
+
+If your article has accompanying supplementary file/s please state so here. 
+
+Authors reporting data from electrophoretic gels and blots should supply the full unprocessed scans for key as part of their Supplementary information. This may be requested by the editorial team/s if it is missing.
+
+Please refer to Journal-level guidance for any specific requirements.
+
+\bmhead{Acknowledgements}
+
+Acknowledgements are not compulsory. Where included they should be brief. Grant or contribution numbers may be acknowledged.
+
+Please refer to Journal-level guidance for any specific requirements.
+
+\section*{Declarations}
+
+Some journals require declarations to be submitted in a standardised format. Please check the Instructions for Authors of the journal to which you are submitting to see if you need to complete this section. If yes, your manuscript must contain the following sections under the heading `Declarations':
+
+\begin{itemize}
+\item Funding
+\item Conflict of interest/Competing interests (check journal-specific guidelines for which heading to use)
+\item Ethics approval and consent to participate
+\item Consent for publication
+\item Data availability 
+\item Materials availability
+\item Code availability 
+\item Author contribution
+\end{itemize}
+
+\noindent
+If any of the sections are not relevant to your manuscript, please include the heading and write `Not applicable' for that section. 
+
+%%===================================================%%
+%% For presentation purpose, we have included        %%
+%% \bigskip command. Please ignore this.             %%
+%%===================================================%%
+\bigskip
+\begin{flushleft}%
+Editorial Policies for:
+
+\bigskip\noindent
+Springer journals and proceedings: \url{https://www.springer.com/gp/editorial-policies}
+
+\bigskip\noindent
+Nature Portfolio journals: \url{https://www.nature.com/nature-research/editorial-policies}
+
+\bigskip\noindent
+\textit{Scientific Reports}: \url{https://www.nature.com/srep/journal-policies/editorial-policies}
+
+\bigskip\noindent
+BMC journals: \url{https://www.biomedcentral.com/getpublished/editorial-policies}
+\end{flushleft}
+
+\begin{appendices}
+
+\section{Section title of first appendix}\label{secA1}
+
+An appendix contains supplementary information that is not an essential part of the text itself but which may be helpful in providing a more comprehensive understanding of the research problem or it is information that is too cumbersome to be included in the body of the paper.
+
+%%=============================================%%
+%% For submissions to Nature Portfolio Journals %%
+%% please use the heading ``Extended Data''.   %%
+%%=============================================%%
+
+%%=============================================================%%
+%% Sample for another appendix section			       %%
+%%=============================================================%%
+
+%% \section{Example of another appendix section}\label{secA2}%
+%% Appendices may be used for helpful, supporting or essential material that would otherwise 
+%% clutter, break up or be distracting to the text. Appendices can consist of sections, figures, 
+%% tables and equations etc.
+
+\end{appendices}
+
+%%===========================================================================================%%
+%% If you are submitting to one of the Nature Portfolio journals, using the eJP submission   %%
+%% system, please include the references within the manuscript file itself. You may do this  %%
+%% by copying the reference list from your .bbl file, paste it into the main manuscript .tex %%
+%% file, and delete the associated \verb+\bibliography+ commands.                            %%
+%%===========================================================================================%%
+
+\bibliography{sn-bibliography}% common bib file
+%% if required, the content of .bbl file can be included here once bbl is generated
+%%\input sn-article.bbl
+
+\end{document}
