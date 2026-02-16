@@ -61,6 +61,28 @@
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs} 
 
+% in preamble
+\usepackage{amsthm}
+\usepackage[most]{tcolorbox}
+
+% --- theorem-like (italic) ---
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+
+% --- definitions (upright) ---
+\theoremstyle{definition}
+\newtheorem{problem}{Problem Setting}[section]
+\newtheorem{dfn}[thm]{Definition}
+\newtheorem{ass}[thm]{Assumption}
+
+% --- remarks (upright, small heading) ---
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+
+
 
 %%%%
 
@@ -174,7 +196,8 @@ Our approach handles adversarial perturbations in a label-independent manner and
   \centering
 
   % --- scatter ---
-  \includegraphics[width=0.92\linewidth]{sn-article-template/final_clean_scatter.pdf}
+  % 本番用: final_clean_scatter.pdf を sn-article-template フォルダに置く
+  \includegraphics[width=0.92\linewidth]{final_clean_scatter.pdf}
 
   \vspace{1.0ex}
 
@@ -317,12 +340,12 @@ The empirical risk of nnPU is defined as follows:
 \subsection{Adversarial Examples} \label{AE}
 
 
-  Adversarial examples are inputs constructed by adding small, carefully designed perturbations to an image that a classifier originally classified correctly, thereby intentionally causing misclassification...w2014ExplainingAH}. For example, Fig.~\ref{fig:advex} adds a tiny perturbation to a cat image and generates an adversarial example...
+  Adversarial examples are inputs constructed by adding small, carefully designed perturbations to an image that a classifier originally classified correctly, thereby intentionally causing misclassification...w2014ExplainingAH. For example, Fig.~\ref{fig:advex} adds a tiny perturbation to a cat image and generates an adversarial example...
 
 
   \begin{figure}[t]
     \centering
-\includegraphics[width=\linewidth]{sn-article-template/goodfelow.pdf}
+\includegraphics[width=\linewidth]{goodfelow.pdf}
     \caption{An example of generating adversarial examples. Starting from the clean image on the left, we add a small perturbation using PGD to obtain an adversarial input... The classifier correctly predicts the clean image as a cat (confidence 94.6\%), while it misclassifies the adversarial example as a dog (confidence 99.8\%). This illustrates that predictions can change drastically even when the input appears almost identical to humans\cite{Goodfellow2014ExplainingAH}.}
     \label{fig:advex}
   \end{figure}
@@ -504,43 +527,747 @@ This term encourages the model outputs to remain stable under small perturbation
 thereby providing robustness against adversarial perturbations.
 
 
-\section{Equations}\label{sec4}
 
-Equations in \LaTeX\ can either be inline or on-a-line by itself (``display equations''). For
-inline equations use the \verb+$...$+ commands. E.g.: The equation
-$H\psi = E \psi$ is written via the command \verb+$H \psi = E \psi$+.
+\section{Theoretical Analysis}\label{ch:theory}
 
-For display equations (with auto generated equation numbers)
-one can use the equation or align environments:
+This section presents generalization (estimation-error) bounds for TRADES in supervised and PU settings, and derives a sufficient condition on the number of unlabeled samples under which PU+TRADES achieves a tighter bound than supervised TRADES.
+
+
+
+
+\begin{problem}{(Adversarial Binary Classification Setting)}
+\label{problem_adv}
+
+Let the input space be $\mathcal{X}\subseteq\mathbb{R}^d$,
+the input data $\boldsymbol{x}\in\mathcal{X}$ are bounded,
+\[
+\|\boldsymbol{x}\|_\infty \leq C_x
+\]
+Assume this condition holds.
+
+\[
+p_{\mathrm{P}}(\boldsymbol{x}) = p(\boldsymbol{x}\mid y=+1), \quad
+p_{\mathrm{N}}(\boldsymbol{x}) = p(\boldsymbol{x}\mid y=-1)
+\]
+We define it as follows.
+$\pi_{\mathrm{P}} = p(y=+1)$ 
+$\pi_{\mathrm{N}} = p(y=-1)$
+
+In supervised learning, we use labeled positive (P) and negative (N) samples.
 \begin{equation}
-\|\tilde{X}(k)\|^2 \leq\frac{\sum\limits_{i=1}^{p}\left\|\tilde{Y}_i(k)\right\|^2+\sum\limits_{j=1}^{q}\left\|\tilde{Z}_j(k)\right\|^2 }{p+q}.\label{eq1}
+\begin{aligned}
+\mathscr{X}_{\mathrm{P}} &= \{\boldsymbol{x}_i^{\mathrm{P}}\}_{i=1}^{n_{\mathrm{P}}}
+\stackrel{\mathrm{i.i.d.}}{\sim} p_{\mathrm{P}}(\boldsymbol{x}),\\
+\mathscr{X}_{\mathrm{N}} &= \{\boldsymbol{x}_i^{\mathrm{N}}\}_{i=1}^{n_{\mathrm{N}}}
+\stackrel{\mathrm{i.i.d.}}{\sim} p_{\mathrm{N}}(\boldsymbol{x})
+\end{aligned}
 \end{equation}
-where,
-\begin{align}
-D_\mu &=  \partial_\mu - ig \frac{\lambda^a}{2} A^a_\mu \nonumber \\
-F^a_{\mu\nu} &= \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + g f^{abc} A^b_\mu A^a_\nu \label{eq2}
+
+In contrast, in PU learning we use positive and unlabeled (U) data.
+\[
+p_{\mathrm{U}}(\boldsymbol{x})
+= \pi_{\mathrm{P}} p_{\mathrm{P}}(\boldsymbol{x})
++ \pi_{\mathrm{N}} p_{\mathrm{N}}(\boldsymbol{x})
+\]
+\begin{equation}
+\mathscr{X}_{\mathrm{U}}
+= \{\boldsymbol{x}_i^{\mathrm{U}}\}_{i=1}^{n_{\mathrm{U}}}
+\stackrel{\mathrm{i.i.d.}}{\sim} p_{\mathrm{U}}(\boldsymbol{x})
+\end{equation}
+.
+
+\[
+g(\boldsymbol{x}) = \boldsymbol{w}^\top \boldsymbol{x}
+\]
+\[
+\mathscr{G}
+= \{ g(\boldsymbol{x}): \|\boldsymbol{w}\|_p \le W \}
+\]
+We define it as follows.
+
+\[
+\ell_{\mathrm{KL}}\big(g(\bm x),g(\bm x')\big)
+\]
+
+\end{problem}
+
+
+\subsection{Preliminaries}We summarize the basic tools used in the analysis, including Rademacher complexity, contraction inequalities, and McDiarmid's inequality.
+
+
+
+\subsubsection{Rademacher Complexity}\[
+\mathfrak{R}(S)
+=\mathbb{E}_{\sigma_1,\ldots,\sigma_n}\left[
+\sup_{(s_1,\ldots,s_n)\in S}\frac{1}{n}\sum_{i=1}^n \sigma_i s_i
+\right]
+\]
+
+\[
+\mathscr{G}\circ S_n
+=\left\{\left(g(\bm{x}_1),\ldots,g(\bm{x}_n)\right)\ \middle|\ g\in\mathscr{G}\right\}
+\]
+\[
+\mathfrak{R}_{S_n}(\mathscr{G})
+=\mathfrak{R}(\mathscr{G}\circ S_n)
+=\mathbb{E}_{\sigma_1,\ldots,\sigma_n}\left[
+\sup_{g\in\mathscr{G}}\frac{1}{n}\sum_{i=1}^n \sigma_i g(\bm{x}_i)
+\right]
+\]
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{dfn}[Rademacher complexity]\begin{equation}
+ \mathfrak{R}_{n, \nu}(\mathscr{G})
+ =\mathbb{E}_{S_n \sim \nu^n}\left[\mathfrak{R}_{S_n}(\mathscr{G})\right]
+ =\mathbb{E}_{\bm{x}_1,\ldots,\bm{x}_n}
+ \mathbb{E}_{\sigma_1,\ldots,\sigma_n}\left[
+ \sup_{g \in \mathscr{G}} \frac{1}{n} \sum_{i=1}^n \sigma_i g(\bm{x}_i)
+ \right]
+\label{eq:emprad}
+\end{equation}
+\end{dfn}
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{lem}[Talagrand's contraction lemma]Let $S_n=\{\bm{x}_i\}_{i=1}^n \stackrel{\text{i.i.d.}}{\sim} \nu(\bm{x})$.
+\begin{equation}
+\mathfrak{R}_{n, \nu}(f \circ \mathscr{G}) \leq L_f \, \mathfrak{R}_{n, \nu}(\mathscr{G})
+\label{eq:radcontraction}
+\end{equation}
+holds.
+\end{lem}
+\end{tcolorbox}
+
+
+\subsubsection{Upper Bound on the Rademacher Complexity}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{thm}[Upper bound on the Rademacher complexity]$\mathscr{G}=\{\bm{x}\mapsto \bm{w}^{\top}\bm{x}\mid \|\bm{w}\|_\infty \le W\}$
+\begin{equation}
+\mathfrak{R}_{n, \nu}\!\left(\mathscr{G}\right) \leq \frac{C_x W}{\sqrt{n}}
+\end{equation}
+holds.
+\end{thm}
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{lem}[Rademacher complexity under adversarial perturbations]$\mathscr{G}=\{\bm x\mapsto \bm w^\top\bm x:\ \|\bm w\|_p\le W\}$
+\[
+\mathfrak{R}_{n,\nu}\Big(\{\,\bm x\mapsto g(\bm x+\bm \eta):\ \|\bm \eta\|_\infty\le \varepsilon,\ g\in\mathscr{G}\,\}\Big)
+\ \le\ \mathfrak{R}_{n,\nu}(\mathscr{G})\ +\ \frac{\varepsilon W\, d^{1/q}}{\sqrt{n}}.
+\]
+\end{lem}
+\end{tcolorbox}
+
+% \begin{proof}
+% $\sup_{\|\bm w\|_p\le W}\frac{1}{n}\sum_{i=1}^n \sigma_i \bm w^\top(\bm x_i+\bm e_i)
+% = W\Big\|\frac{1}{n}\sum_{i=1}^n \sigma_i(\bm x_i+\bm e_i)\Big\|_q$．
+% $\mathbb{E}_\sigma\big\|\frac{1}{n}\sum_{i=1}^n \sigma_i\bm e_i\big\|_q
+% \end{proof}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{lem}[Vector contraction]\begin{equation}
+\begin{aligned}
+\mathbb{E}_{\sigma}\Big[\sup_{h}\frac{1}{n}\sum_{i=1}^n \sigma_i\,
+\ell\big(f_h(\bm x_i),\,g_h(\bm x_i)\big)\Big]
+&\le 2L_\ell\Bigg\{
+\mathbb{E}_{\sigma}\Big[\sup_{h}\frac{1}{n}\sum_{i=1}^n \sigma_i f_h(\bm x_i)\Big]
+\\
+&\quad
++ \mathbb{E}_{\sigma}\Big[\sup_{h}\frac{1}{n}\sum_{i=1}^n \sigma_i g_h(\bm x_i)\Big]
+\Bigg\}.
+\end{aligned}
+\end{equation}
+\end{lem}
+\end{tcolorbox}
+
+\subsubsection{McDiarmid's Inequality}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{thm}[McDiarmid's inequality]\begin{equation}
+\left|f\left(\bm{x}_1,\ldots,\bm{x}_i,\ldots,\bm{x}_n\right)
+-f\left(\bm{x}_1,\ldots,\bm{x}_i',\ldots,\bm{x}_n\right)\right|
+\le c_i
+\label{eq:data_replacement}
+\end{equation}
+\begin{equation}
+\Pr\!\left(
+f\left(X_1,\ldots,X_n\right)-\mathbb{E}\left[f\left(X_1,\ldots,X_n\right)\right]\ge t
+\right)
+\le
+\exp\!\left(-\frac{2t^2}{\sum_{i=1}^n c_i^2}\right)
+\label{eq:mcdiarmid}
+\end{equation}
+holds.
+\end{thm}
+\end{tcolorbox}
+
+
+
+
+
+\subsection{Estimation Error Bound for Supervised TRADES}We first derive a uniform deviation bound and an estimation-error bound for the supervised TRADES objective.
+
+
+
+\paragraph{Supervised TRADES risk (population and empirical risks)}\begin{equation}
+\begin{aligned}
+R_{\mathrm{PN\mbox{-}TR}}(g)
+:=
+&\ \pi_{\mathrm P}\mathbb{E}_{\mathrm P}\!\left[
+\ell\big(g(\bm x),+1\big)+\beta\max_{\|\bm\eta\|_\infty\le\epsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x),g(\bm x+\bm\eta)\big)
+\right]
+\\
+&+\pi_{\mathrm N}\mathbb{E}_{\mathrm N}\!\left[
+\ell\big(g(\bm x),-1\big)+\beta\max_{\|\bm\eta\|_\infty\le\epsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x),g(\bm x+\bm\eta)\big)
+\right]
+\label{eq:pntr-risk-jp}
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g)
+:=
+&\ \frac{\pi_{\mathrm P}}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}
+\left[
+\ell\big(g(\bm x_i^{\mathrm P}),+1\big)+\beta\max_{\|\bm\eta\|_\infty\le\epsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x_i^{\mathrm P}),g(\bm x_i^{\mathrm P}+\bm\eta)\big)
+\right]
+\\
+&+\frac{\pi_{\mathrm N}}{n_{\mathrm N}}\sum_{i=1}^{n_{\mathrm N}}
+\left[
+\ell\big(g(\bm x_i^{\mathrm N}),-1\big)+\beta\max_{\|\bm\eta\|_\infty\le\epsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x_i^{\mathrm N}),g(\bm x_i^{\mathrm N}+\bm\eta)\big)
+\right]
+\label{eq:pntr-emp-jp}
+\end{aligned}
+\end{equation}
+\[
+\widehat g_{\mathrm{PN\mbox{-}TR}}
+:=\arg\min_{g\in\mathscr G}\widehat R_{\mathrm{PN\mbox{-}TR}}(g)
+\]
+\[
+g^*\in\arg\min_{g\in\mathscr G} R_{\mathrm{PN\mbox{-}TR}}(g)
+\]
+
+
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{thm}[Estimation error bound for supervised TRADES]\label{thm:pntr-estimation}
+
+
+\begin{itemize}
+\item \textbf{(Bounded losses)}
+\begin{itemize}
+for any $\widehat y\in\mathbb{R}$ and $y\in\mathcal{Y}$,
+$\|g\|_\infty=\sup_{\bm x\in\mathcal X}|g(\bm x)|\le C_g$
+$\ell(\widehat y,y)\le C_\ell$ holds.
+\end{itemize}
+
+\item \textbf{(Lipschitz continuity of losses)}
+
+\item \textbf{(Regularity of the KL term)}
+$\ell_{\mathrm{KL}}(u,v)\le C_{\mathrm{KL}}$
+satisfies this condition.
+\end{itemize}
+
+\small
+\begin{equation}
+\begin{aligned}
+R_{\mathrm{PN\mbox{-}TR}}(\widehat g_{\mathrm{PN\mbox{-}TR}})
+-
+R_{\mathrm{PN\mbox{-}TR}}(g^*)
+\;\le\;
+&
+4\big(L_\ell+4\beta L_{\mathrm{KL}}\big)
+\Big(
+\pi_{\mathrm P}\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr{G})
++
+\pi_{\mathrm N}\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\mathscr{G})
+\Big)
+\\
+&+
+8\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}\left(\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}\right)
+\\
+&+
+\sqrt{2\ln\frac{2}{\delta}}\,
+(C_\ell+\beta C_{\mathrm{KL}})
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++
+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}
+\right).
+\end{aligned}
+\end{equation}
+\end{thm}
+\end{tcolorbox}
+
+
+
+\paragraph{Auxiliary lemmas}
+
+
+
+% \begin{proof}
+% \end{proof}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{lem}[Uniform deviation bound for supervised TRADES]\label{lem:pntr-unif-jp}
+\begin{equation}
+\begin{aligned}
+\sup_{g\in\mathscr G}\left|
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)
+\right|
+\le\;
+&
+2\bigl(L_\ell+4\beta L_{\mathrm{KL}}\bigr)\Big(\pi_{\mathrm P}\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++
+\pi_{\mathrm N}\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\mathscr G)\Big)
+\\
+&+
+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}\left(\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}\right)
+\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}\,(C_\ell+\beta C_{\mathrm{KL}})
+\left(\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}\right).
+\end{aligned}
+\label{eq:pntr-unif-bound-jp}
+\end{equation}
+holds.
+\end{lem}
+\end{tcolorbox}
+
+
+
+
+%============================================================
+% uPU+TRADES
+%============================================================
+
+
+
+\subsection{Estimation Error Bound for uPU+TRADES}We extend the analysis to the uPU+TRADES objective, which combines unbiased PU risk estimation with the TRADES regularization.
+
+
+
+\paragraph{uPU+TRADES risk (population and empirical risks)}\begin{align}
+R_{\mathrm{uPU\mbox{-}TR}}(g)
+:=
+&\ \pi_{\mathrm P}\mathbb{E}_{\mathrm P}\!\left[
+\tilde{\ell}(g(\boldsymbol{x}), +1)
++\beta\max_{\|\bm\eta\|_\infty\le\epsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x+\bm\eta),g(\bm x)\big)
+\right]
+\nonumber\\
+&+\mathbb{E}_{\mathrm U}\!\left[
+\ell\big(g(\bm x),-1\big)+\beta\max_{\|\bm\eta\|_\infty\le\epsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x+\bm\eta),g(\bm x)\big)
+\right]
+\label{eq:uputr-risk-jp}
 \end{align}
-Notice the use of \verb+\nonumber+ in the align environment at the end
-of each line, except the last, so as not to produce equation numbers on
-lines where no equation numbers are required. The \verb+\label{}+ command
-should only be used at the last line of an align environment where
-\verb+\nonumber+ is not used.
+\begin{align}
+\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)
+:=
+&\ \frac{\pi_{\mathrm P}}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}
+\left[
+\tilde{\ell}(g(\boldsymbol{x}_i^{\mathrm P}), +1)
++\beta\max_{\|\bm\eta\|_\infty\le\epsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x_i^{\mathrm P}+\bm\eta),g(\bm x_i^{\mathrm P})\big)
+\right]
+\nonumber\\
+&+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}
+\left[
+\ell\big(g(\bm x_i^{\mathrm U}),-1\big)
++\beta\max_{\|\bm\eta\|_\infty\le\epsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x_i^{\mathrm U}+\bm\eta),g(\bm x_i^{\mathrm U})\big)
+\right]
+\label{eq:uputr-emp-jp}
+\end{align}
+\[
+\widehat g_{\mathrm{uPU\mbox{-}TR}}
+:=\arg\min_{g\in\mathscr G}\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)
+\]
+\[
+g^*\in\arg\min_{g\in\mathscr G} R_{\mathrm{uPU\mbox{-}TR}}(g)
+\]
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black,
+    fonttitle = \bfseries,
+    breakable = false,
+  % top=1mm,bottom=1mm
+  ]
+\begin{thm}[Estimation error bound for uPU+TRADES]\label{thm:uputr-estimation}
+
+
+\begin{itemize}
+\item \textbf{(Bounded losses)} There exist constants $C_\ell, C_{\mathrm{KL}}>0$ such that,
+for any $y\in\mathcal{Y}$ and any input, the following holds:
+\begin{itemize}
+\begin{itemize}
+\end{itemize}
+$\ell_{\mathrm{KL}}(u,v)\le C_{\mathrm{KL}}$．
+\end{itemize}
+
+\item \textbf{(Lipschitz continuity of losses)} There exist constants $L_\ell, L_{\mathrm{KL}}>0$ such that,
+\begin{itemize}
+\end{itemize}
+\end{itemize}
+
+\footnotesize
+\begin{align}
+R_{\mathrm{uPU\mbox{-}TR}}(\widehat g_{\mathrm{uPU\mbox{-}TR}})-R_{\mathrm{uPU\mbox{-}TR}}(g^*)
+\ \le\
+&
+8\pi_{\mathrm P}\big(L_\ell+2\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G) \nonumber\\
+& +
+4\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\mathscr G)
+\nonumber\\
+&+
+8\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++\frac{1}{\sqrt{n_{\mathrm U}}}
+\right)
+\nonumber\\
+&+
+\sqrt{2\ln\frac{2}{\delta}}
+\left(
+\frac{\pi_{\mathrm P}(2C_\ell+\beta C_{\mathrm{KL}})}{\sqrt{n_{\mathrm P}}}
++
+\frac{C_\ell+\beta C_{\mathrm{KL}}}{\sqrt{n_{\mathrm U}}}
+\right).
+\label{eq:uputr-estimation-bound}
+\end{align}
+\end{thm}
+\end{tcolorbox}
+
+
+
+\paragraph{Auxiliary lemmas}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{lem}[Uniform deviation bound for uPU+TRADES]\label{lem:uputr-unif-jp}
+For any $\delta>0$, with probability at least $1-\delta$
+\small
+\begin{align}
+\sup_{g\in\mathscr G}\left|\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\right|
+\ \le\
+&
+4\pi_{\mathrm P}\big(L_\ell+2\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G) \nonumber\\
+& +
+2\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\mathscr G)
+\nonumber\\
+&+
+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++\frac{1}{\sqrt{n_{\mathrm U}}}
+\right)
+\nonumber\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}
+\left(
+\frac{\pi_{\mathrm P}(2C_\ell+\beta C_{\mathrm{KL}})}{\sqrt{n_{\mathrm P}}}
++
+\frac{C_\ell+\beta C_{\mathrm{KL}}}{\sqrt{n_{\mathrm U}}}
+\right)
+\label{eq:uputr-unif-bound-jp}
+\end{align}
+\end{lem}
+\end{tcolorbox}
+
+
+\eqref{eq:uputr-unif-bound-jp} holds.
+
+
+%============================================================
+% nnPU+TRADES
+%============================================================
+
+\subsection{Estimation Error Bound for nnPU+TRADES}We further analyze nnPU+TRADES, which enforces non-negativity to mitigate overfitting caused by negative empirical risk estimates.
+
+\label{subsec:nnpu-trades-bound}
+
+
+\paragraph{nnPU+TRADES risk (population and empirical risks)}\[
+\psi(g,\bm x)
+:=
+\max_{\|\bm\eta\|_{\infty}\le \varepsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x+\bm\eta),\,g(\bm x)\big)
+\]
+\begin{align}
+R_{\mathrm{nnPU\mbox{-}TR}}(g)
+:={}&
+\pi_{\mathrm P}\,\mathbb{E}_{\mathrm P}\!\left[\ell\big(g(\bm x),+1\big)+\beta\,\psi(g,\bm x)\right]
+\nonumber\\
+&+
+\max\Bigl\{0,\,-\pi_{\mathrm P}\,\mathbb{E}_{\mathrm P}\!\left[\ell\big(g(\bm x),-1\big)\right]
++\mathbb{E}_{\mathrm U}\!\left[\ell\big(g(\bm x),-1\big)\right]\Bigr\}
+\nonumber\\
+&+\beta\,\mathbb{E}_{\mathrm U}\!\left[\psi(g,\bm x)\right]
+\label{eq:nnputr-true-risk-jp}
+\end{align}
+\begin{align}
+\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)
+:={}&
+\frac{\pi_{\mathrm P}}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}
+\Bigl[\ell\big(g(\bm x_i^{\mathrm P}),+1\big)+\beta\,\psi(g,\bm x_i^{\mathrm P})\Bigr]
+\nonumber\\
+&+
+\max\Biggl\{0,\,-\frac{\pi_{\mathrm P}}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\ell\big(g(\bm x_i^{\mathrm P}),-1\big)
++\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\ell\big(g(\bm x_i^{\mathrm U}),-1\big)\Biggr\}
+\nonumber\\
+&+\frac{\beta}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\psi(g,\bm x_i^{\mathrm U})
+\label{eq:nnputr-emp-risk-jp}
+\end{align}
+\[
+\widehat g_{\mathrm{nnPU\mbox{-}TR}}
+:=\arg\min_{g\in\mathscr G}\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)
+\]
+\[
+ g^*\in\arg\min_{g\in\mathscr G} R_{\mathrm{nnPU\mbox{-}TR}}(g)
+\]
+
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{thm}[Estimation error bound for nnPU+TRADES]\label{thm:nnputr-estimation}
+
+
+\begin{itemize}
+\item \textbf{(Bounded losses)} There exist constants $C_\ell, C_{\mathrm{KL}}>0$ such that,
+for any $y\in\mathcal{Y}$ and any input, the following holds:
+\begin{itemize}
+\begin{itemize}
+\end{itemize}
+$\ell_{\mathrm{KL}}(u,v)\le C_{\mathrm{KL}}$．
+\end{itemize}
+
+\item \textbf{(Lipschitz continuity of losses)} There exist constants $L_\ell, L_{\mathrm{KL}}>0$ such that,
+\begin{itemize}
+\end{itemize}
+\end{itemize}
+
+\footnotesize
+\begin{align}
+R_{\mathrm{nnPU\mbox{-}TR}}(\widehat g_{\mathrm{nnPU\mbox{-}TR}})-R_{\mathrm{nnPU\mbox{-}TR}}(g^*)
+\ \le\
+&
+8\pi_{\mathrm P}\big(L_\ell+2\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
+\nonumber\\
+&+
+4\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\mathscr G)
+\nonumber\\
+&+
+8\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++\frac{1}{\sqrt{n_{\mathrm U}}}
+\right)
+\nonumber\\
+&+
+\sqrt{2\ln\frac{2}{\delta}}
+\left(
+\frac{\pi_{\mathrm P}(2C_\ell+\beta C_{\mathrm{KL}})}{\sqrt{n_{\mathrm P}}}
++
+\frac{C_\ell+\beta C_{\mathrm{KL}}}{\sqrt{n_{\mathrm U}}}
+\right).
+\label{eq:nnputr-estimation-bound}
+\end{align}
+\end{thm}
+\end{tcolorbox}
+
+
+
+\paragraph{Auxiliary lemmas}
+
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black!60,
+    boxrule = 0.35pt,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{lem}[Uniform deviation bound for nnPU+TRADES]\label{lem:nnputr-unif-jp}
+For any $\delta>0$, with probability at least $1-\delta$
+\footnotesize
+\begin{align}
+\sup_{g\in\mathscr G}\left|\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\right|
+\ \le\
+&
+4\pi_{\mathrm P}\big(L_\ell+2\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
+\nonumber\\
+&+
+2\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\mathscr G)
+\nonumber\\
+&+
+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++\frac{1}{\sqrt{n_{\mathrm U}}}
+\right)
+\nonumber\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}
+\left(
+\frac{\pi_{\mathrm P}(2C_\ell+\beta C_{\mathrm{KL}})}{\sqrt{n_{\mathrm P}}}
++
+\frac{C_\ell+\beta C_{\mathrm{KL}}}{\sqrt{n_{\mathrm U}}}
+\right).
+\label{eq:nnputr-unif-bound-jp}
+\end{align}
+\end{lem}
+\end{tcolorbox}
+
+
+
+
+\clearpage
+\subsection{Sufficient Condition on the Number of Unlabeled Samples for PU+TRADES to Outperform Supervised TRADES}Finally, we compare the derived bounds and obtain a sufficient unlabeled-sample size condition ensuring that PU+TRADES yields a tighter estimation-error bound than supervised TRADES.
+
+\label{subsec:nu_condition_trades}
+
+
+\paragraph{Rademacher complexity of a linear hypothesis class}\begin{align}
+\mathfrak{R}_{n,\nu}(\mathscr G)
+=\mathbb E_{\bm x_{1:n}\sim\nu}\,\mathbb E_{\bm\sigma}
+\Big[\sup_{\|\bm w\|_p\le W}\frac{1}{n}\sum_{i=1}^n\sigma_i\bm w^\top\bm x_i\Big]
+\ \le\ \frac{W\,\sup_{\bm x\in\mathcal X}\|\bm x\|_q}{\sqrt n}
+\ \le\ \frac{W C_x\,d^{1/q}}{\sqrt n}
+\label{eq:rad-linear-basic}
+\end{align}
 \begin{equation}
-Y_\infty = \left( \frac{m}{\textrm{GeV}} \right)^{-3}
-    \left[ 1 + \frac{3 \ln(m/\textrm{GeV})}{15}
-    + \frac{\ln(c_2/5)}{15} \right]
+\kappa_\delta:=\sqrt{2\ln\frac{2}{\delta}}
 \end{equation}
-The class file also supports the use of \verb+\mathbb{}+, \verb+\mathscr{}+ and
-\verb+\mathcal{}+ commands. As such \verb+\mathbb{R}+, \verb+\mathscr{R}+
-and \verb+\mathcal{R}+ produces $\mathbb{R}$, $\mathscr{R}$ and $\mathcal{R}$
-respectively (refer Subsubsection~\ref{subsubsec2}).
+\begin{equation}
+\Gamma_\delta
+:=
+4\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\,W C_x d^{1/q}
++
+8\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
++
+\kappa_\delta\,(C_\ell+\beta C_{\mathrm{KL}})
+\label{eq:Gamma-delta-def}
+\end{equation}
 
-\section{Tables}\label{sec5}
+\paragraph{(1) Comparing PN+TRADES and uPU+TRADES}\begin{align}
+R_{\mathrm{PN\mbox{-}TR}}(\widehat g_{\mathrm{PN\mbox{-}TR}})-R_{\mathrm{PN\mbox{-}TR}}(g^*)
+\ \le\
+\Gamma_\delta\Big(\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}\Big)
+\label{eq:pntr-bound-simplified}
+\end{align}
 
-Tables can be inserted via the normal table and tabular environment. To put
-footnotes inside tables you should use \verb+\footnotetext[]{...}+ tag.
-The footnote appears just below the table itself (refer Tables~\ref{tab1} and \ref{tab2}). 
-For the corresponding footnotemark use \verb+\footnotemark[...]+
+\begin{align}
+R_{\mathrm{uPU\mbox{-}TR}}(\widehat g_{\mathrm{uPU\mbox{-}TR}})-R_{\mathrm{uPU\mbox{-}TR}}(g^*)
+\ \le\
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}\Big(\Gamma_\delta+4L_\ell\,W C_x d^{1/q}+\kappa_\delta C_\ell\Big)
++\frac{\Gamma_\delta}{\sqrt{n_{\mathrm U}}}
+\label{eq:uputr-bound-simplified}
+\end{align}
+
+\paragraph{Main result: a sufficient condition on the number of unlabeled samples}
+\begin{tcolorbox}[
+    colback = white,
+    colframe = black,
+    fonttitle = \bfseries,
+    breakable = false]
+\begin{thm}[Sufficient unlabeled-sample condition for PU+TRADES to outperform supervised TRADES]\label{thm:nu-threshold-trades}
+We compare the estimation-error bounds in Theorems~\ref{thm:pntr-estimation}, \ref{thm:uputr-estimation}, and \ref{thm:nnputr-estimation}.
+\begin{equation}
+\Gamma_\delta\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}
+\ >\
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}\Big(4L_\ell\,W C_x d^{1/q}+\kappa_\delta C_\ell\Big)
+\label{eq:compare-pn-uputr-feasible}
+\end{equation}
+
+\begin{enumerate}
+\item[(i)] （PN+TRADES vs uPU+TRADES）
+\begin{equation}
+\boxed{\
+\ n_{\mathrm U}
+\ >\
+\left(
+\frac{\Gamma_\delta}
+{\Gamma_\delta\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}
+-\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}\big(4L_\ell\,W C_x d^{1/q}+\kappa_\delta C_\ell\big)}
+\right)^{\!2}
+\ }
+\label{eq:nu-threshold-uputr}
+\end{equation}
+The right-hand side of the PN+TRADES bound (Eq.~\eqref{eq:pntr-bound-simplified})
+
+\item[(ii)] （PN+TRADES vs nnPU+TRADES）
+\begin{equation}
+\boxed{\
+\ n_{\mathrm U}
+\ >\
+\left(
+\frac{\Gamma_\delta}
+{\Gamma_\delta\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}
+-\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}\big(4L_\ell\,W C_x d^{1/q}+\kappa_\delta C_\ell\big)}
+\right)^{\!2}
+\ }
+\label{eq:nu-threshold-nnputr}
+\end{equation}
+\end{enumerate}
+\end{thm}
+\end{tcolorbox}
+
+
+
+
 
 \begin{table}[h]
 \caption{Caption text}\label{tab1}%

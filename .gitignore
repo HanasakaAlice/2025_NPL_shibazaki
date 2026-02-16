@@ -1,0 +1,23 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.run.xml
+*.bcf
+
+# latexmk / tools
+.latexmkrc
+
+# Converted figures
+*eps-converted-to.pdf
+
+# PDF (optional: comment out if you want to track PDFs)
+# *.pdf
