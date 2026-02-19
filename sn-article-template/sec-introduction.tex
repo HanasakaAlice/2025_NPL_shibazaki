@@ -1,0 +1,68 @@
+\section{Introduction} \label{ch:intro}
+
+% TODO
+% Refer to Fig.~\ref{fig:cil}.
+% Add an explanation of class-incremental learning for the master's thesis version.
+
+In recent years, machine learning has achieved remarkable success across a wide range of tasks, driven by advances in large-scale data and high-capacity models. However, in real-world applications, it is often difficult to obtain high-quality ...; moreover, in settings where the training set contains only positive and unlabeled data, one must learn from incomplete information in which the unlabeled set is a mixture of true positives and negatives. Therefore, unlike fully supervised learning, PU learning requires careful risk estimation and additional techniques to stabilize training.
+
+Furthermore, in practical applications, robustness is an essential requirement in addition to label scarcity. In particular, medical images and sensor data are affected by variations in acquisition conditions, noise, and device ... We focus on adversarial perturbations\cite{Goodfellow2014ExplainingAH} and aim to improve robustness within the PU learning framework.
+
+However, in preliminary experiments, directly applying adversarial training\cite{Madry2017TowardsDL}—a standard approach to enhancing resilience against adversarial perturbations—to PU learning can substantially degrade classification performance on clean data.
+This is because, although unlabeled data contain a mixture of true positives and negatives, they are treated uniformly as negatives in the loss.
+As a result, the objectives of adversarial perturbation optimization and classification become misaligned, which destabilizes the updates associated with the unlabeled term. Figure~\ref{fig:cil} illustrates the relationship between clean accuracy and adversarial accuracy when PGD-based adversarial training is naively applied to PU learning.
+In particular, on CIFAR-10, adversarial accuracy improves while clean accuracy drops significantly. These observations indicate that, under the PU setting, introducing adversarial training may impair clean accuracy, which remains a key challenge.
+
+In this study, we extend the TRADES framework\cite{zhang2019theoretically}, a representative adversarial training method, and propose a new learning method, PU-TRADES, by integrating it with PU learning.
+Our approach handles adversarial perturbations in a label-independent manner and combines a PU loss with a Kullback--Leibler loss, aiming to improve robustness while suppressing degradation in clean accuracy.
+
+
+
+\begin{figure}[t]
+  \centering
+
+  % --- scatter ---
+  % 本番用: final_clean_scatter.pdf を sn-article-template フォルダに置く
+  \includegraphics[width=0.92\linewidth]{final_clean_scatter.pdf}
+
+  \vspace{1.0ex}
+
+  % --- table ---
+  \small
+  \setlength{\tabcolsep}{5pt}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{l cc c cc c}
+    \hline
+     & \multicolumn{3}{c}{FashionMNIST} & \multicolumn{3}{c}{CIFAR-10} \\
+     \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    Method & Clean & Adv & $\Delta$Clean & Clean & Adv & $\Delta$Clean \\
+    \hline
+    uPU      & 0.937 & 0.190 & --     & 0.850 & 0.114 & -- \\
+    nnPU     & \textbf{0.948} & 0.001 & --     & \textbf{0.887} & 0.001 & -- \\
+    uPU+PGD  & 0.935 & 0.843 & -0.002 & 0.802 & 0.714 & -0.048 \\
+    nnPU+PGD & 0.930 & 0.860 & -0.018 & 0.732 & 0.686 & \textbf{-0.155} \\
+    \hline
+  \end{tabular}
+
+  \caption{Performance changes when PGD-based adversarial training is naively applied to PU learning (FashionMNIST / CIFAR-10).
+  Left: a scatter plot showing the relationship between clean accuracy and adversarial accuracy for each method.
+  Right: a numerical summary and the change in clean accuracy, $\Delta$Clean, before and after applying PGD (difference from the corresponding PU method without PGD).
+  While PGD substantially improves adversarial accuracy, it degrades clean accuracy; this degradation is particularly pronounced for nnPU on CIFAR-10, where clean accuracy drops from $0.887$ to $0.732$ ($\Delta$Clean$=-0.155$).}
+  \label{fig:cil}
+\end{figure}
+
+
+
+To validate the effectiveness of the proposed method, we conducted experiments on multiple benchmark datasets and medical imaging data. We evaluated both clean accuracy and ... and compared them with baseline methods. The results show that the proposed method substantially improves robustness to adversarial perturbations while maintaining accuracy on clean data.
+
+In addition, we performed a theoretical analysis to better understand robustness in PU learning. Specifically, under binary classification with linear classifiers and adversarial perturbations, we derived upper bounds on the estimation error of the risks minimized by supervised learning and PU learning, thereby clarifying conditions under which PU learning can be advantageous over supervised learning. These conditions are consistent with practical scenarios, and they suggest that simply increasing the amount of unlabeled data can potentially achieve higher robustness than supervised learning.
+
+Our contributions are summarized as follows.
+\begin{itemize}
+\item We propose a new learning framework (PU-TRADES) that integrates TRADES-style regularization into PU learning, improving robustness to adversarial perturbations while maintaining classification accuracy on clean samples.
+\item Assuming linear classifiers under adversarial perturbations, we derive upper bounds on the estimation error of the risks minimized by supervised learning and PU learning, and theoretically identify conditions under which PU learning becomes more favorable than supervised learning.
+\item Through experiments on benchmark datasets and medical imaging data, we empirically demonstrate that the proposed method acquires robustness to adversarial samples while preserving clean accuracy.
+\end{itemize}
+
+% ========================================================================
+

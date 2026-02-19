@@ -1,0 +1,1309 @@
+\begin{appendices}
+
+    \section{Proofs of Theoretical Analysis}
+    \label{app:theory-proofs}
+    
+    \subsection{Background / Tool Box (Standard Results)}
+    \label{app:toolbox}
+    
+    In this appendix, we summarize standard lemmas and inequalities used in the proofs of this chapter.
+    
+    \begin{tcolorbox}[
+        colback = white,
+        colframe = black!60,
+        boxrule = 0.35pt,
+        fonttitle = \bfseries,
+        breakable = false]
+    \begin{lem}[Talagrand's Contraction Lemma]\label{lem:talagrand_contraction}
+    Let $S_n=\{\bm{x}_i\}_{i=1}^n \stackrel{\text{i.i.d.}}{\sim} \nu(\bm{x})$.
+    Suppose $f:\mathbb{R}\to\mathbb{R}$ is $L_f$-Lipschitz.
+    Then, for the Rademacher complexities of $\mathscr{G}$ and $f\circ\mathscr{G}$,
+    \begin{equation}
+    \mathfrak{R}_{n, \nu}(f \circ \mathscr{G}) \leq L_f \, \mathfrak{R}_{n, \nu}(\mathscr{G})
+    \label{eq:radcontraction}
+    \end{equation}
+    holds.
+    \end{lem}
+    \end{tcolorbox}
+    
+    \begin{tcolorbox}[
+        colback = white,
+        colframe = black!60,
+        boxrule = 0.35pt,
+        fonttitle = \bfseries,
+        breakable = false]
+    \begin{lem}[Vector Contraction]\label{lem:vecContract}
+    If $\ell(u,v)$ is $L_\ell$-Lipschitz in each argument, then for any pair of functions $(f_h,g_h)$,
+    \begin{equation}
+    \begin{aligned}
+    \mathbb{E}_{\sigma}\Big[\sup_{h}\frac{1}{n}\sum_{i=1}^n \sigma_i\,
+    \ell\big(f_h(\bm x_i),\,g_h(\bm x_i)\big)\Big]
+    &\le 2L_\ell\Bigg\{
+    \mathbb{E}_{\sigma}\Big[\sup_{h}\frac{1}{n}\sum_{i=1}^n \sigma_i f_h(\bm x_i)\Big]
+    \\
+    &\quad
+    + \mathbb{E}_{\sigma}\Big[\sup_{h}\frac{1}{n}\sum_{i=1}^n \sigma_i g_h(\bm x_i)\Big]
+    \Bigg\}.
+    \end{aligned}
+    \end{equation}
+    \end{lem}
+    \end{tcolorbox}
+    
+    \begin{tcolorbox}[
+        colback = white,
+        colframe = black!60,
+        boxrule = 0.35pt,
+        fonttitle = \bfseries,
+        breakable = false]
+    \begin{thm}[Upper Bound on Rademacher Complexity]\label{thm:rademacher_bound}
+    Assume the input satisfies $\|\bm{x}\|_\infty \le C_x$, and let the class of linear classifiers be
+    $\mathscr{G}=\{\bm{x}\mapsto \bm{w}^{\top}\bm{x}\mid \|\bm{w}\|_\infty \le W\}$.
+    Then,
+    \begin{equation}
+    \mathfrak{R}_{n, \nu}\!\left(\mathscr{G}\right) \leq \frac{C_x W}{\sqrt{n}}
+    \end{equation}
+    holds.
+    \end{thm}
+    \end{tcolorbox}
+    
+    \begin{tcolorbox}[
+        colback = white,
+        colframe = black!60,
+        boxrule = 0.35pt,
+        fonttitle = \bfseries,
+        breakable = false]
+    \begin{lem}[Adversarial Rademacher Additive Term]\label{lem:advRad}
+    For the linear class
+    $\mathscr{G}=\{\bm x\mapsto \bm w^\top\bm x:\ \|\bm w\|_p\le W\}$,
+    for any distribution $\nu$ and any $n\in\mathbb{N}$,
+    \[
+    \mathfrak{R}_{n,\nu}\Big(\{\,\bm x\mapsto g(\bm x+\bm \eta):\ \|\bm \eta\|_\infty\le \varepsilon,\ g\in\mathscr{G}\,\}\Big)
+    \ \le\ \mathfrak{R}_{n,\nu}(\mathscr{G})\ +\ \frac{\varepsilon W\, d^{1/q}}{\sqrt{n}}.
+    \]
+    \end{lem}
+    \end{tcolorbox}
+    
+    \begin{tcolorbox}[
+        colback = white,
+        colframe = black!60,
+        boxrule = 0.35pt,
+        fonttitle = \bfseries,
+        breakable = false]
+    
+        \begin{thm}[McDiarmid's Inequality]\label{thm:mcdiarmid}
+            Let $X_1,\ldots,X_n$ be independent random variables taking values in a set $\mathcal{X}$, and consider a function $f:\mathcal{X}^n \to \mathbb{R}$.
+            Assume that there exist constants $c_1,\ldots,c_n$ such that, for each $i=1,\ldots,n$ and any
+            $\bm{x}_1,\ldots,\bm{x}_n,\bm{x}_i'\in\mathcal{X}$,
+            \begin{equation}
+            \left|f\left(\bm{x}_1,\ldots,\bm{x}_i,\ldots,\bm{x}_n\right)
+            -f\left(\bm{x}_1,\ldots,\bm{x}_i',\ldots,\bm{x}_n\right)\right|
+            \le c_i
+            \label{eq:data_replacement}
+            \end{equation}
+            holds.
+            Then, for any $t>0$,
+            \begin{equation}
+            \Pr\!\left(
+            f\left(X_1,\ldots,X_n\right)-\mathbb{E}\left[f\left(X_1,\ldots,X_n\right)\right]\ge t
+            \right)
+            \le
+            \exp\!\left(-\frac{2t^2}{\sum_{i=1}^n c_i^2}\right)
+            \label{eq:mcdiarmid}
+            \end{equation}
+            holds.
+            \end{thm}
+            \end{tcolorbox}
+            
+            
+            \subsection{Proof of the Lemma ``Uniform Deviation Bound for Supervised TRADES'' (Lemma~\ref{lem:pntr-unif-jp})}
+            \label{app:proof-lem-pntr-unif-jp}
+            \begin{proof}
+            We divide the proof into the following steps (i)--(iv).
+            We evaluate
+            $\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\}$ and
+            $\sup_{g\in\mathscr G}\{R_{\mathrm{PN\mbox{-}TR}}(g)-\widehat R_{\mathrm{PN\mbox{-}TR}}(g)\}$
+            with probability at least $1-\delta/2$, respectively, and then combine them via a union bound to obtain an upper bound on the absolute value.
+            Below, we only show
+            $\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\}$
+            (the reverse direction can be proved analogously).
+            
+            \paragraph{\textbf{(i) McDiarmid's inequality}}
+            Since $\ell(\cdot)\le C_\ell$ and $\ell_{\mathrm{KL}}(\cdot)\le C_{\mathrm{KL}}$,
+            replacing one sample on the P side changes $\widehat R_{\mathrm{PN\mbox{-}TR}}(g)$ by at most
+            $\frac{\pi_{\mathrm P}}{n_{\mathrm P}}(C_\ell+\beta C_{\mathrm{KL}})$,
+            and replacing one sample on the N side changes it by at most
+            $\frac{\pi_{\mathrm N}}{n_{\mathrm N}}(C_\ell+\beta C_{\mathrm{KL}})$.
+            Therefore, by McDiarmid's inequality~\eqref{thm:mcdiarmid}, for any $t>0$,
+            \begin{equation}
+            \begin{aligned}
+            \Pr\!\Big(
+            \sup_{g\in\mathscr G}\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\}
+            -\mathbb{E}\big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\}\big]
+            \ge t
+            \Big)
+            \\
+            \le
+            \exp\!\Bigg(
+            - \frac{2t^2}
+            {(C_\ell+\beta C_{\mathrm{KL}})^2
+            (\pi_{\mathrm P}^2/n_{\mathrm P}+\pi_{\mathrm N}^2/n_{\mathrm N})}
+            \Bigg).
+            \end{aligned}
+            \end{equation}
+            Setting
+            $\delta/2=\exp\left(
+            - 2 t^2
+            / \bigl((C_\ell+\beta C_{\mathrm{KL}})^2(\pi_{\mathrm P}^2/n_{\mathrm P}+\pi_{\mathrm N}^2/n_{\mathrm N})\bigr)
+            \right)$
+            and solving for $t$, and then using the subadditivity of the square root, we obtain, with probability at least $1-\delta/2$,
+            \begin{equation}
+            \begin{aligned}
+            \sup_{g\in\mathscr G}\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\}
+            & \le
+            \mathbb{E}\big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\}\big] \\
+            & +
+            \sqrt{\frac{1}{2}\ln\frac{2}{\delta}}\,(C_\ell+\beta C_{\mathrm{KL}})
+            \left(\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}\right)
+            \label{eq:pntr-mcdiarmid-root-jp}
+            \end{aligned}
+            \end{equation}
+            as desired.
+            
+            \paragraph{\textbf{(ii) Ghost sampling and symmetrization}}
+We use the symmetrization technique in statistical learning theory~\cite{Vapnik1998}.
+First, in
+\[
+\mathbb{E}\Big[\sup_{g\in\mathscr G}\ \widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\Big],
+\]
+the expectation $\mathbb{E}$ is taken over repeated sampling of $(\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})$ used to evaluate $\widehat R_{\mathrm{PN\mbox{-}TR}}(g)$.
+To make this explicit, we write
+\[
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g)=\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm N}).
+\]
+Let $(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')$ be a ghost sample (an independent copy with the same distribution) independent of $(\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})$.
+Since the true risk can be written as the expectation over the ghost sample,
+\[
+R_{\mathrm{PN\mbox{-}TR}}(g)
+=\mathbb{E}_{(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')}\big[
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')
+\big],
+\]
+we obtain
+\begin{align}
+&\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})}
+\Big[\sup_{g\in\mathscr G}\ \widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})
+- R_{\mathrm{PN\mbox{-}TR}}(g)\Big]
+\nonumber\\
+&=
+\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})}
+\Big[\sup_{g\in\mathscr G}\ \widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})
+-\mathbb{E}_{(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')}
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')\Big]
+\nonumber\\
+&\le
+\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm N}),(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')}
+\Big[\sup_{g\in\mathscr G}\
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})
+-
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')
+\Big],
+\label{eq:pntr-ghost-sym}
+\end{align}
+where we used Jensen's inequality, since $\sup$ is a convex function.
+
+Next, we decompose the difference into the P and N parts.
+For notational simplicity, define
+\[
+\phi_y(g,\bm x)
+:=
+\ell\big(g(\bm x),y\big)
++
+\beta\max_{\|\bm\eta\|_\infty\le\varepsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x),g(\bm x+\bm\eta)\big).
+\]
+Then,
+\begin{align}
+&\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})
+-
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')
+\nonumber\\
+&=
+\frac{\pi_{\mathrm P}}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}
+\Big(\phi_{+1}(g,\bm x_i^{\mathrm P})-\phi_{+1}(g,\bm x_i^{\mathrm P\prime})\Big)
++
+\frac{\pi_{\mathrm N}}{n_{\mathrm N}}\sum_{i=1}^{n_{\mathrm N}}
+\Big(\phi_{-1}(g,\bm x_i^{\mathrm N})-\phi_{-1}(g,\bm x_i^{\mathrm N\prime})\Big).
+\label{eq:pntr-diff-decomp}
+\end{align}
+By the subadditivity of $\sup$,
+\begin{align}
+&\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm N}),(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')}
+\Big[\sup_{g\in\mathscr G}\
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm N})
+-
+\widehat R_{\mathrm{PN\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm N}')
+\Big]
+\nonumber\\
+&\le
+\frac{\pi_{\mathrm P}}{n_{\mathrm P}}
+\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{+1}(g,\bm x_i^{\mathrm P})-\phi_{+1}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&\quad+
+\frac{\pi_{\mathrm N}}{n_{\mathrm N}}
+\mathbb{E}_{\mathscr X_{\mathrm N},\mathscr X_{\mathrm N}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm N}}
+\big(\phi_{-1}(g,\bm x_i^{\mathrm N})-\phi_{-1}(g,\bm x_i^{\mathrm N\prime})\big)\Big].
+\label{eq:pntr-sup-subadd}
+\end{align}
+
+Now consider, for example, the P side.
+Since $\bm x_i^{\mathrm P}$ and $\bm x_i^{\mathrm P\prime}$ are independent and identically distributed (both from $p_{\mathrm P}$),
+the two differences
+$\phi_{+1}(g,\bm x_i^{\mathrm P})-\phi_{+1}(g,\bm x_i^{\mathrm P\prime})$
+and
+$\phi_{+1}(g,\bm x_i^{\mathrm P\prime})-\phi_{+1}(g,\bm x_i^{\mathrm P})$
+have the same distribution.
+Therefore, letting
+$L_{2,n_{\mathrm P}}:=\sum_{i=2}^{n_{\mathrm P}}\big(\phi_{+1}(g,\bm x_i^{\mathrm P})-\phi_{+1}(g,\bm x_i^{\mathrm P\prime})\big)$, we have
+\begin{align}
+&\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{+1}(g,\bm x_i^{\mathrm P})-\phi_{+1}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&=
+\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}
+\big(\phi_{+1}(g,\bm x_1^{\mathrm P})-\phi_{+1}(g,\bm x_1^{\mathrm P\prime})\big)+L_{2,n_{\mathrm P}}\Big]
+\nonumber\\
+&=
+\frac12\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}
+\big(\phi_{+1}(g,\bm x_1^{\mathrm P})-\phi_{+1}(g,\bm x_1^{\mathrm P\prime})\big)+L_{2,n_{\mathrm P}}\Big]
+\nonumber\\
+&\quad+
+\frac12\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}
+\big(\phi_{+1}(g,\bm x_1^{\mathrm P\prime})-\phi_{+1}(g,\bm x_1^{\mathrm P})\big)+L_{2,n_{\mathrm P}}\Big]
+\nonumber\\
+&=
+\mathbb{E}_{\sigma_1,\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}
+\sigma_1\big(\phi_{+1}(g,\bm x_1^{\mathrm P})-\phi_{+1}(g,\bm x_1^{\mathrm P\prime})\big)+L_{2,n_{\mathrm P}}\Big].
+\label{eq:pntr-sym-stepP}
+\end{align}
+Repeating the same argument $n_{\mathrm P}$ times yields
+\begin{align}
+&\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{+1}(g,\bm x_i^{\mathrm P})-\phi_{+1}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&=
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\sigma_i\big(\phi_{+1}(g,\bm x_i^{\mathrm P})-\phi_{+1}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&\le
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\sigma_i\,\phi_{+1}(g,\bm x_i^{\mathrm P})\Big]
++
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+(-\sigma_i)\,\phi_{+1}(g,\bm x_i^{\mathrm P\prime})\Big]
+\nonumber\\
+&=
+2\,\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\sigma_i\,\phi_{+1}(g,\bm x_i^{\mathrm P})\Big]
+=
+2n_{\mathrm P}\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{+1}\circ\mathscr G).
+\label{eq:pntr-rad-phiP}
+\end{align}
+Similarly, for the N side,
+\[
+\mathbb{E}_{\mathscr X_{\mathrm N},\mathscr X_{\mathrm N}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm N}}
+\big(\phi_{-1}(g,\bm x_i^{\mathrm N})-\phi_{-1}(g,\bm x_i^{\mathrm N\prime})\big)\Big]
+\le
+2n_{\mathrm N}\,\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\phi_{-1}\circ\mathscr G)
+\]
+is obtained.
+
+Finally, we upper bound $\mathfrak{R}(\phi_y\circ\mathscr G)$ by $\mathfrak{R}(\mathscr G)$.
+Write $\phi_y=\ell(\cdot,y)+\beta\,\psi$, where
+\[
+\psi(g,\bm x):=\max_{\|\bm\eta\|_\infty\le\varepsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x),g(\bm x+\bm\eta)\big).
+\]
+Then, by the subadditivity of $\sup$,
+\[
+\mathfrak{R}_{n,q}(\phi_y\circ\mathscr G)
+\le
+\mathfrak{R}_{n,q}(\ell(\cdot,y)\circ\mathscr G)
++\beta\,\mathfrak{R}_{n,q}(\psi\circ\mathscr G).
+\]
+For the classification loss term, by the contraction lemma,
+\[
+\mathfrak{R}_{n,q}(\ell(\cdot,y)\circ\mathscr G)
+\le
+L_\ell\,\mathfrak{R}_{n,q}(\mathscr G).
+\]
+For the KL term, applying Lemma~\ref{lem:vecContract} to
+$f_g(\bm x)=g(\bm x)$ and $g_{g,\bm\eta}(\bm x)=g(\bm x+\bm\eta)$,
+and then using Lemma~\ref{lem:advRad}, we obtain
+\begin{align}
+\mathfrak{R}_{n,q}(\psi\circ\mathscr G)
+&\le
+2L_{\mathrm{KL}}
+\Big(
+\mathfrak{R}_{n,q}(\mathscr G)
++
+\mathfrak{R}_{n,q}(\{\,\bm x\mapsto g(\bm x+\bm\eta):\ \|\bm\eta\|_\infty\le\varepsilon,\ g\in\mathscr G\,\})
+\Big)
+\nonumber\\
+&\le
+2L_{\mathrm{KL}}
+\Big(
+2\mathfrak{R}_{n,q}(\mathscr G)
++\frac{\varepsilon W d^{1/q}}{\sqrt n}
+\Big).
+\label{eq:pntr-rad-kl-bound}
+\end{align}
+Substituting these bounds into \eqref{eq:pntr-ghost-sym}--\eqref{eq:pntr-sup-subadd}, we get
+\begin{align}
+&\mathbb{E}\Big[\sup_{g\in\mathscr G}\ \widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\Big]
+\nonumber\\
+&\le
+\frac{\pi_{\mathrm P}}{n_{\mathrm P}}
+\cdot 2n_{\mathrm P}\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{+1}\circ\mathscr G)
+\;+\;
+\frac{\pi_{\mathrm N}}{n_{\mathrm N}}
+\cdot 2n_{\mathrm N}\,\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\phi_{-1}\circ\mathscr G)
+\nonumber\\
+&=
+2\pi_{\mathrm P}\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{+1}\circ\mathscr G)
++
+2\pi_{\mathrm N}\,\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\phi_{-1}\circ\mathscr G)
+\nonumber\\
+&\le
+2\pi_{\mathrm P}\Big\{
+L_\ell\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++\beta\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\psi\circ\mathscr G)
+\Big\}
++
+2\pi_{\mathrm N}\Big\{
+L_\ell\,\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\mathscr G)
++\beta\,\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\psi\circ\mathscr G)
+\Big\}
+\nonumber\\
+&\le
+2\pi_{\mathrm P}\Big\{
+L_\ell\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++\beta\cdot 2L_{\mathrm{KL}}
+\Big(
+2\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++\frac{\varepsilon W d^{1/q}}{\sqrt{n_{\mathrm P}}}
+\Big)
+\Big\}
+\nonumber\\
+&\quad+
+2\pi_{\mathrm N}\Big\{
+L_\ell\,\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\mathscr G)
++\beta\cdot 2L_{\mathrm{KL}}
+\Big(
+2\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\mathscr G)
++\frac{\varepsilon W d^{1/q}}{\sqrt{n_{\mathrm N}}}
+\Big)
+\Big\}
+\nonumber\\
+&=
+2\big(L_\ell+4\beta L_{\mathrm{KL}}\big)
+\Big(
+\pi_{\mathrm P}\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++
+\pi_{\mathrm N}\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\mathscr G)
+\Big)
++
+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\Big(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++
+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}
+\Big),
+\label{eq:pntr-exp-sup-bound}
+\end{align}
+where
+$\phi_y(g,\bm x):=\ell(g(\bm x),y)+\beta\max_{\|\bm\eta\|_\infty\le\varepsilon}
+\ell_{\mathrm{KL}}(g(\bm x),g(\bm x+\bm\eta))$
+and
+$\psi(g,\bm x):=\max_{\|\bm\eta\|_\infty\le\varepsilon}
+\ell_{\mathrm{KL}}(g(\bm x),g(\bm x+\bm\eta))$.
+
+\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
+Substituting the expectation bound in (ii), i.e., \eqref{eq:pntr-exp-sup-bound}, into McDiarmid's inequality result in (i), i.e., \eqref{eq:pntr-mcdiarmid-root-jp}, we obtain, with probability at least $1-\delta/2$,
+\begin{align}
+\sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\Big\}
+\ \le\
+&
+2\bigl(L_\ell+4\beta L_{\mathrm{KL}}\bigr)
+\Big(
+\pi_{\mathrm P}\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++
+\pi_{\mathrm N}\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\mathscr G)
+\Big)
+\nonumber\\
+&+
+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}\left(\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}\right)
+\nonumber\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}\,(C_\ell+\beta C_{\mathrm{KL}})
+\left(\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}\right)
+\label{eq:pntr-sup-one-dir}
+\end{align}
+as claimed.
+
+\paragraph{\textbf{(iv) Reverse direction and union bound}}
+By the same argument,
+$\sup_{g\in\mathscr G}\{R_{\mathrm{PN\mbox{-}TR}}(g)-\widehat R_{\mathrm{PN\mbox{-}TR}}(g)\}$ is also bounded by the same right-hand side with probability at least $1-\delta/2$.
+Therefore, by the union bound, \eqref{eq:pntr-unif-bound-jp} holds with probability at least $1-\delta$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:pntr-estimation}}
+\label{app:proof-thm-pntr-estimation}
+\begin{proof}
+Since $\widehat g_{\mathrm{PN\mbox{-}TR}}$ is an empirical risk minimizer, we have
+$\widehat R_{\mathrm{PN\mbox{-}TR}}(\widehat g_{\mathrm{PN\mbox{-}TR}})
+\le \widehat R_{\mathrm{PN\mbox{-}TR}}(g^*)$.
+Moreover, by Lemma~\ref{lem:pntr-unif-jp}, the following holds with probability at least $1-\delta$:
+\begin{align*}
+& R_{\mathrm{PN\mbox{-}TR}}(\widehat g_{\mathrm{PN\mbox{-}TR}})-R_{\mathrm{PN\mbox{-}TR}}(g^*)
+\\
+&=
+\Big(R_{\mathrm{PN\mbox{-}TR}}(\widehat g_{\mathrm{PN\mbox{-}TR}})-\widehat R_{\mathrm{PN\mbox{-}TR}}(\widehat g_{\mathrm{PN\mbox{-}TR}})\Big)
++
+\Big(\widehat R_{\mathrm{PN\mbox{-}TR}}(\widehat g_{\mathrm{PN\mbox{-}TR}})-\widehat R_{\mathrm{PN\mbox{-}TR}}(g^*)\Big)
+\\ &+
+\Big(\widehat R_{\mathrm{PN\mbox{-}TR}}(g^*)-R_{\mathrm{PN\mbox{-}TR}}(g^*)\Big)
+\\
+&\le
+\sup_{g\in\mathscr G}\big(R_{\mathrm{PN\mbox{-}TR}}(g)-\widehat R_{\mathrm{PN\mbox{-}TR}}(g)\big)
++0+
+\sup_{g\in\mathscr G}\big(\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\big)
+\\
+&\le
+2\sup_{g\in\mathscr G}\left|\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\right| \\
+ & \le\;
+4\bigl(L_\ell+4\beta L_{\mathrm{KL}}\bigr)\Big(
+\pi_{\mathrm P}\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++
+\pi_{\mathrm N}\mathfrak{R}_{n_{\mathrm N},p_{\mathrm N}}(\mathscr G)
+\Big) \\
+ & +
+8\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++
+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}
+\right) \\
+&+
+\sqrt{2\ln\frac{2}{\delta}}\,(C_\ell+\beta C_{\mathrm{KL}})
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++
+\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}
+\right).
+\end{align*}
+Thus, the claim of Theorem~\ref{thm:pntr-estimation} follows.
+\end{proof}
+
+\subsection{Proof of the Lemma ``Uniform Deviation Bound for uPU+TRADES'' (Lemma~\ref{lem:uputr-unif-jp})}
+\label{app:proof-lem-uputr-unif-jp}
+\begin{proof}
+As in the previous section,
+(i) we first show concentration of the uniform deviation using McDiarmid's inequality,
+(ii) evaluate the expectation via ghost sampling and Rademacher complexity,
+(iii) combine the results of (i) and (ii) to obtain a one-sided upper bound,
+and (iv) combine the reverse direction via a union bound to obtain the uniform deviation bound (the lemma).
+Finally, in (v), we derive the estimation error bound (the theorem) by the standard decomposition for an empirical risk minimizer.
+
+\paragraph{\textbf{(i) McDiarmid's inequality}}
+Since $\ell(\cdot)\le C_\ell$ and $\ell_{\mathrm{KL}}(\cdot)\le C_{\mathrm{KL}}$,
+replacing one sample on the P side changes $\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)$ by at most
+$\frac{\pi_{\mathrm P}}{n_{\mathrm P}}(2C_\ell+\beta C_{\mathrm{KL}})$.
+Similarly, replacing one sample on the U side changes $\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)$ by at most
+$
+\frac{1}{n_{\mathrm U}}(C_\ell+\beta C_{\mathrm{KL}})
+$.
+Therefore, by McDiarmid's inequality, for any $t>0$,
+\begin{align}
+\Pr\!\Bigg(
+&\sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\Big\}
+-\mathbb E\Big[\sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\Big\}\Big]
+\ge t
+\Bigg)
+\nonumber\\
+&\le
+\exp\!\Bigg(
+-\frac{2t^2}{
+\frac{\pi_{\mathrm P}^2(2C_\ell+\beta C_{\mathrm{KL}})^2}{n_{\mathrm P}}
++\frac{(C_\ell+\beta C_{\mathrm{KL}})^2}{n_{\mathrm U}}
+}
+\Bigg).
+\label{eq:uputr-mcdiarmid-jp}
+\end{align}
+
+Setting the right-hand side equal to $\delta/2$, we obtain, with probability at least $1-\delta/2$,
+\begin{align}
+\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\}
+\le\
+&\mathbb E\Big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\}\Big]
+\nonumber\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}\,
+\sqrt{
+\frac{\pi_{\mathrm P}^2(2C_\ell+\beta C_{\mathrm{KL}})^2}{n_{\mathrm P}}
++\frac{(C_\ell+\beta C_{\mathrm{KL}})^2}{n_{\mathrm U}}
+}\,.
+\label{eq:uputr-mcdiarmid-root-jp}
+\end{align}
+Furthermore, by using the subadditivity of the square root, we obtain
+\begin{align}
+\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\}
+\le\
+&\mathbb E\Big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\}\Big]
+\nonumber\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}\,
+\left(
+\frac{\pi_{\mathrm P}(2C_\ell+\beta C_{\mathrm{KL}})}{\sqrt{n_{\mathrm P}}}
++\frac{C_\ell+\beta C_{\mathrm{KL}}}{\sqrt{n_{\mathrm U}}}
+\right)
+\label{eq:uputr-mcdiarmid-root2-jp}
+\end{align}
+as desired.
+
+\paragraph{\textbf{(ii) Ghost sampling}}
+Here, we upper bound
+$\mathbb{E}\big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\}\big]$
+by the Rademacher complexity.
+The expectation in
+$\mathbb{E}[\sup_{g\in\mathscr G}\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)]$
+is taken over repeated sampling of
+$(\mathscr X_{\mathrm P},\mathscr X_{\mathrm U})$ used to evaluate
+$\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)$.
+That is,
+$\mathbb{E}=\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm U})}$, and
+$\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)$ can also be written as
+$\widehat R_{\mathrm{uPU\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm U})$.
+Introducing an independent ghost sample
+$(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm U}')$, we obtain
+\begin{align}
+&\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm U})}
+\Big[\sup_{g\in\mathscr G}\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\Big]
+\nonumber\\
+&=
+\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm U})}
+\Big[\sup_{g\in\mathscr G}\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)
+-\mathbb{E}_{(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm U}')}
+\widehat R_{\mathrm{uPU\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm U}')
+\Big]
+\nonumber\\
+&\le
+\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm U}),(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm U}')}
+\Big[
+\sup_{g\in\mathscr G}
+\widehat R_{\mathrm{uPU\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm U})
+-
+\widehat R_{\mathrm{uPU\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm U}')
+\Big]
+\label{eq:uputr-ghost-sym}
+\end{align}
+The last inequality follows from Jensen's inequality, since $\sup$ is convex.
+
+Next, we decompose the difference:
+\[
+\phi_{\mathrm P}(g,\bm x)
+:=\ell\big(g(\bm x),+1\big)-\ell\big(g(\bm x),-1\big)+\beta\psi(g,\bm x),\qquad
+\phi_{\mathrm U}(g,\bm x)
+:=\ell\big(g(\bm x),-1\big)+\beta\psi(g,\bm x),
+\]
+where
+\[
+\psi(g,\bm x)
+:=\max_{\|\bm\eta\|_\infty\le\varepsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x+\bm\eta),g(\bm x)\big).
+\]
+Then,
+\begin{align}
+&\widehat R_{\mathrm{uPU\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm U})
+-\widehat R_{\mathrm{uPU\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm U}')
+\nonumber\\
+&=
+\frac{\pi_{\mathrm P}}{n_{\mathrm P}}
+\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})\big)
++
+\frac{1}{n_{\mathrm U}}
+\sum_{i=1}^{n_{\mathrm U}}
+\big(\phi_{\mathrm U}(g,\bm x_i^{\mathrm U})-\phi_{\mathrm U}(g,\bm x_i^{\mathrm U\prime})\big).
+\label{eq:uputr-diff-decomp}
+\end{align}
+Therefore, by the subadditivity of $\sup$,
+\begin{align}
+&\mathbb{E}_{(\mathscr X_{\mathrm P},\mathscr X_{\mathrm U}),(\mathscr X_{\mathrm P}',\mathscr X_{\mathrm U}')}
+\Big[
+\sup_{g\in\mathscr G}
+\widehat R_{\mathrm{uPU\mbox{-}TR}}(g;\mathscr X_{\mathrm P},\mathscr X_{\mathrm U})
+-
+\widehat R_{\mathrm{uPU\mbox{-}TR}}(g;\mathscr X_{\mathrm P}',\mathscr X_{\mathrm U}')
+\Big]
+\nonumber\\
+&\le
+\frac{\pi_{\mathrm P}}{n_{\mathrm P}}
+\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&\quad+
+\frac{1}{n_{\mathrm U}}
+\mathbb{E}_{\mathscr X_{\mathrm U},\mathscr X_{\mathrm U}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm U}}
+\big(\phi_{\mathrm U}(g,\bm x_i^{\mathrm U})-\phi_{\mathrm U}(g,\bm x_i^{\mathrm U\prime})\big)\Big].
+\label{eq:uputr-sup-subadd}
+\end{align}
+
+Next, we symmetrize the difference terms appearing on the right-hand side of \eqref{eq:uputr-sup-subadd} and bound them by the Rademacher complexity.
+For example, consider the P side.
+Since $\bm x_i^{\mathrm P}$ and $\bm x_i^{\mathrm P\prime}$ are independent and identically distributed (both from $p_{\mathrm P}$),
+the two differences
+$\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})$
+and
+$\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})-\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})$
+have the same distribution.
+Therefore, letting
+$L_{2,n_{\mathrm P}}:=\sum_{i=2}^{n_{\mathrm P}}\big(\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})\big)$, we have
+\begin{align}
+&\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&=
+\frac12\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}
+\big(\phi_{\mathrm P}(g,\bm x_1^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_1^{\mathrm P\prime})\big)+L_{2,n_{\mathrm P}}\Big]
+\nonumber\\
+&\quad+
+\frac12\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}
+\big(\phi_{\mathrm P}(g,\bm x_1^{\mathrm P\prime})-\phi_{\mathrm P}(g,\bm x_1^{\mathrm P})\big)+L_{2,n_{\mathrm P}}\Big]
+\nonumber\\
+&=
+\mathbb{E}_{\sigma_1,\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}
+\sigma_1\big(\phi_{\mathrm P}(g,\bm x_1^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_1^{\mathrm P\prime})\big)+L_{2,n_{\mathrm P}}\Big].
+\end{align}
+Repeating the same argument $n_{\mathrm P}$ times, and using independent Rademacher variables $\bm\sigma=(\sigma_1,\ldots,\sigma_{n_{\mathrm P}})$, we obtain
+\begin{align}
+&\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&=
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\sigma_i\big(\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})-\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&\le
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}\sigma_i\,\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})\Big]
++
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}(-\sigma_i)\,\phi_{\mathrm P}(g,\bm x_i^{\mathrm P\prime})\Big]
+\nonumber\\
+&=
+2\,\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}\sigma_i\,\phi_{\mathrm P}(g,\bm x_i^{\mathrm P})\Big]
+=
+2n_{\mathrm P}\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{\mathrm P}\circ\mathscr G).
+\label{eq:uputr-rad-phiP}
+\end{align}
+Similarly, for the U side,
+\begin{align}
+\mathbb{E}_{\mathscr X_{\mathrm U},\mathscr X_{\mathrm U}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm U}}
+\big(\phi_{\mathrm U}(g,\bm x_i^{\mathrm U})-\phi_{\mathrm U}(g,\bm x_i^{\mathrm U\prime})\big)\Big]
+\le
+2n_{\mathrm U}\,\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\phi_{\mathrm U}\circ\mathscr G)
+\label{eq:uputr-rad-phiU}
+\end{align}
+is obtained.
+
+Finally, we upper bound $\mathfrak{R}(\phi_{\mathrm P}\circ\mathscr G)$ and
+$\mathfrak{R}(\phi_{\mathrm U}\circ\mathscr G)$ by
+$\mathfrak{R}(\mathscr G)$.
+By the subadditivity of $\sup$,
+\[
+\mathfrak{R}_{n,q}(\phi_{\mathrm P}\circ\mathscr G)
+\le
+\mathfrak{R}_{n,q}(\ell(\cdot,+1)\circ\mathscr G)
++
+\mathfrak{R}_{n,q}(\ell(\cdot,-1)\circ\mathscr G),
+\]
+\[
+\mathfrak{R}_{n,q}(\phi_{\mathrm U}\circ\mathscr G)
+\le
+\mathfrak{R}_{n,q}(\ell(\cdot,-1)\circ\mathscr G)
++\beta\,\mathfrak{R}_{n,q}(\psi\circ\mathscr G).
+\]
+For the classification loss term, the contraction lemma gives
+\[
+\mathfrak{R}_{n,q}(\ell(\cdot,y)\circ\mathscr G)
+\le
+L_\ell\,\mathfrak{R}_{n,q}(\mathscr G)
+\qquad (y\in\mathcal Y).
+\]
+For the KL term, applying Lemma~\ref{lem:vecContract} to
+$f_g(\bm x)=g(\bm x)$ and $g_{g,\bm\eta}(\bm x)=g(\bm x+\bm\eta)$,
+and then using Lemma~\ref{lem:advRad}, we obtain
+\begin{align}
+\mathfrak{R}_{n,q}(\psi\circ\mathscr G)
+&\le
+2L_{\mathrm{KL}}
+\Big(
+\mathfrak{R}_{n,q}(\mathscr G)
++
+\mathfrak{R}_{n,q}(\{\,\bm x\mapsto g(\bm x+\bm\eta):\ \|\bm\eta\|_\infty\le\varepsilon,\ g\in\mathscr G\,\})
+\Big)
+\nonumber\\
+&\le
+2L_{\mathrm{KL}}
+\Big(
+2\mathfrak{R}_{n,q}(\mathscr G)
++\frac{\varepsilon W d^{1/q}}{\sqrt n}
+\Big).
+\label{eq:uputr-rad-kl-bound}
+\end{align}
+Substituting these bounds into \eqref{eq:uputr-ghost-sym}--\eqref{eq:uputr-sup-subadd}, we obtain
+\begin{align}
+\mathbb E\!\left[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\}\right]
+\ \le\
+&
+2\pi_{\mathrm P}\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}\big(\phi_{\mathrm P}\circ\mathscr G\big)
++
+2\,\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}\big(\phi_{\mathrm U}\circ\mathscr G\big)
+\nonumber\\
+\le\
+&
+4\pi_{\mathrm P}\big(L_\ell+2\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G) \nonumber\\
+&+
+2\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\mathscr G)
+\nonumber\\
+&+
+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++\frac{1}{\sqrt{n_{\mathrm U}}}
+\right).
+\label{eq:uputr-exp-sup-bound}
+\end{align}
+This completes the bound.
+\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
+Substituting the expectation bound in (ii), i.e., \eqref{eq:uputr-exp-sup-bound}, into the McDiarmid inequality result in (i), i.e., \eqref{eq:uputr-mcdiarmid-root2-jp}, we obtain, with probability at least $1-\delta/2$,
+\begin{align}
+\sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\Big\}
+\ \le\
+&
+4\pi_{\mathrm P}\big(L_\ell+2\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++
+2\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\mathscr G)
+\nonumber\\
+&+
+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++\frac{1}{\sqrt{n_{\mathrm U}}}
+\right)
+\nonumber\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}
+\left(
+\frac{\pi_{\mathrm P}(2C_\ell+\beta C_{\mathrm{KL}})}{\sqrt{n_{\mathrm P}}}
++
+\frac{C_\ell+\beta C_{\mathrm{KL}}}{\sqrt{n_{\mathrm U}}}
+\right).
+\label{eq:uputr-sup-one-dir}
+\end{align}
+This completes the one-sided bound.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:uputr-estimation}}
+\label{app:proof-thm-uputr-estimation}
+\begin{proof}
+Since $\widehat g_{\mathrm{uPU\mbox{-}TR}}$ is an empirical risk minimizer, we have
+\[
+\widehat R_{\mathrm{uPU\mbox{-}TR}}(\widehat g_{\mathrm{uPU\mbox{-}TR}})
+\le
+\widehat R_{\mathrm{uPU\mbox{-}TR}}(g^*)
+\]
+Moreover, on the event where Lemma~\ref{lem:uputr-unif-jp} holds (which occurs with probability at least $1-\delta$),
+\begin{align*}
+& R_{\mathrm{uPU\mbox{-}TR}}(\widehat g_{\mathrm{uPU\mbox{-}TR}})
+-
+R_{\mathrm{uPU\mbox{-}TR}}(g^*)
+\\
+&=
+\Big(R_{\mathrm{uPU\mbox{-}TR}}(\widehat g_{\mathrm{uPU\mbox{-}TR}})-\widehat R_{\mathrm{uPU\mbox{-}TR}}(\widehat g_{\mathrm{uPU\mbox{-}TR}})\Big) \nonumber\\
+&+
+\Big(\widehat R_{\mathrm{uPU\mbox{-}TR}}(\widehat g_{\mathrm{uPU\mbox{-}TR}})-\widehat R_{\mathrm{uPU\mbox{-}TR}}(g^*)\Big) \nonumber\\
+&+
+\Big(\widehat R_{\mathrm{uPU\mbox{-}TR}}(g^*)-R_{\mathrm{uPU\mbox{-}TR}}(g^*)\Big)
+ \nonumber\\
+&\le
+\sup_{g\in\mathscr G}\big(R_{\mathrm{uPU\mbox{-}TR}}(g)-\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)\big)
++0+
+\sup_{g\in\mathscr G}\big(\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\big)
+\\
+&\le
+2\sup_{g\in\mathscr G}\left|\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\right|.
+\end{align*}
+Therefore, multiplying \eqref{eq:uputr-unif-bound-jp} by $2$ yields \eqref{eq:uputr-estimation-bound}.
+\end{proof}
+
+\subsection{Proof of the Lemma ``Uniform Deviation Bound for nnPU+TRADES'' (Lemma~\ref{lem:nnputr-unif-jp})}
+\label{app:proof-lem-nnputr-unif-jp}
+\begin{proof}
+\paragraph{\textbf{(i) McDiarmid's inequality}}
+Since $\ell(\cdot)\le C_\ell$ and $\ell_{\mathrm{KL}}(\cdot)\le C_{\mathrm{KL}}$,
+replacing one sample on the P side changes the sum in the first line by at most
+$\frac{\pi_{\mathrm P}}{n_{\mathrm P}}(C_\ell+\beta C_{\mathrm{KL}})$.
+In addition, since the truncation term $\max\{0,\cdot\}$ in nnPU is $1$-Lipschitz,
+it can be upper bounded by the change in its argument.
+Inside the truncation term, $\ell(g(\bm x),-1)$ on the P side is replaced at only one point, so the change is at most
+$\frac{\pi_{\mathrm P}}{n_{\mathrm P}}C_\ell$.
+Therefore, replacing one P-side sample changes
+$\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)$ by at most
+$\frac{\pi_{\mathrm P}}{n_{\mathrm P}}(2C_\ell+\beta C_{\mathrm{KL}})$
+in total.
+Similarly, replacing one U-side sample affects $\ell(g(\bm x),-1)$ inside the truncation term and
+$\psi$ in the third line at only one point, and hence changes
+$\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)$ by at most
+$\frac{1}{n_{\mathrm U}}(C_\ell+\beta C_{\mathrm{KL}})$.
+Therefore, by McDiarmid's inequality, for any $t>0$,
+\begin{align}
+\Pr\!\Bigg(
+&\sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\Big\}
+-\mathbb E\Big[\sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\Big\}\Big]
+\ge t
+\Bigg)
+\nonumber\\
+&\le
+\exp\!\Bigg(
+-\frac{2t^2}{
+\frac{\pi_{\mathrm P}^2(2C_\ell+\beta C_{\mathrm{KL}})^2}{n_{\mathrm P}}
++\frac{(C_\ell+\beta C_{\mathrm{KL}})^2}{n_{\mathrm U}}
+}
+\Bigg).
+\label{eq:nnputr-mcdiarmid-jp}
+\end{align}
+
+Setting the right-hand side equal to $\delta/2$, we obtain, with probability at least $1-\delta/2$,
+\begin{align}
+\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}
+\le\
+&\mathbb E\Big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}\Big]
+\nonumber\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}\,
+\sqrt{
+\frac{\pi_{\mathrm P}^2(2C_\ell+\beta C_{\mathrm{KL}})^2}{n_{\mathrm P}}
++\frac{(C_\ell+\beta C_{\mathrm{KL}})^2}{n_{\mathrm U}}
+}\,.
+\label{eq:nnputr-mcdiarmid-root-jp}
+\end{align}
+Furthermore, by using the subadditivity of the square root, we obtain
+\begin{align}
+\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}
+\le\
+&\mathbb E\Big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}\Big]
+\nonumber\\
+&+
+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}\,
+\left(
+\frac{\pi_{\mathrm P}(2C_\ell+\beta C_{\mathrm{KL}})}{\sqrt{n_{\mathrm P}}}
++\frac{C_\ell+\beta C_{\mathrm{KL}}}{\sqrt{n_{\mathrm U}}}
+\right)
+\label{eq:nnputr-mcdiarmid-root2-jp}
+\end{align}
+as desired.
+\paragraph{\textbf{(ii) Ghost sampling}}
+Here, we upper bound
+$\mathbb{E}\big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}\big]$
+by the Rademacher complexity.
+Unlike the uPU case,
+$\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)$ contains the nnPU truncation term $\max\{0,\cdot\}$, and therefore,
+in general, $R_{\mathrm{nnPU\mbox{-}TR}}(g)=\mathbb{E}[\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)]$ does not hold.
+Thus, using the $1$-Lipschitz property of $\max\{0,\cdot\}$,
+\[
+|\max\{0,a\}-\max\{0,b\}|\le |a-b|,
+\]
+we first reduce the problem to a sum of differences between empirical and population averages, and then evaluate each term by ghost sampling and symmetrization, as in uPU+TRADES.
+
+First, define
+\[
+\phi_{+}(g,\bm x):=\ell\big(g(\bm x),+1\big)+\beta\,\psi(g,\bm x),\qquad
+\phi_{-}(g,\bm x):=\ell\big(g(\bm x),-1\big),\qquad
+\phi_{\psi}(g,\bm x):=\psi(g,\bm x),
+\]
+where
+\[
+\psi(g,\bm x)
+:=\max_{\|\bm\eta\|_\infty\le\varepsilon}
+\ell_{\mathrm{KL}}\big(g(\bm x+\bm\eta),g(\bm x)\big).
+\]
+Then, writing the inside of the truncation term as
+\begin{align*}
+\widehat s(g)
+:={}&
+-\frac{\pi_{\mathrm P}}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{-}\big(g,\bm x_i^{\mathrm P}\big)
++\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{-}\big(g,\bm x_i^{\mathrm U}\big),\\
+s(g)
+:={}&
+-\pi_{\mathrm P}\,\mathbb E_{\mathrm P}\!\left[\phi_{-}(g,\bm x)\right]
++\mathbb E_{\mathrm U}\!\left[\phi_{-}(g,\bm x)\right],
+\end{align*}
+we have
+\begin{align}
+\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)
+={}&
+\pi_{\mathrm P}\left\{
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{+}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{+}(g,\bm x)\right]
+\right\}\nonumber\\
+&+\beta\left\{
+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{\psi}\big(g,\bm x_i^{\mathrm U}\big)
+-\mathbb E_{\mathrm U}\!\left[\phi_{\psi}(g,\bm x)\right]
+\right\}
+\nonumber\\
+&\quad
++\max\{0,\widehat s(g)\}-\max\{0,s(g)\}
+\nonumber\\
+\le{}&
+\pi_{\mathrm P}\left\{
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{+}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{+}(g,\bm x)\right]
+\right\}\nonumber\\
+&+\beta\left\{
+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{\psi}\big(g,\bm x_i^{\mathrm U}\big)
+-\mathbb E_{\mathrm U}\!\left[\phi_{\psi}(g,\bm x)\right]
+\right\}\nonumber\\
+&+|\widehat s(g)-s(g)|
+\nonumber\\
+\le{}&
+\pi_{\mathrm P}\left\{
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{+}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{+}(g,\bm x)\right]
+\right\}\nonumber\\
+&+\beta\left\{
+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{\psi}\big(g,\bm x_i^{\mathrm U}\big)
+-\mathbb E_{\mathrm U}\!\left[\phi_{\psi}(g,\bm x)\right]
+\right\}
+\nonumber\\
+&\quad
++\pi_{\mathrm P}\left|
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{-}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{-}(g,\bm x)\right]
+\right|\nonumber\\
+&+\left|
+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{-}\big(g,\bm x_i^{\mathrm U}\big)
+-\mathbb E_{\mathrm U}\!\left[\phi_{-}(g,\bm x)\right]
+\right|.
+\label{eq:nnputr-lip-max}
+\end{align}
+Therefore, by the subadditivity of $\sup$ and the triangle inequality,
+\begin{align}
+\mathbb E\Big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}\Big]
+\le{}
+&\ \pi_{\mathrm P}\,
+\mathbb E\Bigg[\sup_{g\in\mathscr G}
+\left\{
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{+}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{+}(g,\bm x)\right]
+\right\}\Bigg]
+\nonumber\\
+&+\beta\,
+\mathbb E\Bigg[\sup_{g\in\mathscr G}
+\left\{
+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{\psi}\big(g,\bm x_i^{\mathrm U}\big)
+-\mathbb E_{\mathrm U}\!\left[\phi_{\psi}(g,\bm x)\right]
+\right\}\Bigg]
+\nonumber\\
+&+\pi_{\mathrm P}\,
+\mathbb E\Bigg[\sup_{g\in\mathscr G}
+\left|
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{-}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{-}(g,\bm x)\right]
+\right|\Bigg]
+\nonumber\\
+&+
+\mathbb E\Bigg[\sup_{g\in\mathscr G}
+\left|
+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{-}\big(g,\bm x_i^{\mathrm U}\big)
+-\mathbb E_{\mathrm U}\!\left[\phi_{-}(g,\bm x)\right]
+\right|\Bigg].
+\label{eq:nnputr-exp-sup-decomp}
+\end{align}
+
+Next, we evaluate each term by ghost sampling and symmetrization (as in uPU+TRADES).
+For illustration, consider the first term on the P side.
+Let
+$\mathscr X_{\mathrm P}'=\{\bm x_i^{\mathrm P\prime}\}_{i=1}^{n_{\mathrm P}}$
+be an independent ghost sample on the P side. Then,
+\begin{align}
+&\mathbb{E}_{\mathscr X_{\mathrm P}}
+\Bigg[\sup_{g\in\mathscr G}
+\left\{
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{+}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{+}(g,\bm x)\right]
+\right\}\Bigg]
+\nonumber\\
+&=
+\mathbb{E}_{\mathscr X_{\mathrm P}}
+\Bigg[\sup_{g\in\mathscr G}
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{+}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb{E}_{\mathscr X_{\mathrm P}'}\Big\{\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{+}\big(g,\bm x_i^{\mathrm P\prime}\big)\Big\}
+\Bigg]
+\nonumber\\
+&\le
+\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Bigg[\sup_{g\in\mathscr G}
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}
+\Big(\phi_{+}\big(g,\bm x_i^{\mathrm P}\big)-\phi_{+}\big(g,\bm x_i^{\mathrm P\prime}\big)\Big)\Bigg]
+\label{eq:nnputr-ghost-P}
+\end{align}
+where the last inequality follows from Jensen's inequality, since $\sup$ is convex.
+
+Here, since $\bm x_i^{\mathrm P}$ and $\bm x_i^{\mathrm P\prime}$ are independent and identically distributed (both from $p_{\mathrm P}$),
+the two differences
+$\phi_{+}(g,\bm x_i^{\mathrm P})-\phi_{+}(g,\bm x_i^{\mathrm P\prime})$
+and
+$\phi_{+}(g,\bm x_i^{\mathrm P\prime})-\phi_{+}(g,\bm x_i^{\mathrm P})$
+have the same distribution. Therefore, letting
+$L_{2,n_{\mathrm P}}:=\sum_{i=2}^{n_{\mathrm P}}\big(\phi_{+}(g,\bm x_i^{\mathrm P})-\phi_{+}(g,\bm x_i^{\mathrm P\prime})\big)$, we have
+\begin{align}
+&\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{+}(g,\bm x_i^{\mathrm P})-\phi_{+}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&=
+\mathbb{E}_{\sigma_1,\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}
+\sigma_1\big(\phi_{+}(g,\bm x_1^{\mathrm P})-\phi_{+}(g,\bm x_1^{\mathrm P\prime})\big)+L_{2,n_{\mathrm P}}\Big].
+\label{eq:nnputr-sym-stepP}
+\end{align}
+Repeating the same argument $n_{\mathrm P}$ times, and using independent Rademacher variables $\bm\sigma=(\sigma_1,\ldots,\sigma_{n_{\mathrm P}})$, we obtain
+\begin{align}
+&\mathbb{E}_{\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\big(\phi_{+}(g,\bm x_i^{\mathrm P})-\phi_{+}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&=
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P},\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\sigma_i\big(\phi_{+}(g,\bm x_i^{\mathrm P})-\phi_{+}(g,\bm x_i^{\mathrm P\prime})\big)\Big]
+\nonumber\\
+&\le
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\sigma_i\,\phi_{+}(g,\bm x_i^{\mathrm P})\Big]
++
+\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}'}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+(-\sigma_i)\,\phi_{+}(g,\bm x_i^{\mathrm P\prime})\Big]
+\nonumber\\
+&=
+2\,\mathbb{E}_{\bm\sigma,\mathscr X_{\mathrm P}}
+\Big[\sup_{g\in\mathscr G}\sum_{i=1}^{n_{\mathrm P}}
+\sigma_i\,\phi_{+}(g,\bm x_i^{\mathrm P})\Big]
+=
+2n_{\mathrm P}\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{+}\circ\mathscr G).
+\label{eq:nnputr-rad-phiPlusP}
+\end{align}
+Hence, combining this with \eqref{eq:nnputr-ghost-P}, we obtain
+\[
+\mathbb{E}_{\mathscr X_{\mathrm P}}
+\Bigg[\sup_{g\in\mathscr G}
+\left\{
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{+}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{+}(g,\bm x)\right]
+\right\}\Bigg]
+\le
+2\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{+}\circ\mathscr G).
+\]
+Similarly, the second term on the U side and the third and fourth terms with absolute values can also be symmetrized, yielding
+\begin{align}
+\mathbb{E}\Bigg[\sup_{g\in\mathscr G}
+\left\{
+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{\psi}\big(g,\bm x_i^{\mathrm U}\big)
+-\mathbb E_{\mathrm U}\!\left[\phi_{\psi}(g,\bm x)\right]
+\right\}\Bigg]
+&\le
+2\,\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\phi_{\psi}\circ\mathscr G),
+\nonumber\\
+\mathbb{E}\Bigg[\sup_{g\in\mathscr G}
+\left|
+\frac{1}{n_{\mathrm P}}\sum_{i=1}^{n_{\mathrm P}}\phi_{-}\big(g,\bm x_i^{\mathrm P}\big)
+-\mathbb E_{\mathrm P}\!\left[\phi_{-}(g,\bm x)\right]
+\right|\Bigg]
+&\le
+2\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{-}\circ\mathscr G),
+\nonumber\\
+\mathbb{E}\Bigg[\sup_{g\in\mathscr G}
+\left|
+\frac{1}{n_{\mathrm U}}\sum_{i=1}^{n_{\mathrm U}}\phi_{-}\big(g,\bm x_i^{\mathrm U}\big)
+-\mathbb E_{\mathrm U}\!\left[\phi_{-}(g,\bm x)\right]
+\right|\Bigg]
+&\le
+2\,\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\phi_{-}\circ\mathscr G)
+\label{eq:nnputr-rad-others}
+\end{align}
+Substituting these bounds into \eqref{eq:nnputr-exp-sup-decomp}, we obtain
+\begin{align}
+\mathbb E\Big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}\Big]
+\le{}
+&\ 2\pi_{\mathrm P}\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{+}\circ\mathscr G)\nonumber\\
+&+2\beta\,\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\phi_{\psi}\circ\mathscr G) \nonumber\\
+&+2\pi_{\mathrm P}\,\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\phi_{-}\circ\mathscr G) \nonumber\\
+&+2\,\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\phi_{-}\circ\mathscr G).
+\label{eq:nnputr-rad-split}
+\end{align}
+
+Finally, we upper bound each Rademacher complexity term by $\mathfrak{R}(\mathscr G)$.
+By the subadditivity of $\sup$,
+\[
+\mathfrak{R}_{n,p}(\phi_{+}\circ\mathscr G)
+\le
+\mathfrak{R}_{n,p}(\ell(\cdot,+1)\circ\mathscr G)
++\beta\,\mathfrak{R}_{n,p}(\psi\circ\mathscr G),\qquad
+\mathfrak{R}_{n,p}(\phi_{-}\circ\mathscr G)
+=
+\mathfrak{R}_{n,p}(\ell(\cdot,-1)\circ\mathscr G).
+\]
+For the classification loss, the contraction lemma implies
+\[
+\mathfrak{R}_{n,p}(\ell(\cdot,y)\circ\mathscr G)\le L_{\ell}\,\mathfrak{R}_{n,p}(\mathscr G)\qquad(y\in\mathcal Y).
+\]
+For $\psi$, applying Lemma~\ref{lem:vecContract} and Lemma~\ref{lem:advRad}, we obtain
+\begin{align}
+\mathfrak{R}_{n,p}(\psi\circ\mathscr G)
+&\le
+2L_{\mathrm{KL}}
+\Big(
+\mathfrak{R}_{n,p}(\mathscr G)
++
+\mathfrak{R}_{n,p}(\{\,\bm x\mapsto g(\bm x+\bm\eta):\ \|\bm\eta\|_\infty\le\varepsilon,\ g\in\mathscr G\,\})
+\Big)
+\nonumber\\
+&\le
+2L_{\mathrm{KL}}
+\Big(
+2\mathfrak{R}_{n,p}(\mathscr G)
++\frac{\varepsilon W d^{1/q}}{\sqrt n}
+\Big).
+\label{eq:nnputr-rad-kl-bound}
+\end{align}
+Substituting these bounds into \eqref{eq:nnputr-rad-split} and simplifying yields
+\begin{align}
+\mathbb E\Big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}\Big]
+\ \le\
+&4\pi_{\mathrm P}\big(L_\ell+2\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)\nonumber\\
+&+2\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\mathscr G)
+\nonumber\\
+&+
+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\left(\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}+\frac{1}{\sqrt{n_{\mathrm U}}}\right).
+\label{eq:nnputr-exp-sup-bound}
+\end{align}
+as desired.
+\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
+Substituting the expectation bound in (ii), i.e., \eqref{eq:nnputr-exp-sup-bound}, into the McDiarmid inequality result in (i), i.e., \eqref{eq:nnputr-mcdiarmid-root2-jp}, we obtain, with probability at least $1-\delta/2$,
+\begin{align}
+\sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\Big\}
+\ \le\
+&4\pi_{\mathrm P}\big(L_\ell+2\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm P},p_{\mathrm P}}(\mathscr G)
++2\big(L_\ell+4\beta L_{\mathrm{KL}}\big)\mathfrak{R}_{n_{\mathrm U},p_{\mathrm U}}(\mathscr G)
+\nonumber\\
+&+4\beta L_{\mathrm{KL}}\,\varepsilon W d^{1/q}
+\left(
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}
++\frac{1}{\sqrt{n_{\mathrm U}}}
+\right)
+\nonumber\\
+&+\sqrt{\frac{1}{2}\ln\frac{2}{\delta}}
+\left(
+\frac{\pi_{\mathrm P}(2C_\ell+\beta C_{\mathrm{KL}})}{\sqrt{n_{\mathrm P}}}
++\frac{C_\ell+\beta C_{\mathrm{KL}}}{\sqrt{n_{\mathrm U}}}
+\right).
+\label{eq:nnputr-sup-one-dir}
+\end{align}
+This establishes the one-sided bound.\\
+
+\par\noindent\textbf{(iv) Opposite direction and union bound}\quad
+Similarly,
+$\sup_{g\in\mathscr G}\{R_{\mathrm{nnPU\mbox{-}TR}}(g)-\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)\}$
+is also bounded by the right-hand side of \eqref{eq:nnputr-sup-one-dir}
+with probability at least $1-\delta/2$.
+Therefore, by the union bound, \eqref{eq:nnputr-unif-bound-jp} holds with probability at least $1-\delta$.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:nnputr-estimation}}
+\label{app:proof-thm-nnputr-estimation}
+\begin{proof}
+Since $\widehat g_{\mathrm{nnPU\mbox{-}TR}}$ is an empirical risk minimizer, we have
+\[
+\widehat R_{\mathrm{nnPU\mbox{-}TR}}(\widehat g_{\mathrm{nnPU\mbox{-}TR}})
+\le
+\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g^*)
+\]
+Moreover, on the event where Lemma~\ref{lem:nnputr-unif-jp} holds (which occurs with probability at least $1-\delta$),
+\begin{align*}
+& R_{\mathrm{nnPU\mbox{-}TR}}(\widehat g_{\mathrm{nnPU\mbox{-}TR}})
+-
+R_{\mathrm{nnPU\mbox{-}TR}}(g^*)
+\\
+&=
+\Big(R_{\mathrm{nnPU\mbox{-}TR}}(\widehat g_{\mathrm{nnPU\mbox{-}TR}})-\widehat R_{\mathrm{nnPU\mbox{-}TR}}(\widehat g_{\mathrm{nnPU\mbox{-}TR}})\Big) \nonumber\\
+&+
+\Big(\widehat R_{\mathrm{nnPU\mbox{-}TR}}(\widehat g_{\mathrm{nnPU\mbox{-}TR}})-\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g^*)\Big) \nonumber\\
+&+
+\Big(\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g^*)-R_{\mathrm{nnPU\mbox{-}TR}}(g^*)\Big)
+\\
+&\le
+\sup_{g\in\mathscr G}\big(R_{\mathrm{nnPU\mbox{-}TR}}(g)-\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)\big)
++0+
+\sup_{g\in\mathscr G}\big(\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\big)
+\\
+&\le
+2\sup_{g\in\mathscr G}\left|\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\right|.
+\end{align*}
+Therefore, multiplying \eqref{eq:nnputr-unif-bound-jp} by $2$ yields \eqref{eq:nnputr-estimation-bound}.
+\end{proof}
+
+\subsection{Proof of the Theorem ``Condition on the Number of Unlabeled Samples for PU+TRADES to Outperform Supervised TRADES'' (Theorem~\ref{thm:nu-threshold-trades})}
+\label{app:proof-thm-nu-threshold-trades}
+\begin{proof}
+(i) Comparing \eqref{eq:pntr-bound-simplified} and \eqref{eq:uputr-bound-simplified},
+and canceling $\Gamma_\delta(\pi_{\mathrm P}/\sqrt{n_{\mathrm P}})$ from both sides, we obtain
+\begin{align*}
+\Gamma_\delta\frac{\pi_{\mathrm N}}{\sqrt{n_{\mathrm N}}}
+\ >\
+\frac{\pi_{\mathrm P}}{\sqrt{n_{\mathrm P}}}\Big(4L_\ell\,W C_x d^{1/q}+\kappa_\delta C_\ell\Big)
++\frac{\Gamma_\delta}{\sqrt{n_{\mathrm U}}}.
+\end{align*}
+Rearranging by moving the first term on the right-hand side, and solving for
+$\Gamma_\delta/\sqrt{n_{\mathrm U}}$,
+we obtain \eqref{eq:nu-threshold-uputr} under condition \eqref{eq:compare-pn-uputr-feasible}.
+Part (ii) follows immediately from the fact that the bound for nnPU+TRADES has the same form as that for uPU+TRADES.
+\end{proof}
+
+\end{appendices}

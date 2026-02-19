@@ -1,0 +1,164 @@
+\section{Preliminaries}\label{ch:preliminaries}
+
+  In this chapter, we introduce PU learning, adversarial examples and representative attacks, and adversarial training.
+  Hereafter, we refer to learning a binary classifier from fully labeled positive and negative data as Positive--Negative (PN) learning.
+
+\subsection{Positive-Unlabeled (PU) Learning}
+We denote the input space by $\mathcal{X} \subseteq \mathbb{R}^d$ and the label space by $\mathcal{Y}=\{-1,+1\}$.
+Let $p(\bm{x}, y)$ be the joint distribution over $(\mathcal{X},\mathcal{Y})$.
+Let the total number of samples be $n \in \mathbb{N}$, and
+let $n_{\mathrm{P}}$ and $n_{\mathrm{N}}$ denote the numbers of positive (P) and negative (N) samples, respectively.
+Each set is represented as follows:
+\begin{equation}
+\begin{aligned}
+\mathscr{X}_{\mathrm{P}} &= \{\boldsymbol{x}_i^{\mathrm{P}}\}_{i=1}^{n_{\mathrm{P}}}
+\stackrel{\text{i.i.d.}}{\sim} p_{\mathrm{P}}(\boldsymbol{x}), \\
+\mathscr{X}_{\mathrm{N}} &= \{\boldsymbol{x}_i^{\mathrm{N}}\}_{i=1}^{n_{\mathrm{N}}}
+\stackrel{\text{i.i.d.}}{\sim} p_{\mathrm{N}}(\boldsymbol{x}).
+\end{aligned}
+\end{equation}
+Here, $p_{\mathrm{P}}(\bm{x})$ and $p_{\mathrm{N}}(\bm{x})$ denote the class-conditional densities for the positive and negative classes, respectively.
+The full dataset $\mathscr{X}=\mathscr{X}_{\mathrm{P}} \cup \mathscr{X}_{\mathrm{N}}$ is written as
+\begin{equation}
+\begin{aligned}
+\mathscr{X} &= \{\boldsymbol{x}_i\}_{i=1}^{n} \stackrel{\text{i.i.d.}}{\sim} p(\boldsymbol{x}),\\
+p(\boldsymbol{x}) &= \pi_{\mathrm{P}}\, p_{\mathrm{P}}(\boldsymbol{x}) + \pi_{\mathrm{N}}\, p_{\mathrm{N}}(\boldsymbol{x}),
+\end{aligned}
+\end{equation}
+where $\pi_{\mathrm{P}}=p(y=+1)$ and $\pi_{\mathrm{N}}=...p(y=-1)$ are the class priors satisfying $\pi_{\mathrm{P}}+\pi_{\mathrm{N}}=1$.
+
+In PU learning, the training set consists of positive (P) samples and unlabeled (U) samples.
+Since the marginal distribution of unlabeled data is $p_{\mathrm{U}}(\bm{x})=\pi_{\mathrm{P}} p_{\mathrm{P}}(\bm{x})+\pi_{\mathrm{N}} p_{\mathrm{N}}(\bm{x})$, 
+letting $n_{\mathrm{U}}$ be the number of unlabeled samples, the unlabeled set is given by
+\begin{align}
+\mathscr{X}_{\mathrm{U}}
+&= \{\boldsymbol{x}_i^{\mathrm{U}}\}_{i=1}^{n_{\mathrm{U}}}
+\stackrel{\text{i.i.d.}}{\sim} p_{\mathrm{U}}(\boldsymbol{x})
+= p(\boldsymbol{x}).
+\end{align}
+That is, the unlabeled samples are drawn i.i.d. from the marginal distribution of inputs, which is a mixture of positive and negative class-conditional distributions.
+
+\noindent\textbf{Unbiased PU Learning (uPU).}
+uPU assumes that the positive class prior $\pi_{\mathrm{P}}$ is known and estimates the negative risk indirectly from the unlabeled data.
+Specifically, it minimizes the following empirical risk:
+\begin{align}
+\widehat{R}_{\mathrm{uPU}}(g)
+&=
+\frac{\pi_{\mathrm{P}}}{n_{\mathrm{P}}} \sum_{i=1}^{n_{\mathrm{P}}}
+\tilde{\ell}\!\left(g\!\left(\boldsymbol{x}_i^{\mathrm{P}}\right), +1\right)
+\;+\;
+\frac{1}{n_{\mathrm{U}}} \sum_{i=1}^{n_{\mathrm{U}}}
+\ell\!\left(g\!\left(\boldsymbol{x}_i^{\mathrm{U}}\right), -1\right).
+\end{align}
+Here, the composite loss $\tilde{\ell}(g(\boldsymbol{x}), y)$ is defined by
+$\tilde{\ell}(g(\boldsymbol{x}), y)
+=\ell(g(\boldsymbol{x}), y)-\ell(g(\boldsymbol{x}), -y)$.
+
+
+\noindent\textbf{Non-Negative PU Learning (nnPU).}
+nnPU was introduced to address the overfitting issue in uPU, where the empirical risk can take negative values\cite{Kiryo2017PositiveUnlabeledLW}.
+Specifically, when the estimated term involving the negative risk in PU learning becomes negative, nnPU clips its negative contribution to zero, yielding a non-negative risk estimator that keeps the overall estimate bounded below by $0$.
+This modification prevents the empirical risk from diverging to negative values during empirical minimization and enables stable training.
+The empirical risk of nnPU is defined as follows:
+\begin{equation}
+\begin{aligned}
+\widehat{R}_{\mathrm{nnPU}}(g)
+= {} & \frac{\pi_{\mathrm{P}}}{n_{\mathrm{P}}} \sum_{i=1}^{n_{\mathrm{P}}}
+\ell\left(g\left(\boldsymbol{x}_i^{\mathrm{P}}\right),+1\right) \\
+& + \max\Biggl\{0\,,
+- \frac{\pi_{\mathrm{P}}}{n_{\mathrm{P}}} \sum_{i=1}^{n_{\mathrm{P}}}
+\ell\left(g\left(\boldsymbol{x}_i^{\mathrm{P}}\right),-1\right)
++ \frac{1}{n_{\mathrm{U}}} \sum_{i=1}^{n_{\mathrm{U}}}
+\ell\left(g\left(\boldsymbol{x}_i^{\mathrm{U}}\right),-1\right)
+\Biggr\}.
+\end{aligned}
+\end{equation}
+
+
+\subsection{Adversarial Examples} \label{AE}
+
+
+  Adversarial examples are inputs constructed by adding small, carefully designed perturbations to an image that a classifier originally classified correctly, thereby intentionally causing misclassification...w2014ExplainingAH. For example, Fig.~\ref{fig:advex} adds a tiny perturbation to a cat image and generates an adversarial example...
+
+
+  \begin{figure}[t]
+    \centering
+\includegraphics[width=\linewidth]{goodfelow.pdf}
+    \caption{An example of generating adversarial examples. Starting from the clean image on the left, we add a small perturbation using PGD to obtain an adversarial input... The classifier correctly predicts the clean image as a cat (confidence 94.6\%), while it misclassifies the adversarial example as a dog (confidence 99.8\%). This illustrates that predictions can change drastically even when the input appears almost identical to humans\cite{Goodfellow2014ExplainingAH}.}
+    \label{fig:advex}
+  \end{figure}
+
+
+\subsection{Adversarial attack: FGSM and PGD}\label{AA}
+We refer to methods for generating adversarial examples as \emph{adversarial attacks}, and many variants have been studied. In this work, we focus on representative first-order attacks: the Fast Gradient Sign Method (FGSM)~\cite{Goodfellow2014ExplainingAH} and Projected Gradient Descent (PGD)~\cite{M...}. Here, $\mathrm{sign}:\mathbb{R} \rightarrow [-1,1]$ is applied element-wise to the argument vector.
+\begin{equation}
+\bm{x}'=\bm{x}+\epsilon\cdot\mathrm{sign}\left(\nabla_{\bm{x}}
+\ell(g(\bm{x};\bm{\theta}),y)\right)
+\label{fgsm}
+\end{equation}
+This produces an input that increases the loss when fed into the model. A stronger iterative variant of this method is PGD~\cite{...}, which updates the input in the direction that increases the loss with step size $\alpha$, similarly to FGSM, and then applies the projection $\Pi_{\mathcal{...}}$.
+In particular,
+\[
+\mathcal{B}_\infty(\bm{x},\epsilon):=\{\bm{z}\in\mathbb{R}^d \mid \|\bm{z}-\bm{x}\|_\infty \le \epsilon\}
+\]
+Then, $\Pi_{\mathcal{B}_\infty(\bm{x},\epsilon)}$ denotes the projection onto the $\ell_\infty$-ball, which guarantees $\|\bm{x}'-\bm{x}\|_\infty \le \epsilon$.
+Under this setting, the PGD update is given by:
+\begin{equation}
+\bm{x}^{\prime} \leftarrow \Pi_{\mathcal{B}_\infty(\bm{x},\epsilon)}
+\left[\bm{x}+\alpha\,\operatorname{sign}\left(\nabla_{\bm{x}} \ell(g(\bm{x} ; \bm{\theta}),y)\right)\right].
+\label{pgd}
+\end{equation}
+
+
+% In particular, $\operatorname{Clip}{(\bm{x}-\epsilon,\ \bm{x}+\epsilo...$ projects by restricting each component to the interval $[\bm{x}-\epsilon,\ \bm{x}+\epsilon]$, ensuring $|\bm{x}'-\bm...$.
+
+By repeating Eq.~\eqref{pgd} multiple times, we can generate samples that more strongly increase the loss within the $\epsilon$-ball.
+
+\subsection{Adversarial Training}\label{AT}
+
+Adversarial training improves model robustness by training on adversarial examples\cite{madry...}. It is typically formulated as the following min--max optimization problem: one first generates adversarial examples for each input, and then learns parameters that minimize the average loss over these adversarial inputs.
+\begin{equation}
+\min_{\boldsymbol{\theta}} \frac{1}{n} \sum_{i=1}^n
+\max_{\|\bm{x}_i^{\prime}-\bm{x}_i\|_\infty \le \epsilon}
+\ell\!\left(g(\bm{x}_i^{\prime};\boldsymbol{\theta}), y_i\right).
+\end{equation}
+In addition, as a method to further enhance robustness against adversarial examples,
+TRADES (TRadeoff-inspired Adversarial DEfense via Surrogate-loss minimization), proposed by Zhang \emph{et al.}\cite{zhang2019theoretically}, is a prominent approach.
+TRADES explicitly models the trade-off between accuracy on clean samples and robustness to adversarial samples,
+and aims to minimize the following loss function:
+\begin{equation}
+\begin{aligned}
+\mathcal{L}_{\mathrm{TR}}(\boldsymbol{\theta})
+    &= \frac{1}{n} \sum_{i=1}^n \Bigl[
+        \ell\bigl(g(\bm{x}_i ; \boldsymbol{\theta}), y_i \bigr)
+        \\&\quad
+        + \beta \cdot \max_{\|\bm{x}_i^{\prime} - \bm{x}_i\|_\infty \le \epsilon}
+        \ell_{\mathrm{KL}}\bigl(g(\bm{x}_i ; \boldsymbol{\theta}), g(\bm{x}_i^{\prime} ; \boldsymbol{\theta}) \bigr)
+    \Bigr].
+\end{aligned}
+\label{eq:trades_loss}
+\end{equation}
+Here, $\ell_{\mathrm{KL}}(\cdot,\cdot)$ denotes the Kullback--Leibler (KL) divergence between predictive distributions, i.e.,
+\[
+\ell_{\mathrm{KL}}\bigl(g(\bm{x}_i;\boldsymbol{\theta}),\,g(\bm{x}_i';\boldsymbol{\theta})\bigr)
+:= \mathrm{KL}\!\left(
+p_{\boldsymbol{\theta}}(\cdot\mid \bm{x}_i)\ \big\|\ p_{\boldsymbol{\theta}}(\cdot\mid \bm{x}_i')
+\right).
+\]
+
+
+The first term of Eq.~\eqref{eq:trades_loss},
+$\ell\bigl(g(\bm{x}_i ; \boldsymbol{\theta}), y_i \bigr)$, is
+the standard classification loss on the clean input $\bm{x}_i$.
+
+On the other hand, the second term
+$\ell_{\mathrm{KL}}\bigl(g(\bm{x}_i ; \boldsymbol{\theta}), g(\bm{x}_i^{\prime} ; \boldsymbol{\theta})\bigr)$
+constrains the model so that the output distributions for $\bm{x}_i$ and its perturbed version $\bm{x}_i^{\prime}$ are close,
+and this term plays a key role in improving robustness.
+Thus, TRADES is designed to enhance robustness while maintaining classification accuracy.
+In this study, we apply this framework to PU learning
+to achieve both high performance on clean samples and robustness to adversarial examples.
+
+
+
+

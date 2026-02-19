@@ -1,0 +1,20 @@
+\section{Related Work} \label{ch:related}
+% 2--3 pages
+% Add a bit more detail on each method ...
+
+In this chapter, we review prior studies related to this work, focusing on (i) Positive-Unlabeled (PU) learning and (ii) adversarial training. We then summarize existing research that combines PU learning with adversarial robustness.
+
+\subsection{Positive-Unlabeled (PU) Learning}
+PU learning is a classification framework in which only positive-labeled and unlabeled data are available. A representative line of work is risk-estimation-based PU learning, which constructs an (unbiased) estimator of the supervised classification risk using the class prior and the mixture structure of the unlabeled set.
+In particular, uPU (unbiased PU learning) estimates the true risk without bias, while nnPU (non-negative PU learning) introduces a non-negativity constraint to prevent the empirical risk from becoming negative, thereby mitigating overfitting.
+Many extensions have also been proposed, including methods that exploit high-confidence samples from the unlabeled set and approaches that incorporate various correction mechanisms.
+
+\subsection{Adversarial Training}
+Adversarial examples are inputs that are intentionally perturbed to cause a model to misclassify, and they have attracted extensive attention as a major threat to machine learning systems.
+A standard defense is adversarial training, which improves robustness by training the model on adversarially perturbed samples. Representative methods such as PGD-based adversarial training can be formulated as a min--max optimization problem consisting of an outer minimization (parameter optimization) and an inner maximization (perturbation generation).
+In addition, TRADES \cite{zhang2019theoretically} is a prominent method that introduces a regularization term based on the Kullback--Leibler divergence between the model outputs on clean and perturbed inputs, aiming to balance clean accuracy and adversarial robustness.
+
+% \subsection{PU Learning with Adversarial Robustness}
+% Several recent studies have explored robust learning under weak supervision, including settings related to PU learning. However, naively applying adversarial training to PU learning is non-trivial, because the unlabeled set contains a mixture of true positives and negatives, which can lead to unstable updates and substantial degradation in clean accuracy.
+% In this study, we extend the TRADES framework to the PU learning setting and propose a method that achieves strong robustness under the constraints inherent to PU learning.
+
