@@ -2,9 +2,9 @@
 
 \subsection{Theoretical Analysis} \label{ch:theory}
 
-In this chapter, we consider a binary classification problem where input data may be subject to adversarial perturbations, and derive upper bounds on the gap between the true adversarial risk and its empirical estimator for both supervised learning and PU learning. By comparing these bounds, we theoretically clarify conditions under which PU learning can be advantageous over supervised learning in the finite-sample regime.
+In this section, we consider a binary classification problem where input data may be subject to adversarial perturbations, and derive upper bounds on the gap between the true adversarial risk and its empirical estimator for both supervised learning and PU learning. By comparing these bounds, we theoretically clarify conditions under which PU learning can be advantageous over supervised learning in the finite-sample regime.
 
-Below we define the problem setting used throughout this chapter.
+Below we define the problem setting used throughout this section.
 
 \begin{problem}{(Adversarial Binary Classification Setting)}
 \label{problem_adv}
@@ -26,7 +26,7 @@ p_{\mathrm{N}}(\boldsymbol{x}) = p(\boldsymbol{x}\mid y=-1)
 \]
 as above.
 Let the class prior probabilities be
-$\pi_{\mathrm{P}} = p(y=+1)$，
+$\pi_{\mathrm{P}} = p(y=+1)$,
 $\pi_{\mathrm{N}} = p(y=-1)$
 and let
 with $\pi_{\mathrm{P}}+\pi_{\mathrm{N}}=1$.
@@ -81,15 +81,15 @@ Moreover, as the adversarial regularization term in TRADES we use
 where $\ell_{\mathrm{KL}}$ denotes
 the Kullback--Leibler divergence between probability distributions induced by the classifier outputs.
 
-Throughout this chapter, we assume that $\ell$ and $\ell_{\mathrm{KL}}$ satisfy the regularity conditions needed for the analysis (boundedness and Lipschitz continuity); see the assumptions in Theorem\ref{thm:pntr-estimation} for details.
+Throughout this section, we assume that $\ell$ and $\ell_{\mathrm{KL}}$ satisfy the regularity conditions needed for the analysis (boundedness and Lipschitz continuity); see the assumptions in Theorem\ref{thm:pntr-estimation} for details.
 \end{problem}
 
 
 \subsection{Preliminaries (Notation and Assumptions)}\label{subsec:theory_tools}
 
-To derive the estimation-error upper bounds in this chapter, we use the Rademacher complexity to bound the expected uniform deviation,
+To derive the estimation-error upper bounds in this section, we use the Rademacher complexity to bound the expected uniform deviation,
 and we use McDiarmid's inequality to obtain high-probability guarantees that hold with probability at least $1-\delta$.
-Below we summarize the definitions and properties used in this chapter.
+Below we summarize the definitions and properties used in this section.
 
 \paragraph{Rademacher Complexity}\label{rad}
 In our discussion, we need a measure of the complexity of a function class $\mathscr{G}$.
@@ -147,7 +147,7 @@ is defined as above.
 \end{tcolorbox}
 
 \par\noindent
-Standard results used in this chapter (Talagrand's contraction lemma, vector contraction, Rademacher complexity bounds for linear function classes, additional bounds for adversarial inputs, McDiarmid's inequality, etc.) are summarized in Appendix\ref{app:toolbox}.
+Standard results used in this section (Talagrand's contraction lemma, vector contraction, Rademacher complexity bounds for linear function classes, additional bounds for adversarial inputs, McDiarmid's inequality, etc.) are summarized in Appendix\ref{app:toolbox}.
 
 \par\noindent\textit{(Proofs of theorems and lemmas are provided in Appendix~\ref{app:theory-proofs}.)}
 
@@ -441,7 +441,7 @@ $\ell(\widehat y,y)\le C_\ell$, or
 for $|\widehat y|\le C_g$, $\ell(\widehat y,y)\le C_\ell$.
 \end{itemize}
 \item (TRADES term) For any $u,v$,
-$\ell_{\mathrm{KL}}(u,v)\le C_{\mathrm{KL}}$．
+$\ell_{\mathrm{KL}}(u,v)\le C_{\mathrm{KL}}$.
 \end{itemize}
 
 \item \textbf{(Lipschitz continuity)} There exist constants $L_\ell, L_{\mathrm{KL}}>0$ such that
@@ -633,7 +633,7 @@ $\ell(\widehat y,y)\le C_\ell$, or
 for $|\widehat y|\le C_g$, $\ell(\widehat y,y)\le C_\ell$.
 \end{itemize}
 \item (TRADES term) For any $u,v$,
-$\ell_{\mathrm{KL}}(u,v)\le C_{\mathrm{KL}}$．
+$\ell_{\mathrm{KL}}(u,v)\le C_{\mathrm{KL}}$.
 \end{itemize}
 
 \item \textbf{(Lipschitz continuity)} There exist constants $L_\ell, L_{\mathrm{KL}}>0$ such that
@@ -750,7 +750,7 @@ For any $\delta>0$, with probability at least $1-\delta$,
 In this section, we compare the estimation-error upper bounds obtained in the previous subsections (Theorems~\ref{thm:pntr-estimation}, \ref{thm:uputr-estimation}, and \ref{thm:nnputr-estimation}) and derive sufficient conditions on the unlabeled sample size $n_{\mathrm U}$ under which the bound for supervised TRADES (PN+TRADES) becomes larger than that for PU+TRADES (uPU+TRADES / nnPU+TRADES), i.e., conditions under which PU+TRADES can theoretically outperform supervised TRADES.
 
 \paragraph{Rademacher complexity of the linear hypothesis class}
-Under the assumptions in this chapter ($\|\bm x\|_\infty\le C_x$ and $\|\bm w\|_p\le W$),
+Under the assumptions in this section ($\|\bm x\|_\infty\le C_x$ and $\|\bm w\|_p\le W$),
 for any distribution $\nu$,
 \begin{align}
 \mathfrak{R}_{n,\nu}(\mathscr G)
@@ -824,7 +824,7 @@ Then
 assume it holds.
 
 \begin{enumerate}
-\item[(i)] （PN+TRADES vs uPU+TRADES）
+\item[(i)] (PN+TRADES vs uPU+TRADES)
 If
 \begin{equation}
 \boxed{\
@@ -842,7 +842,7 @@ as a comparison of the estimation-error upper bounds,
 the bound for PN+TRADES (\eqref{eq:pntr-bound-simplified})
 is larger than that for uPU+TRADES (\eqref{eq:uputr-bound-simplified}).
 
-\item[(ii)] （PN+TRADES vs nnPU+TRADES）
+\item[(ii)] (PN+TRADES vs nnPU+TRADES)
 Since the right-hand side of Theorem~\ref{thm:nnputr-estimation} is identical to that of Theorem~\ref{thm:uputr-estimation},
 the same sufficient condition
 \begin{equation}
@@ -868,7 +868,7 @@ implies that the PN+TRADES estimation-error upper bound is larger than the nnPU+
 
 If condition \eqref{eq:compare-pn-uputr-feasible} does not hold,
 the denominator on the right-hand side becomes non-positive, and thus there is no $n_{\mathrm U}$ satisfying the comparison inequality in (i);
-within the scope of comparisons based on the bounds derived in this chapter,
+within the scope of comparisons based on the bounds derived in this section,
 we cannot claim that PU+TRADES outperforms supervised TRADES.
 On the other hand, when \eqref{eq:compare-pn-uputr-feasible} holds,
 by \eqref{eq:nu-threshold-uputr} and \eqref{eq:nu-threshold-nnputr},

@@ -1,20 +1,24 @@
 \section{Related Work} \label{ch:related}
 % 2--3 pages
-% Add a bit more detail on each method ...
+% It is fine to discuss each method in a little more detail.
 
-In this chapter, we review prior studies related to this work, focusing on (i) Positive-Unlabeled (PU) learning and (ii) adversarial training. We then summarize existing research that combines PU learning with adversarial robustness.
+% ========================================================================
+% This section discusses traditional class-incremental learning methods and recent approaches with pre-trained models.
 
-\subsection{Positive-Unlabeled (PU) Learning}
-PU learning is a classification framework in which only positive-labeled and unlabeled data are available. A representative line of work is risk-estimation-based PU learning, which constructs an (unbiased) estimator of the supervised classification risk using the class prior and the mixture structure of the unlabeled set.
-In particular, uPU (unbiased PU learning) estimates the true risk without bias, while nnPU (non-negative PU learning) introduces a non-negativity constraint to prevent the empirical risk from becoming negative, thereby mitigating overfitting.
-Many extensions have also been proposed, including methods that exploit high-confidence samples from the unlabeled set and approaches that incorporate various correction mechanisms.
+In this chapter, we organize representative studies on PU learning and adversarial learning to clarify the positioning of this research.
+
+
+\subsection{PU Learning}
+Positive-Unlabeled\,(PU) learning has been widely studied as a framework for building classifiers in settings where only positive and unlabeled data are available. It is particularly effective in application domains such as medical image analysis, where explicit labeling of negative examples is difficult, and many recent studies have proposed methods that achieve performance comparable to supervised learning.
+
+In risk-estimation-based approaches, starting from uPU\,(unbiased PU)\,\cite{Plessis2014AnalysisOL,Plessis2015ConvexFF}, loss functions have been designed to provide unbiased estimates of the classification risk\cite{chen2020selfpu,Kiryo2017PositiveUnlabeledLW,kato2018learning,Sakai2019CovariateSA,bekker2020beyond,hammoudeh2020learningpositiveunlabeleddata,dorigatti2022robustefficientimbalancedpositiveunlabeled}. nnPU\,\cite{Kiryo2017PositiveUnlabeledLW} suppresses overfitting by imposing a non-negativity constraint on this loss, enabling more stable learning. In addition, methods such as Imbalanced PU learning (ImbPU)\,\cite{dorigatti2022robustefficientimbalancedpositiveunlabeled} and Self-PU\,\cite{chen2020selfpu}, which address class imbalance and self-training-style learning, have also been proposed. On the other hand, sample-selection-based methods extract highly reliable negative or positive examples from unlabeled data and treat them as labeled samples, thereby reducing the problem to supervised learning\cite{liu2002partially,hou2018genpu,Zhao2022DistPUPL,pebl,hsieh2019classificationpositiveunlabeledbiased,2021PULNS,2021PredictPU}.
+
+Although these studies have primarily focused on improving standard classification accuracy, they have paid little attention to robustness against adversarial perturbations or noise. Therefore, in this study, we build on risk-correction-based methods such as uPU and nnPU while introducing a robustness perspective to address a new challenge in PU learning.
+
 
 \subsection{Adversarial Training}
-Adversarial examples are inputs that are intentionally perturbed to cause a model to misclassify, and they have attracted extensive attention as a major threat to machine learning systems.
-A standard defense is adversarial training, which improves robustness by training the model on adversarially perturbed samples. Representative methods such as PGD-based adversarial training can be formulated as a min--max optimization problem consisting of an outer minimization (parameter optimization) and an inner maximization (perturbation generation).
-In addition, TRADES \cite{zhang2019theoretically} is a prominent method that introduces a regularization term based on the Kullback--Leibler divergence between the model outputs on clean and perturbed inputs, aiming to balance clean accuracy and adversarial robustness.
+It is well known that deep learning models are vulnerable to ``adversarial examples,'' in which small perturbations added to the input induce misclassification. The Fast Gradient Sign Method (FGSM) proposed by Goodfellow et al.\ \cite{Goodfellow2014ExplainingAH} is an efficient method for generating adversarial examples by modifying the input in a single step along the gradient direction of the loss function. In contrast, Projected Gradient Descent (PGD) proposed by Madry et al.\ \cite{Madry2017TowardsDL} iteratively applies FGSM and projects the perturbation back into the allowable region at each step, enabling stronger attacks.
 
-% \subsection{PU Learning with Adversarial Robustness}
-% Several recent studies have explored robust learning under weak supervision, including settings related to PU learning. However, naively applying adversarial training to PU learning is non-trivial, because the unlabeled set contains a mixture of true positives and negatives, which can lead to unstable updates and substantial degradation in clean accuracy.
-% In this study, we extend the TRADES framework to the PU learning setting and propose a method that achieves strong robustness under the constraints inherent to PU learning.
+As a major defense against these attacks, adversarial training, which incorporates adversarial examples into the training process, has been widely studied. Adversarial training is generally formulated as a min--max optimization problem consisting of outer parameter updates (minimization) and inner perturbation generation (maximization). In addition, TRADES \cite{zhang2019theoretically} introduces a regularization term combining classification loss and Kullback-Leibler (KL) loss to control the trade-off between clean-data accuracy and adversarial robustness, and it has become an important foundation of modern robust learning.
 
+However, these standard methods assume supervised learning, where all data are labeled. When they are directly applied to PU learning, which uses only positive and unlabeled data, the design of the loss function and the optimization process for adversarial perturbations become inconsistent, and preliminary experiments confirm that classification performance deteriorates significantly. In this study, we extend the TRADES framework to the PU learning setting and propose a method that achieves high robustness under the constraints specific to PU learning.

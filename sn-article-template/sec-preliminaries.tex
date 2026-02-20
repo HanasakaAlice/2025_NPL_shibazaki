@@ -1,6 +1,6 @@
 \section{Preliminaries}\label{ch:preliminaries}
 
-  In this chapter, we introduce PU learning, adversarial examples and representative attacks, and adversarial training.
+  In this section, we introduce PU learning, adversarial examples and representative attacks, and adversarial training.
   Hereafter, we refer to learning a binary classifier from fully labeled positive and negative data as Positive--Negative (PN) learning.
 
 \subsection{Positive-Unlabeled (PU) Learning}
@@ -90,13 +90,13 @@ The empirical risk of nnPU is defined as follows:
 
 
 \subsection{Adversarial attack: FGSM and PGD}\label{AA}
-We refer to methods for generating adversarial examples as \emph{adversarial attacks}, and many variants have been studied. In this work, we focus on representative first-order attacks: the Fast Gradient Sign Method (FGSM)~\cite{Goodfellow2014ExplainingAH} and Projected Gradient Descent (PGD)~\cite{M...}. Here, $\mathrm{sign}:\mathbb{R} \rightarrow [-1,1]$ is applied element-wise to the argument vector.
+We refer to methods for generating adversarial examples as \emph{adversarial attacks}, and many variants have been studied. In this work, we focus on representative first-order attacks: the Fast Gradient Sign Method (FGSM)~\cite{Goodfellow2014ExplainingAH} and Projected Gradient Descent (PGD)~\cite{Madry2017TowardsDL}. Here, $\mathrm{sign}:\mathbb{R} \rightarrow [-1,1]$ is applied element-wise to the argument vector.
 \begin{equation}
 \bm{x}'=\bm{x}+\epsilon\cdot\mathrm{sign}\left(\nabla_{\bm{x}}
 \ell(g(\bm{x};\bm{\theta}),y)\right)
 \label{fgsm}
 \end{equation}
-This produces an input that increases the loss when fed into the model. A stronger iterative variant of this method is PGD~\cite{...}, which updates the input in the direction that increases the loss with step size $\alpha$, similarly to FGSM, and then applies the projection $\Pi_{\mathcal{...}}$.
+This produces an input that increases the loss when fed into the model. A stronger iterative variant of this method is PGD~\cite{Madry2017TowardsDL}, which updates the input in the direction that increases the loss with step size $\alpha$, similarly to FGSM, and then applies the projection $\Pi_{\mathcal{...}}$.
 In particular,
 \[
 \mathcal{B}_\infty(\bm{x},\epsilon):=\{\bm{z}\in\mathbb{R}^d \mid \|\bm{z}-\bm{x}\|_\infty \le \epsilon\}
@@ -116,7 +116,7 @@ By repeating Eq.~\eqref{pgd} multiple times, we can generate samples that more s
 
 \subsection{Adversarial Training}\label{AT}
 
-Adversarial training improves model robustness by training on adversarial examples\cite{madry...}. It is typically formulated as the following min--max optimization problem: one first generates adversarial examples for each input, and then learns parameters that minimize the average loss over these adversarial inputs.
+Adversarial training improves model robustness by training on adversarial examples~\cite{Madry2017TowardsDL}. It is typically formulated as the following min--max optimization problem: one first generates adversarial examples for each input, and then learns parameters that minimize the average loss over these adversarial inputs.
 \begin{equation}
 \min_{\boldsymbol{\theta}} \frac{1}{n} \sum_{i=1}^n
 \max_{\|\bm{x}_i^{\prime}-\bm{x}_i\|_\infty \le \epsilon}

@@ -6,7 +6,7 @@
     \subsection{Background / Tool Box (Standard Results)}
     \label{app:toolbox}
     
-    In this appendix, we summarize standard lemmas and inequalities used in the proofs of this chapter.
+    In this appendix, we summarize standard lemmas and inequalities used in the proofs of this paper.
     
     \begin{tcolorbox}[
         colback = white,
@@ -127,7 +127,7 @@
             $\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\}$
             (the reverse direction can be proved analogously).
             
-            \paragraph{\textbf{(i) McDiarmid's inequality}}
+            \leavevmode\paragraph{\textbf{(i) McDiarmid's inequality}}
             Since $\ell(\cdot)\le C_\ell$ and $\ell_{\mathrm{KL}}(\cdot)\le C_{\mathrm{KL}}$,
             replacing one sample on the P side changes $\widehat R_{\mathrm{PN\mbox{-}TR}}(g)$ by at most
             $\frac{\pi_{\mathrm P}}{n_{\mathrm P}}(C_\ell+\beta C_{\mathrm{KL}})$,
@@ -169,7 +169,7 @@
             \end{equation}
             as desired.
             
-            \paragraph{\textbf{(ii) Ghost sampling and symmetrization}}
+            \leavevmode\paragraph{\textbf{(ii) Ghost sampling and symmetrization}}
 We use the symmetrization technique in statistical learning theory~\cite{Vapnik1998}.
 First, in
 \[
@@ -441,7 +441,7 @@ and
 $\psi(g,\bm x):=\max_{\|\bm\eta\|_\infty\le\varepsilon}
 \ell_{\mathrm{KL}}(g(\bm x),g(\bm x+\bm\eta))$.
 
-\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
+\leavevmode\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
 Substituting the expectation bound in (ii), i.e., \eqref{eq:pntr-exp-sup-bound}, into McDiarmid's inequality result in (i), i.e., \eqref{eq:pntr-mcdiarmid-root-jp}, we obtain, with probability at least $1-\delta/2$,
 \begin{align}
 \sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{PN\mbox{-}TR}}(g)-R_{\mathrm{PN\mbox{-}TR}}(g)\Big\}
@@ -464,7 +464,7 @@ Substituting the expectation bound in (ii), i.e., \eqref{eq:pntr-exp-sup-bound},
 \end{align}
 as claimed.
 
-\paragraph{\textbf{(iv) Reverse direction and union bound}}
+\leavevmode\paragraph{\textbf{(iv) Reverse direction and union bound}}
 By the same argument,
 $\sup_{g\in\mathscr G}\{R_{\mathrm{PN\mbox{-}TR}}(g)-\widehat R_{\mathrm{PN\mbox{-}TR}}(g)\}$ is also bounded by the same right-hand side with probability at least $1-\delta/2$.
 Therefore, by the union bound, \eqref{eq:pntr-unif-bound-jp} holds with probability at least $1-\delta$.
@@ -527,7 +527,7 @@ As in the previous section,
 and (iv) combine the reverse direction via a union bound to obtain the uniform deviation bound (the lemma).
 Finally, in (v), we derive the estimation error bound (the theorem) by the standard decomposition for an empirical risk minimizer.
 
-\paragraph{\textbf{(i) McDiarmid's inequality}}
+\leavevmode\paragraph{\textbf{(i) McDiarmid's inequality}}
 Since $\ell(\cdot)\le C_\ell$ and $\ell_{\mathrm{KL}}(\cdot)\le C_{\mathrm{KL}}$,
 replacing one sample on the P side changes $\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)$ by at most
 $\frac{\pi_{\mathrm P}}{n_{\mathrm P}}(2C_\ell+\beta C_{\mathrm{KL}})$.
@@ -583,7 +583,7 @@ Furthermore, by using the subadditivity of the square root, we obtain
 \end{align}
 as desired.
 
-\paragraph{\textbf{(ii) Ghost sampling}}
+\leavevmode\paragraph{\textbf{(ii) Ghost sampling}}
 Here, we upper bound
 $\mathbb{E}\big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\}\big]$
 by the Rademacher complexity.
@@ -808,7 +808,7 @@ Substituting these bounds into \eqref{eq:uputr-ghost-sym}--\eqref{eq:uputr-sup-s
 \label{eq:uputr-exp-sup-bound}
 \end{align}
 This completes the bound.
-\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
+\leavevmode\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
 Substituting the expectation bound in (ii), i.e., \eqref{eq:uputr-exp-sup-bound}, into the McDiarmid inequality result in (i), i.e., \eqref{eq:uputr-mcdiarmid-root2-jp}, we obtain, with probability at least $1-\delta/2$,
 \begin{align}
 \sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{uPU\mbox{-}TR}}(g)-R_{\mathrm{uPU\mbox{-}TR}}(g)\Big\}
@@ -873,7 +873,7 @@ Therefore, multiplying \eqref{eq:uputr-unif-bound-jp} by $2$ yields \eqref{eq:up
 \subsection{Proof of the Lemma ``Uniform Deviation Bound for nnPU+TRADES'' (Lemma~\ref{lem:nnputr-unif-jp})}
 \label{app:proof-lem-nnputr-unif-jp}
 \begin{proof}
-\paragraph{\textbf{(i) McDiarmid's inequality}}
+\leavevmode\paragraph{\textbf{(i) McDiarmid's inequality}}
 Since $\ell(\cdot)\le C_\ell$ and $\ell_{\mathrm{KL}}(\cdot)\le C_{\mathrm{KL}}$,
 replacing one sample on the P side changes the sum in the first line by at most
 $\frac{\pi_{\mathrm P}}{n_{\mathrm P}}(C_\ell+\beta C_{\mathrm{KL}})$.
@@ -936,7 +936,7 @@ Furthermore, by using the subadditivity of the square root, we obtain
 \label{eq:nnputr-mcdiarmid-root2-jp}
 \end{align}
 as desired.
-\paragraph{\textbf{(ii) Ghost sampling}}
+\leavevmode\paragraph{\textbf{(ii) Ghost sampling}}
 Here, we upper bound
 $\mathbb{E}\big[\sup_{g\in\mathscr G}\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\}\big]$
 by the Rademacher complexity.
@@ -1225,7 +1225,7 @@ Substituting these bounds into \eqref{eq:nnputr-rad-split} and simplifying yield
 \label{eq:nnputr-exp-sup-bound}
 \end{align}
 as desired.
-\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
+\leavevmode\paragraph{\textbf{(iii) Combining the results of (i) and (ii)}}
 Substituting the expectation bound in (ii), i.e., \eqref{eq:nnputr-exp-sup-bound}, into the McDiarmid inequality result in (i), i.e., \eqref{eq:nnputr-mcdiarmid-root2-jp}, we obtain, with probability at least $1-\delta/2$,
 \begin{align}
 \sup_{g\in\mathscr G}\Big\{\widehat R_{\mathrm{nnPU\mbox{-}TR}}(g)-R_{\mathrm{nnPU\mbox{-}TR}}(g)\Big\}

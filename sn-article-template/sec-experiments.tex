@@ -1,10 +1,9 @@
-\chapter{Experiments}\label{ch:exp}
+\section{Experiments}\label{sec:exp}
 
-In this chapter, we experimentally evaluate the effectiveness of PU+TRADES (uPU+TRADES and nnPU+TRADES), proposed in Chapter~\ref{ch:method}, on multiple benchmark datasets.
+In this section, we experimentally evaluate the effectiveness of PU+TRADES (uPU+TRADES and nnPU+TRADES), proposed in Section~\ref{ch:method}, on multiple benchmark datasets.
 Specifically, we compare our methods with existing approaches using clean accuracy (Clean Accuracy) and adversarial accuracy (Adversarial Accuracy) as evaluation metrics, and also analyze the effect of the TRADES coefficient $\beta$.
-Furthermore, we conduct additional experiments to examine how the theoretical threshold on the number of unlabeled samples, derived in Chapter~\ref{ch:theory}, corresponds to empirical observations.
+Furthermore, we conduct additional experiments to examine how the theoretical threshold on the number of unlabeled samples, derived in Section~\ref{ch:theory}, corresponds to empirical observations.
 
-\section{Experiments}
 \subsection{Experimental Setup}
 
 % requires: \usepackage{booktabs}
@@ -16,8 +15,7 @@ Furthermore, we conduct additional experiments to examine how the theoretical th
  \vspace{5pt}
  \small
  \setlength{\tabcolsep}{3.5pt} % tighten columns
- \resizebox{\linewidth}{!}{ % <- uncomment if still too wide
- \begin{tabular}{l|cccc}
+\begin{tabular}{l|cccc}
  \toprule
   \textbf{Item} & \textbf{F-MNIST} & \textbf{CIFAR-10} & \textbf{CIFAR-100} & \textbf{Alzheimer} \\
  \midrule
@@ -37,7 +35,6 @@ Furthermore, we conduct additional experiments to examine how the theoretical th
   Metrics & \multicolumn{4}{c}{Clean Accuracy, Adversarial Accuracy} \\
  \bottomrule
  \end{tabular}
-  }
 \end{table}
 
 \paragraph{Datasets.}
@@ -166,7 +163,7 @@ However, for nnPU+TRADES, setting $\beta$ too large slightly degrades adversaria
 \section{Validation of Theoretical Analysis}\label{subsec:validate_theory}
 
 \paragraph{Objective.}
-In Chapter~\ref{ch:theory}, as a condition under which PU learning can become advantageous compared to supervised learning (PN),
+In Section~\ref{ch:theory}, as a condition under which PU learning can become advantageous compared to supervised learning (PN),
 we compared the upper bounds on the estimation error of PN-TRADES and PU+TRADES,
 and derived a threshold on the number of unlabeled samples, $n_{\mathrm U}^{\star}$, which holds when the upper bound for PN-TRADES exceeds that of PU+TRADES (Theorem~\ref{thm:nu-threshold-trades}).
 The aim of this section is to examine to what extent this theoretical threshold aligns with experimental results as a qualitative guideline:
@@ -296,7 +293,7 @@ We follow Table~\ref{tab:exp_settings} for the class priors and sample sizes, an
   $C_x$ & input norm bound & $\sqrt d$ & $\sqrt d$ & $\|x\|_2\le \sqrt d$ \\
   $C_x^{\mathrm{adv}}$ & perturbed-input bound & $C_x+\epsilon d^{1/q}$ & $C_x+\epsilon d^{1/q}$ & from \eqref{eq:ckl_def} \\
   $L_\ell$ & Lipschitz constant of loss & $1$ & $1$ & logistic loss \\
-  $L_{\mathrm{KL}}$ & Lipschitz constant of KL term & $1$ & $1$ & setting in Chapter~\ref{ch:theory} \\
+  $L_{\mathrm{KL}}$ & Lipschitz constant of KL term & $1$ & $1$ & setting in Section~\ref{ch:theory} \\
   $\delta$ & confidence level & $0.05$ & $0.05$ & fixed \\
  \bottomrule
  \end{tabular}
