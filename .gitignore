@@ -1,5 +1,5 @@
 # LaTeX build artifacts
-*.aux
+# *.aux
 # *.bbl  # Overleafと同期するため追跡する
 *.blg
 *.log

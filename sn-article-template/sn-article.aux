@@ -1,0 +1,261 @@
+\relax 
+\bibstyle{sn-mathphys-num}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\Newlabel{1}{1}
+\Newlabel{2}{2}
+\citation{Goodfellow2014ExplainingAH}
+\citation{Madry2017TowardsDL}
+\citation{zhang2019theoretically}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}\protected@file@percent }
+\newlabel{ch:intro}{{1}{2}{Introduction}{section.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Performance changes when PGD-based adversarial training is naively applied to PU learning (FashionMNIST / CIFAR-10). Left: a scatter plot showing the relationship between clean accuracy and adversarial accuracy for each method. Right: a numerical summary and the change in clean accuracy, $\Delta $Clean, before and after applying PGD (difference from the corresponding PU method without PGD). While PGD substantially improves adversarial accuracy, it degrades clean accuracy; this degradation is particularly pronounced for nnPU on CIFAR-10, where clean accuracy drops from $0.887$ to $0.732$ ($\Delta $Clean$=-0.155$).}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:cil}{{1}{3}{Performance changes when PGD-based adversarial training is naively applied to PU learning (FashionMNIST / CIFAR-10). Left: a scatter plot showing the relationship between clean accuracy and adversarial accuracy for each method. Right: a numerical summary and the change in clean accuracy, $\Delta $Clean, before and after applying PGD (difference from the corresponding PU method without PGD). While PGD substantially improves adversarial accuracy, it degrades clean accuracy; this degradation is particularly pronounced for nnPU on CIFAR-10, where clean accuracy drops from $0.887$ to $0.732$ ($\Delta $Clean$=-0.155$)}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\newlabel{ch:related}{{2}{3}{Related Work}{section.2}{}}
+\citation{Plessis2014AnalysisOL,Plessis2015ConvexFF}
+\citation{chen2020selfpu,Kiryo2017PositiveUnlabeledLW,kato2018learning,Sakai2019CovariateSA,bekker2020beyond,hammoudeh2020learningpositiveunlabeleddata,dorigatti2022robustefficientimbalancedpositiveunlabeled}
+\citation{Kiryo2017PositiveUnlabeledLW}
+\citation{dorigatti2022robustefficientimbalancedpositiveunlabeled}
+\citation{chen2020selfpu}
+\citation{liu2002partially,hou2018genpu,Zhao2022DistPUPL,pebl,hsieh2019classificationpositiveunlabeledbiased,2021PULNS,2021PredictPU}
+\citation{Goodfellow2014ExplainingAH}
+\citation{Madry2017TowardsDL}
+\citation{zhang2019theoretically}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}PU Learning}{4}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Adversarial Training}{4}{subsection.2.2}\protected@file@percent }
+\citation{Kiryo2017PositiveUnlabeledLW}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Preliminaries}{5}{section.3}\protected@file@percent }
+\newlabel{ch:preliminaries}{{3}{5}{Preliminaries}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Positive-Unlabeled (PU) Learning}{5}{subsection.3.1}\protected@file@percent }
+\citation{Goodfellow2014ExplainingAH}
+\citation{Goodfellow2014ExplainingAH}
+\citation{Madry2017TowardsDL}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces An example of generating adversarial examples. Starting from the clean image on the left, we add a small perturbation using PGD to obtain an adversarial input... The classifier correctly predicts the clean image as a cat (confidence 94.6\%), while it misclassifies the adversarial example as a dog (confidence 99.8\%). This illustrates that predictions can change drastically even when the input appears almost identical to humans\cite  {Goodfellow2014ExplainingAH}.}}{6}{figure.2}\protected@file@percent }
+\newlabel{fig:advex}{{2}{6}{An example of generating adversarial examples. Starting from the clean image on the left, we add a small perturbation using PGD to obtain an adversarial input... The classifier correctly predicts the clean image as a cat (confidence 94.6\%), while it misclassifies the adversarial example as a dog (confidence 99.8\%). This illustrates that predictions can change drastically even when the input appears almost identical to humans\cite {Goodfellow2014ExplainingAH}}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Adversarial Examples}{6}{subsection.3.2}\protected@file@percent }
+\newlabel{AE}{{3.2}{6}{Adversarial Examples}{subsection.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Adversarial attack: FGSM and PGD}{6}{subsection.3.3}\protected@file@percent }
+\newlabel{AA}{{3.3}{6}{Adversarial attack: FGSM and PGD}{subsection.3.3}{}}
+\citation{Madry2017TowardsDL}
+\citation{Madry2017TowardsDL}
+\citation{zhang2019theoretically}
+\newlabel{fgsm}{{6}{7}{Adversarial attack: FGSM and PGD}{equation.6}{}}
+\newlabel{pgd}{{7}{7}{Adversarial attack: FGSM and PGD}{equation.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Adversarial Training}{7}{subsection.3.4}\protected@file@percent }
+\newlabel{AT}{{3.4}{7}{Adversarial Training}{subsection.3.4}{}}
+\newlabel{eq:trades_loss}{{9}{7}{Adversarial Training}{equation.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Accurate and Robust PU Learning}{8}{section.4}\protected@file@percent }
+\newlabel{ch:method}{{4}{8}{Accurate and Robust PU Learning}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}uPU+PGD}{8}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:uPU_loss_piecewise}{{11}{8}{uPU+PGD}{equation.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}PU+TRADES}{9}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Appendix}{9}{section.5}\protected@file@percent }
+\newlabel{sec:appendix}{{5}{9}{Appendix}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Theoretical Analysis}{9}{subsection.5.1}\protected@file@percent }
+\newlabel{ch:theory}{{5.1}{9}{Theoretical Analysis}{subsection.5.1}{}}
+\newlabel{problem_adv}{{5.1}{10}{}{problem.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Preliminaries (Notation and Assumptions)}{11}{subsection.5.2}\protected@file@percent }
+\newlabel{subsec:theory_tools}{{5.2}{11}{Preliminaries (Notation and Assumptions)}{subsection.5.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Rademacher Complexity}{11}{section*.3}\protected@file@percent }
+\newlabel{rad}{{5.2}{11}{Rademacher Complexity}{section*.3}{}}
+\newlabel{thm:def_rademacher}{{5.1}{11}{Rademacher Complexity}{thm.5.1}{}}
+\newlabel{eq:emprad}{{19}{11}{Rademacher Complexity}{equation.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Upper Bound on the Estimation Error of Supervised TRADES}{12}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Supervised TRADES risk (population risk and empirical risk)}{12}{section*.4}\protected@file@percent }
+\newlabel{eq:pntr-risk-jp}{{20}{12}{Supervised TRADES risk (population risk and empirical risk)}{equation.20}{}}
+\newlabel{eq:pntr-emp-jp}{{21}{12}{Supervised TRADES risk (population risk and empirical risk)}{equation.21}{}}
+\newlabel{thm:pntr-estimation}{{5.2}{13}{Upper Bound on the Estimation Error of Supervised TRADES}{thm.5.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {Interpretation and implications (statistical convergence rate)}}{13}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Auxiliary lemmas}{14}{section*.6}\protected@file@percent }
+\newlabel{lem:pntr-unif-jp}{{5.3}{14}{Upper Bound on the Uniform Deviation for Supervised TRADES}{thm.5.3}{}}
+\newlabel{eq:pntr-unif-bound-jp}{{23}{14}{Upper Bound on the Uniform Deviation for Supervised TRADES}{equation.23}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Upper Bound on the Estimation Error of uPU+TRADES}{14}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{uPU+TRADES risk (population risk and empirical risk)}{14}{section*.7}\protected@file@percent }
+\newlabel{eq:uputr-risk-jp}{{24}{14}{uPU+TRADES risk (population risk and empirical risk)}{equation.24}{}}
+\newlabel{eq:uputr-emp-jp}{{25}{14}{uPU+TRADES risk (population risk and empirical risk)}{equation.25}{}}
+\newlabel{thm:uputr-estimation}{{5.4}{15}{Upper Bound on the Estimation Error of uPU+TRADES}{thm.5.4}{}}
+\newlabel{eq:uputr-estimation-bound}{{26}{15}{Upper Bound on the Estimation Error of uPU+TRADES}{equation.26}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {Interpretation and implications (statistical convergence rate)}}{15}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Auxiliary lemmas}{16}{section*.9}\protected@file@percent }
+\newlabel{lem:uputr-unif-jp}{{5.5}{16}{Upper Bound on the Uniform Deviation for uPU+TRADES}{thm.5.5}{}}
+\newlabel{eq:uputr-unif-bound-jp}{{27}{16}{Upper Bound on the Uniform Deviation for uPU+TRADES}{equation.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Upper Bound on the Estimation Error of nnPU+TRADES}{16}{subsection.5.5}\protected@file@percent }
+\newlabel{subsec:nnpu-trades-bound}{{5.5}{16}{Upper Bound on the Estimation Error of nnPU+TRADES}{subsection.5.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{nnPU+TRADES risk (population risk and empirical risk)}{16}{section*.10}\protected@file@percent }
+\newlabel{eq:nnputr-true-risk-jp}{{28}{16}{nnPU+TRADES risk (population risk and empirical risk)}{equation.28}{}}
+\newlabel{eq:nnputr-emp-risk-jp}{{29}{17}{nnPU+TRADES risk (population risk and empirical risk)}{equation.29}{}}
+\newlabel{thm:nnputr-estimation}{{5.6}{17}{Upper Bound on the Estimation Error of nnPU+TRADES}{thm.5.6}{}}
+\newlabel{eq:nnputr-estimation-bound}{{30}{17}{Upper Bound on the Estimation Error of nnPU+TRADES}{equation.30}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {Interpretation and implications (statistical convergence rate)}}{18}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Auxiliary lemmas}{18}{section*.12}\protected@file@percent }
+\newlabel{lem:nnputr-unif-jp}{{5.7}{18}{Upper Bound on the Uniform Deviation for nnPU+TRADES}{thm.5.7}{}}
+\newlabel{eq:nnputr-unif-bound-jp}{{31}{18}{Upper Bound on the Uniform Deviation for nnPU+TRADES}{equation.31}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Sufficient Unlabeled Sample Size for PU+TRADES to Outperform Supervised TRADES}{19}{subsection.5.6}\protected@file@percent }
+\newlabel{subsec:nu_condition_trades}{{5.6}{19}{Sufficient Unlabeled Sample Size for PU+TRADES to Outperform Supervised TRADES}{subsection.5.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Rademacher complexity of the linear hypothesis class}{19}{section*.13}\protected@file@percent }
+\newlabel{eq:rad-linear-basic}{{32}{19}{Rademacher complexity of the linear hypothesis class}{equation.32}{}}
+\newlabel{eq:Gamma-delta-def}{{34}{19}{Rademacher complexity of the linear hypothesis class}{equation.34}{}}
+\@writefile{toc}{\contentsline {paragraph}{(1) Comparing PN+TRADES and uPU+TRADES}{19}{section*.14}\protected@file@percent }
+\newlabel{eq:pntr-bound-simplified}{{35}{19}{(1) Comparing PN+TRADES and uPU+TRADES}{equation.35}{}}
+\newlabel{eq:uputr-bound-simplified}{{36}{19}{(1) Comparing PN+TRADES and uPU+TRADES}{equation.36}{}}
+\@writefile{toc}{\contentsline {paragraph}{Main result: sufficient unlabeled sample size}{20}{section*.15}\protected@file@percent }
+\newlabel{thm:nu-threshold-trades}{{5.8}{20}{Sufficient Unlabeled Sample Size for PU+TRADES to Outperform Supervised TRADES}{thm.5.8}{}}
+\newlabel{eq:compare-pn-uputr-feasible}{{37}{20}{Sufficient Unlabeled Sample Size for PU+TRADES to Outperform Supervised TRADES}{equation.37}{}}
+\newlabel{eq:nu-threshold-uputr}{{38}{20}{Sufficient Unlabeled Sample Size for PU+TRADES to Outperform Supervised TRADES}{Item.1}{}}
+\newlabel{eq:nu-threshold-nnputr}{{39}{20}{Sufficient Unlabeled Sample Size for PU+TRADES to Outperform Supervised TRADES}{Item.2}{}}
+\citation{Xiao2017FashionMNIST}
+\citation{krizhevsky2009learning}
+\citation{krizhevsky2009learning}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Experimental settings for each dataset (F-MNIST, CIFAR-10, CIFAR-100, and Alzheimer MRI).}}{21}{table.1}\protected@file@percent }
+\newlabel{tab:exp_settings}{{1}{21}{Experimental settings for each dataset (F-MNIST, CIFAR-10, CIFAR-100, and Alzheimer MRI)}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Experiments}{21}{section.6}\protected@file@percent }
+\newlabel{sec:exp}{{6}{21}{Experiments}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Experimental Setup}{21}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Datasets.}{21}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evaluation metrics.}{21}{section*.17}\protected@file@percent }
+\citation{Goodfellow-et-al-2016}
+\citation{He2016ResNet}
+\citation{He2016ResNet}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Main results on FashionMNIST (6-layer MLP) and CIFAR-10 (ResNet-18). We compare uPU/nnPU and their adversarially trained variants (PGD training and TRADES training), and report clean accuracy (Clean) and adversarial accuracy (Adv.) under PGD attacks ($\epsilon $ follows Table~\ref {tab:exp_settings}, 10 steps) on the test set. For each setting, we select the epoch that achieves the highest Clean Accuracy. While uPU/nnPU without adversarial training achieve almost zero Adv., TRADES improves robustness without severely degrading clean accuracy.}}{22}{table.2}\protected@file@percent }
+\newlabel{tab:main_results_fm_c10}{{2}{22}{Main results on FashionMNIST (6-layer MLP) and CIFAR-10 (ResNet-18). We compare uPU/nnPU and their adversarially trained variants (PGD training and TRADES training), and report clean accuracy (Clean) and adversarial accuracy (Adv.) under PGD attacks ($\epsilon $ follows Table~\ref {tab:exp_settings}, 10 steps) on the test set. For each setting, we select the epoch that achieves the highest Clean Accuracy. While uPU/nnPU without adversarial training achieve almost zero Adv., TRADES improves robustness without severely degrading clean accuracy}{table.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Training details.}{22}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Main Results}{22}{section.7}\protected@file@percent }
+\newlabel{sec:main_results}{{7}{22}{Main Results}{section.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Main results on CIFAR-100 (ResNet-18) and Alzheimer MRI (ResNet-50) (nnPU variants only). We compare clean accuracy (Clean) and adversarial accuracy (Adv.) under PGD attacks ($\epsilon $ follows Table~\ref {tab:exp_settings}, 10 steps) on the test set. For each setting, we select the epoch that achieves the highest Clean Accuracy. While nnPU alone attains almost zero Adv., nnPU+TRADES substantially improves robustness.}}{23}{table.3}\protected@file@percent }
+\newlabel{tab:main_results_c100_ad}{{3}{23}{Main results on CIFAR-100 (ResNet-18) and Alzheimer MRI (ResNet-50) (nnPU variants only). We compare clean accuracy (Clean) and adversarial accuracy (Adv.) under PGD attacks ($\epsilon $ follows Table~\ref {tab:exp_settings}, 10 steps) on the test set. For each setting, we select the epoch that achieves the highest Clean Accuracy. While nnPU alone attains almost zero Adv., nnPU+TRADES substantially improves robustness}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Ablation on the TRADES coefficient $\beta $ (F-MNIST / CIFAR-10). We vary $\beta \in \{6,12,18\}$ and compare clean accuracy (Clean Acc.) and adversarial accuracy (Adv. Acc.) for uPU+TRADES and nnPU+TRADES. On FashionMNIST, performance changes only mildly with $\beta $, whereas on CIFAR-10 increasing $\beta $ tends to improve adversarial accuracy at the cost of decreased clean accuracy.}}{23}{table.4}\protected@file@percent }
+\newlabel{tab:beta_sweep}{{4}{23}{Ablation on the TRADES coefficient $\beta $ (F-MNIST / CIFAR-10). We vary $\beta \in \{6,12,18\}$ and compare clean accuracy (Clean Acc.) and adversarial accuracy (Adv. Acc.) for uPU+TRADES and nnPU+TRADES. On FashionMNIST, performance changes only mildly with $\beta $, whereas on CIFAR-10 increasing $\beta $ tends to improve adversarial accuracy at the cost of decreased clean accuracy}{table.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Validation of Theoretical Analysis}{24}{section.8}\protected@file@percent }
+\newlabel{subsec:validate_theory}{{8}{24}{Validation of Theoretical Analysis}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Objective.}{24}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Validation procedure.}{24}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Numerical instantiation of the theoretical threshold $n_{\mathrm  U}^{\star }$.}{24}{section*.21}\protected@file@percent }
+\newlabel{eq:ckl_def}{{40}{24}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.40}{}}
+\newlabel{eq:Gamma_step0_exp}{{41}{24}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.41}{}}
+\newlabel{eq:Gamma_step1_exp}{{42}{24}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.42}{}}
+\newlabel{eq:Gamma_step2_exp}{{43}{24}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.43}{}}
+\newlabel{eq:Gamma_step3_exp}{{44}{25}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.44}{}}
+\newlabel{eq:Gamma_step4_exp}{{45}{25}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.45}{}}
+\newlabel{eq:Gamma_bar_def}{{46}{25}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.46}{}}
+\newlabel{eq:compare-pn-uputr-feasible-exp}{{47}{25}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.47}{}}
+\newlabel{eq:nu_threshold_exp_simplified}{{48}{25}{Numerical instantiation of the theoretical threshold $n_{\mathrm U}^{\star }$}{equation.48}{}}
+\@writefile{toc}{\contentsline {paragraph}{Constants and settings.}{25}{section*.22}\protected@file@percent }
+\newlabel{eq:cx_d_simplify}{{49}{25}{Constants and settings}{equation.49}{}}
+\@writefile{toc}{\contentsline {paragraph}{Experimental protocol for validation.}{25}{section*.23}\protected@file@percent }
+\newlabel{eq:loss_sum_def}{{50}{25}{Experimental protocol for validation}{equation.50}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Constants used to numerically instantiate the theoretical threshold $n_{\mathrm  U}^{\star }$ derived in Theorem~\ref {thm:nu-threshold-trades} (FashionMNIST / CIFAR-10). We follow Table~\ref {tab:exp_settings} for the class priors and sample sizes, and summarize the input dimension $d$, norm bounds $C_x, C_x^{\mathrm  {adv}}$, Lipschitz constants $L_\ell , L_{\mathrm  {KL}}$, confidence level $\delta $, and so on.}}{26}{table.5}\protected@file@percent }
+\newlabel{tab:validate_theory_constants}{{5}{26}{Constants used to numerically instantiate the theoretical threshold $n_{\mathrm U}^{\star }$ derived in Theorem~\ref {thm:nu-threshold-trades} (FashionMNIST / CIFAR-10). We follow Table~\ref {tab:exp_settings} for the class priors and sample sizes, and summarize the input dimension $d$, norm bounds $C_x, C_x^{\mathrm {adv}}$, Lipschitz constants $L_\ell , L_{\mathrm {KL}}$, confidence level $\delta $, and so on}{table.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Empirical turning point.}{26}{section*.24}\protected@file@percent }
+\newlabel{eq:nu_emp_def}{{51}{26}{Empirical turning point}{equation.51}{}}
+\@writefile{toc}{\contentsline {paragraph}{Results.}{26}{section*.25}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces *}}{27}{figure.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces *}}{27}{figure.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces *}}{27}{figure.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces *}}{27}{figure.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Validation results for the theoretical threshold $n_{\mathrm  U}^{\star }$ of the unlabeled sample size derived in our theoretical analysis. Each panel plots the test loss sum for PU+TRADES, $\mathcal  {L}_{\mathrm  {sum}}(n_{\mathrm  U})=\mathcal  {L}_{\mathrm  {clean}}(t^{\star }(n_{\mathrm  U});n_{\mathrm  U})+\mathcal  {L}_{\mathrm  {adv}}(t^{\star }(n_{\mathrm  U});n_{\mathrm  U})$ (Eq.~\eqref  {eq:loss_sum_def}), against $n_{\mathrm  U}$, and compares it with the PN-TRADES baseline value (which does not depend on $n_{\mathrm  U}$). Here, $t^{\star }(n_{\mathrm  U})$ denotes the epoch achieving the highest Clean Accuracy. The intersection $\setbox \z@ \hbox {\mathsurround \z@ $\textstyle n$}\mathaccent "0362{n}_{\mathrm  U}^{\mathrm  {emp}}$ is estimated by linear interpolation.}}{27}{figure.7}\protected@file@percent }
+\newlabel{fig:validate_theory_loss_sum}{{7}{27}{Validation results for the theoretical threshold $n_{\mathrm U}^{\star }$ of the unlabeled sample size derived in our theoretical analysis. Each panel plots the test loss sum for PU+TRADES, $\mathcal {L}_{\mathrm {sum}}(n_{\mathrm U})=\mathcal {L}_{\mathrm {clean}}(t^{\star }(n_{\mathrm U});n_{\mathrm U})+\mathcal {L}_{\mathrm {adv}}(t^{\star }(n_{\mathrm U});n_{\mathrm U})$ (Eq.~\eqref {eq:loss_sum_def}), against $n_{\mathrm U}$, and compares it with the PN-TRADES baseline value (which does not depend on $n_{\mathrm U}$). Here, $t^{\star }(n_{\mathrm U})$ denotes the epoch achieving the highest Clean Accuracy. The intersection $\widehat n_{\mathrm U}^{\mathrm {emp}}$ is estimated by linear interpolation}{figure.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Discussion.}{27}{section*.26}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Comparison between the theoretical threshold $n_{\mathrm  U}^{\star }$ (Theorem~\ref {thm:nu-threshold-trades}) and the empirical turning point $\setbox \z@ \hbox {\mathsurround \z@ $\textstyle n$}\mathaccent "0362{n}_{\mathrm  U}^{\mathrm  {emp}}$. $\setbox \z@ \hbox {\mathsurround \z@ $\textstyle n$}\mathaccent "0362{n}_{\mathrm  U}^{\mathrm  {emp}}$ is estimated by linear interpolation from Fig.~\ref {fig:validate_theory_loss_sum} as the value of $n_{\mathrm  U}$ where the loss sums $\mathcal  {L}_{\mathrm  {sum}}$ of PU+TRADES and PN-TRADES coincide. ``---'' indicates that no intersection existed within the range of $n_{\mathrm  U}$ evaluated in this study.}}{28}{table.6}\protected@file@percent }
+\newlabel{tab:validate_theory_summary}{{6}{28}{Comparison between the theoretical threshold $n_{\mathrm U}^{\star }$ (Theorem~\ref {thm:nu-threshold-trades}) and the empirical turning point $\widehat n_{\mathrm U}^{\mathrm {emp}}$. $\widehat n_{\mathrm U}^{\mathrm {emp}}$ is estimated by linear interpolation from Fig.~\ref {fig:validate_theory_loss_sum} as the value of $n_{\mathrm U}$ where the loss sums $\mathcal {L}_{\mathrm {sum}}$ of PU+TRADES and PN-TRADES coincide. ``---'' indicates that no intersection existed within the range of $n_{\mathrm U}$ evaluated in this study}{table.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{28}{section.9}\protected@file@percent }
+\newlabel{sec13}{{9}{28}{Conclusion}{section.9}{}}
+\@writefile{toc}{\contentsline {subparagraph}{Supplementary information}{28}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{Acknowledgements}{28}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs of Theoretical Analysis}{28}{appendix.1.A}\protected@file@percent }
+\newlabel{app:theory-proofs}{{A}{28}{Proofs of Theoretical Analysis}{appendix.1.A}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Background / Tool Box (Standard Results)}{28}{subsection.1.A.1}\protected@file@percent }
+\newlabel{app:toolbox}{{A.1}{28}{Background / Tool Box (Standard Results)}{subsection.1.A.1}{}}
+\newlabel{lem:talagrand_contraction}{{A.1}{28}{Talagrand's Contraction Lemma}{thm.1.A.1}{}}
+\newlabel{eq:radcontraction}{{A1}{28}{Talagrand's Contraction Lemma}{equation.1}{}}
+\newlabel{lem:vecContract}{{A.2}{29}{Vector Contraction}{thm.1.A.2}{}}
+\newlabel{thm:rademacher_bound}{{A.3}{29}{Upper Bound on Rademacher Complexity}{thm.1.A.3}{}}
+\newlabel{lem:advRad}{{A.4}{29}{Adversarial Rademacher Additive Term}{thm.1.A.4}{}}
+\newlabel{thm:mcdiarmid}{{A.5}{29}{McDiarmid's Inequality}{thm.1.A.5}{}}
+\newlabel{eq:data_replacement}{{A4}{29}{McDiarmid's Inequality}{equation.4}{}}
+\newlabel{eq:mcdiarmid}{{A5}{29}{McDiarmid's Inequality}{equation.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of the Lemma ``Uniform Deviation Bound for Supervised TRADES'' (Lemma~\ref {lem:pntr-unif-jp})}{29}{subsection.1.A.2}\protected@file@percent }
+\newlabel{app:proof-lem-pntr-unif-jp}{{A.2}{29}{Proof of the Lemma ``Uniform Deviation Bound for Supervised TRADES'' (Lemma~\ref {lem:pntr-unif-jp})}{subsection.1.A.2}{}}
+\citation{Vapnik1998}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(i) McDiarmid's inequality}}{30}{section*.29}\protected@file@percent }
+\newlabel{eq:pntr-mcdiarmid-root-jp}{{A7}{30}{\textbf {(i) McDiarmid's inequality}}{equation.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(ii) Ghost sampling and symmetrization}}{30}{section*.30}\protected@file@percent }
+\newlabel{eq:pntr-ghost-sym}{{A8}{30}{\textbf {(ii) Ghost sampling and symmetrization}}{equation.8}{}}
+\newlabel{eq:pntr-diff-decomp}{{A9}{31}{\textbf {(ii) Ghost sampling and symmetrization}}{equation.9}{}}
+\newlabel{eq:pntr-sup-subadd}{{A10}{31}{\textbf {(ii) Ghost sampling and symmetrization}}{equation.10}{}}
+\newlabel{eq:pntr-sym-stepP}{{A11}{31}{\textbf {(ii) Ghost sampling and symmetrization}}{equation.11}{}}
+\newlabel{eq:pntr-rad-phiP}{{A12}{31}{\textbf {(ii) Ghost sampling and symmetrization}}{equation.12}{}}
+\newlabel{eq:pntr-rad-kl-bound}{{A13}{32}{\textbf {(ii) Ghost sampling and symmetrization}}{equation.13}{}}
+\newlabel{eq:pntr-exp-sup-bound}{{A14}{32}{\textbf {(ii) Ghost sampling and symmetrization}}{equation.14}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(iii) Combining the results of (i) and (ii)}}{32}{section*.31}\protected@file@percent }
+\newlabel{eq:pntr-sup-one-dir}{{A15}{32}{\textbf {(iii) Combining the results of (i) and (ii)}}{equation.15}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(iv) Reverse direction and union bound}}{33}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Proof of Theorem~\ref {thm:pntr-estimation}}{33}{subsection.1.A.3}\protected@file@percent }
+\newlabel{app:proof-thm-pntr-estimation}{{A.3}{33}{Proof of Theorem~\ref {thm:pntr-estimation}}{subsection.1.A.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of the Lemma ``Uniform Deviation Bound for uPU+TRADES'' (Lemma~\ref {lem:uputr-unif-jp})}{33}{subsection.1.A.4}\protected@file@percent }
+\newlabel{app:proof-lem-uputr-unif-jp}{{A.4}{33}{Proof of the Lemma ``Uniform Deviation Bound for uPU+TRADES'' (Lemma~\ref {lem:uputr-unif-jp})}{subsection.1.A.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(i) McDiarmid's inequality}}{33}{section*.33}\protected@file@percent }
+\newlabel{eq:uputr-mcdiarmid-jp}{{A16}{33}{\textbf {(i) McDiarmid's inequality}}{equation.16}{}}
+\newlabel{eq:uputr-mcdiarmid-root-jp}{{A17}{34}{\textbf {(i) McDiarmid's inequality}}{equation.17}{}}
+\newlabel{eq:uputr-mcdiarmid-root2-jp}{{A18}{34}{\textbf {(i) McDiarmid's inequality}}{equation.18}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(ii) Ghost sampling}}{34}{section*.34}\protected@file@percent }
+\newlabel{eq:uputr-ghost-sym}{{A19}{34}{\textbf {(ii) Ghost sampling}}{equation.19}{}}
+\newlabel{eq:uputr-diff-decomp}{{A20}{34}{\textbf {(ii) Ghost sampling}}{equation.20}{}}
+\newlabel{eq:uputr-sup-subadd}{{A21}{35}{\textbf {(ii) Ghost sampling}}{equation.21}{}}
+\newlabel{eq:uputr-rad-phiP}{{A23}{35}{\textbf {(ii) Ghost sampling}}{equation.23}{}}
+\newlabel{eq:uputr-rad-phiU}{{A24}{35}{\textbf {(ii) Ghost sampling}}{equation.24}{}}
+\newlabel{eq:uputr-rad-kl-bound}{{A25}{35}{\textbf {(ii) Ghost sampling}}{equation.25}{}}
+\newlabel{eq:uputr-exp-sup-bound}{{A26}{36}{\textbf {(ii) Ghost sampling}}{equation.26}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(iii) Combining the results of (i) and (ii)}}{36}{section*.35}\protected@file@percent }
+\newlabel{eq:uputr-sup-one-dir}{{A27}{36}{\textbf {(iii) Combining the results of (i) and (ii)}}{equation.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Theorem~\ref {thm:uputr-estimation}}{36}{subsection.1.A.5}\protected@file@percent }
+\newlabel{app:proof-thm-uputr-estimation}{{A.5}{36}{Proof of Theorem~\ref {thm:uputr-estimation}}{subsection.1.A.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Proof of the Lemma ``Uniform Deviation Bound for nnPU+TRADES'' (Lemma~\ref {lem:nnputr-unif-jp})}{36}{subsection.1.A.6}\protected@file@percent }
+\newlabel{app:proof-lem-nnputr-unif-jp}{{A.6}{36}{Proof of the Lemma ``Uniform Deviation Bound for nnPU+TRADES'' (Lemma~\ref {lem:nnputr-unif-jp})}{subsection.1.A.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(i) McDiarmid's inequality}}{37}{section*.36}\protected@file@percent }
+\newlabel{eq:nnputr-mcdiarmid-jp}{{A28}{37}{\textbf {(i) McDiarmid's inequality}}{equation.28}{}}
+\newlabel{eq:nnputr-mcdiarmid-root-jp}{{A29}{37}{\textbf {(i) McDiarmid's inequality}}{equation.29}{}}
+\newlabel{eq:nnputr-mcdiarmid-root2-jp}{{A30}{37}{\textbf {(i) McDiarmid's inequality}}{equation.30}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(ii) Ghost sampling}}{37}{section*.37}\protected@file@percent }
+\newlabel{eq:nnputr-lip-max}{{A31}{38}{\textbf {(ii) Ghost sampling}}{equation.31}{}}
+\newlabel{eq:nnputr-exp-sup-decomp}{{A32}{38}{\textbf {(ii) Ghost sampling}}{equation.32}{}}
+\newlabel{eq:nnputr-ghost-P}{{A33}{39}{\textbf {(ii) Ghost sampling}}{equation.33}{}}
+\newlabel{eq:nnputr-sym-stepP}{{A34}{39}{\textbf {(ii) Ghost sampling}}{equation.34}{}}
+\newlabel{eq:nnputr-rad-phiPlusP}{{A35}{39}{\textbf {(ii) Ghost sampling}}{equation.35}{}}
+\newlabel{eq:nnputr-rad-others}{{A36}{39}{\textbf {(ii) Ghost sampling}}{equation.36}{}}
+\newlabel{eq:nnputr-rad-split}{{A37}{40}{\textbf {(ii) Ghost sampling}}{equation.37}{}}
+\newlabel{eq:nnputr-rad-kl-bound}{{A38}{40}{\textbf {(ii) Ghost sampling}}{equation.38}{}}
+\newlabel{eq:nnputr-exp-sup-bound}{{A39}{40}{\textbf {(ii) Ghost sampling}}{equation.39}{}}
+\@writefile{toc}{\contentsline {paragraph}{\textbf  {(iii) Combining the results of (i) and (ii)}}{40}{section*.38}\protected@file@percent }
+\newlabel{eq:nnputr-sup-one-dir}{{A40}{40}{\textbf {(iii) Combining the results of (i) and (ii)}}{equation.40}{}}
+\bibdata{sn-bibliography}
+\bibcite{Goodfellow2014ExplainingAH}{{1}{2014}{{Goodfellow et~al.}}{{}}}
+\bibcite{Madry2017TowardsDL}{{2}{2017}{{Madry et~al.}}{{}}}
+\bibcite{zhang2019theoretically}{{3}{2019}{{Zhang et~al.}}{{}}}
+\bibcite{Plessis2014AnalysisOL}{{4}{2014}{{du~Plessis et~al.}}{{}}}
+\bibcite{Plessis2015ConvexFF}{{5}{2015}{{du~Plessis et~al.}}{{}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Proof of Theorem~\ref {thm:nnputr-estimation}}{41}{subsection.1.A.7}\protected@file@percent }
+\newlabel{app:proof-thm-nnputr-estimation}{{A.7}{41}{Proof of Theorem~\ref {thm:nnputr-estimation}}{subsection.1.A.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Proof of the Theorem ``Condition on the Number of Unlabeled Samples for PU+TRADES to Outperform Supervised TRADES'' (Theorem~\ref {thm:nu-threshold-trades})}{41}{subsection.1.A.8}\protected@file@percent }
+\newlabel{app:proof-thm-nu-threshold-trades}{{A.8}{41}{Proof of the Theorem ``Condition on the Number of Unlabeled Samples for PU+TRADES to Outperform Supervised TRADES'' (Theorem~\ref {thm:nu-threshold-trades})}{subsection.1.A.8}{}}
+\bibcite{chen2020selfpu}{{6}{2020}{{Chen et~al.}}{{}}}
+\bibcite{Kiryo2017PositiveUnlabeledLW}{{7}{2017}{{Kiryo et~al.}}{{}}}
+\bibcite{kato2018learning}{{8}{2019}{{Kato et~al.}}{{}}}
+\bibcite{Sakai2019CovariateSA}{{9}{2019}{{Sakai and Shimizu}}{{}}}
+\bibcite{bekker2020beyond}{{10}{2020}{{Bekker et~al.}}{{}}}
+\bibcite{hammoudeh2020learningpositiveunlabeleddata}{{11}{2020}{{Hammoudeh and Lowd}}{{}}}
+\bibcite{dorigatti2022robustefficientimbalancedpositiveunlabeled}{{12}{2022}{{Dorigatti et~al.}}{{}}}
+\bibcite{liu2002partially}{{13}{2002}{{Liu et~al.}}{{}}}
+\bibcite{hou2018genpu}{{14}{2018}{{Hou et~al.}}{{}}}
+\bibcite{Zhao2022DistPUPL}{{15}{2022}{{Zhao et~al.}}{{}}}
+\bibcite{pebl}{{16}{2004}{{Yu et~al.}}{{}}}
+\bibcite{hsieh2019classificationpositiveunlabeledbiased}{{17}{2019}{{Hsieh et~al.}}{{}}}
+\bibcite{2021PULNS}{{18}{2021}{{Luo et~al.}}{{}}}
+\bibcite{2021PredictPU}{{19}{2021}{{Hu et~al.}}{{}}}
+\bibcite{Xiao2017FashionMNIST}{{20}{2017}{{Xiao et~al.}}{{}}}
+\bibcite{krizhevsky2009learning}{{21}{2009}{{Krizhevsky}}{{}}}
+\bibcite{Goodfellow-et-al-2016}{{22}{2016}{{Goodfellow et~al.}}{{}}}
+\bibcite{He2016ResNet}{{23}{2016}{{He et~al.}}{{}}}
+\bibcite{Vapnik1998}{{24}{1998}{{Vapnik}}{{}}}
+\gdef \@abspage@last{43}
