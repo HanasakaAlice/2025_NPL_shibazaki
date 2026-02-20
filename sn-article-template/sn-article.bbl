@@ -1,0 +1,409 @@
+%% BioMed_Central_Bib_Style_v1.01
+
+\begin{thebibliography}{24}
+% BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\url{https://doi.org/#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\bibcommenthead
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem[\protect\citeauthoryear{Goodfellow et~al.}{2014}]{Goodfellow2014ExplainingAH}
+\begin{botherref}
+\oauthor{\bsnm{Goodfellow}, \binits{I.J.}},
+\oauthor{\bsnm{Shlens}, \binits{J.}},
+\oauthor{\bsnm{Szegedy}, \binits{C.}}:
+Explaining and harnessing adversarial examples.
+CoRR
+(2014)
+\end{botherref}
+\endbibitem
+
+%%% 2
+\bibitem[\protect\citeauthoryear{Madry et~al.}{2017}]{Madry2017TowardsDL}
+\begin{botherref}
+\oauthor{\bsnm{Madry}, \binits{A.}},
+\oauthor{\bsnm{Makelov}, \binits{A.}},
+\oauthor{\bsnm{Schmidt}, \binits{L.}},
+\oauthor{\bsnm{Tsipras}, \binits{D.}},
+\oauthor{\bsnm{Vladu}, \binits{A.}}:
+Towards deep learning models resistant to adversarial attacks.
+arXiv preprint arXiv:1706.06083
+(2017)
+\end{botherref}
+\endbibitem
+
+%%% 3
+\bibitem[\protect\citeauthoryear{Zhang et~al.}{2019}]{zhang2019theoretically}
+\begin{bchapter}
+\bauthor{\bsnm{Zhang}, \binits{H.}},
+\bauthor{\bsnm{Yu}, \binits{Y.}},
+\bauthor{\bsnm{Jiao}, \binits{J.}},
+\bauthor{\bsnm{Xing}, \binits{E.P.}},
+\bauthor{\bsnm{{El Ghaoui}}, \binits{L.}},
+\bauthor{\bsnm{Jordan}, \binits{M.I.}}:
+\bctitle{Theoretically principled trade-off between robustness and accuracy}.
+In: \bbtitle{Proceedings of the 36th International Conference on Machine Learning}.
+\bsertitle{Proceedings of Machine Learning Research},
+vol. \bseriesno{97},
+pp. \bfpage{7472}--\blpage{7482}
+(\byear{2019})
+\end{bchapter}
+\endbibitem
+
+%%% 4
+\bibitem[\protect\citeauthoryear{du~Plessis et~al.}{2014}]{Plessis2014AnalysisOL}
+\begin{bchapter}
+\bauthor{\bsnm{Plessis}, \binits{M.C.}},
+\bauthor{\bsnm{Niu}, \binits{G.}},
+\bauthor{\bsnm{Sugiyama}, \binits{M.}}:
+\bctitle{Analysis of learning from positive and unlabeled data}.
+In: \bbtitle{Advances in Neural Information Processing Systems},
+vol. \bseriesno{27},
+pp. \bfpage{703}--\blpage{711}
+(\byear{2014}).
+\burl{https://api.semanticscholar.org/CorpusID:14878885}
+\end{bchapter}
+\endbibitem
+
+%%% 5
+\bibitem[\protect\citeauthoryear{du~Plessis et~al.}{2015}]{Plessis2015ConvexFF}
+\begin{bchapter}
+\bauthor{\bsnm{Plessis}, \binits{M.C.}},
+\bauthor{\bsnm{Niu}, \binits{G.}},
+\bauthor{\bsnm{Sugiyama}, \binits{M.}}:
+\bctitle{Convex formulation for learning from positive and unlabeled data}.
+In: \bbtitle{Proceedings of the 32nd International Conference on Machine Learning}.
+\bsertitle{Proceedings of Machine Learning Research},
+vol. \bseriesno{37},
+pp. \bfpage{1386}--\blpage{1394}
+(\byear{2015}).
+\burl{https://api.semanticscholar.org/CorpusID:15313053}
+\end{bchapter}
+\endbibitem
+
+%%% 6
+\bibitem[\protect\citeauthoryear{Chen et~al.}{2020}]{chen2020selfpu}
+\begin{bchapter}
+\bauthor{\bsnm{Chen}, \binits{X.}},
+\bauthor{\bsnm{Chen}, \binits{W.}},
+\bauthor{\bsnm{Chen}, \binits{T.}},
+\bauthor{\bsnm{Yuan}, \binits{Y.}},
+\bauthor{\bsnm{Gong}, \binits{C.}},
+\bauthor{\bsnm{Chen}, \binits{K.}},
+\bauthor{\bsnm{Wang}, \binits{Z.}}:
+\bctitle{Self-pu: Self boosted and calibrated positive-unlabeled training}.
+In: \bbtitle{Proceedings of the 37th International Conference on Machine Learning}.
+\bsertitle{Proceedings of Machine Learning Research},
+vol. \bseriesno{119},
+pp. \bfpage{1510}--\blpage{1519}.
+\bpublisher{PMLR}, \blocation{???}
+(\byear{2020}).
+\burl{https://proceedings.mlr.press/v119/chen20b.html}
+\end{bchapter}
+\endbibitem
+
+%%% 7
+\bibitem[\protect\citeauthoryear{Kiryo et~al.}{2017}]{Kiryo2017PositiveUnlabeledLW}
+\begin{botherref}
+\oauthor{\bsnm{Kiryo}, \binits{R.}},
+\oauthor{\bsnm{Niu}, \binits{G.}},
+\oauthor{\bsnm{Plessis}, \binits{M.C.}},
+\oauthor{\bsnm{Sugiyama}, \binits{M.}}:
+Positive-unlabeled learning with non-negative risk estimator.
+arXiv preprint arXiv:1703.00593
+(2017)
+\end{botherref}
+\endbibitem
+
+%%% 8
+\bibitem[\protect\citeauthoryear{Kato et~al.}{2019}]{kato2018learning}
+\begin{bchapter}
+\bauthor{\bsnm{Kato}, \binits{M.}},
+\bauthor{\bsnm{Teshima}, \binits{T.}},
+\bauthor{\bsnm{Honda}, \binits{J.}}:
+\bctitle{Learning from positive and unlabeled data with a selection bias}.
+In: \bbtitle{International Conference on Learning Representations}
+(\byear{2019}).
+\burl{https://openreview.net/forum?id=rJzLciCqKm}
+\end{bchapter}
+\endbibitem
+
+%%% 9
+\bibitem[\protect\citeauthoryear{Sakai and Shimizu}{2019}]{Sakai2019CovariateSA}
+\begin{bchapter}
+\bauthor{\bsnm{Sakai}, \binits{T.}},
+\bauthor{\bsnm{Shimizu}, \binits{N.}}:
+\bctitle{Covariate shift adaptation on learning from positive and unlabeled data}.
+In: \bbtitle{AAAI Conference on Artificial Intelligence},
+pp. \bfpage{4838}--\blpage{4845}
+(\byear{2019}).
+\burl{https://api.semanticscholar.org/CorpusID:70299136}
+\end{bchapter}
+\endbibitem
+
+%%% 10
+\bibitem[\protect\citeauthoryear{Bekker et~al.}{2020}]{bekker2020beyond}
+\begin{bchapter}
+\bauthor{\bsnm{Bekker}, \binits{J.}},
+\bauthor{\bsnm{Robberechts}, \binits{P.}},
+\bauthor{\bsnm{Davis}, \binits{J.}}:
+\bctitle{Beyond the selected completely at random assumption for learning from positive and unlabeled data}.
+In: \bbtitle{Machine Learning and Knowledge Discovery in Databases (ECML PKDD 2019), Proceedings, Part II}.
+\bsertitle{Lecture Notes in Computer Science (LNAI)},
+vol. \bseriesno{11907},
+pp. \bfpage{71}--\blpage{85}.
+\bpublisher{Springer}, \blocation{???}
+(\byear{2020}).
+\doiurl{10.1007/978-3-030-46147-8_5} .
+\burl{https://link.springer.com/chapter/10.1007/978-3-030-46147-8\_5}
+\end{bchapter}
+\endbibitem
+
+%%% 11
+\bibitem[\protect\citeauthoryear{Hammoudeh and Lowd}{2020}]{hammoudeh2020learningpositiveunlabeleddata}
+\begin{bchapter}
+\bauthor{\bsnm{Hammoudeh}, \binits{Z.}},
+\bauthor{\bsnm{Lowd}, \binits{D.}}:
+\bctitle{Learning from positive and unlabeled data with arbitrary positive shift}.
+In: \bbtitle{Advances in Neural Information Processing Systems},
+vol. \bseriesno{33},
+pp. \bfpage{13088}--\blpage{13099}
+(\byear{2020}).
+\burl{https://arxiv.org/abs/2002.10261}
+\end{bchapter}
+\endbibitem
+
+%%% 12
+\bibitem[\protect\citeauthoryear{Dorigatti et~al.}{2022}]{dorigatti2022robustefficientimbalancedpositiveunlabeled}
+\begin{botherref}
+\oauthor{\bsnm{Dorigatti}, \binits{E.}},
+\oauthor{\bsnm{Schweisthal}, \binits{J.}},
+\oauthor{\bsnm{Bischl}, \binits{B.}},
+\oauthor{\bsnm{Rezaei}, \binits{M.}}:
+Robust and Efficient Imbalanced Positive-Unlabeled Learning with Self-supervision
+(2022).
+\url{https://arxiv.org/abs/2209.02459}
+\end{botherref}
+\endbibitem
+
+%%% 13
+\bibitem[\protect\citeauthoryear{Liu et~al.}{2002}]{liu2002partially}
+\begin{bchapter}
+\bauthor{\bsnm{Liu}, \binits{B.}},
+\bauthor{\bsnm{Lee}, \binits{W.S.}},
+\bauthor{\bsnm{Yu}, \binits{P.S.}},
+\bauthor{\bsnm{Li}, \binits{X.}}:
+\bctitle{Partially supervised classification of text documents}.
+In: \bbtitle{Proceedings of the Nineteenth International Conference on Machine Learning (ICML 2002)},
+pp. \bfpage{387}--\blpage{394}
+(\byear{2002})
+\end{bchapter}
+\endbibitem
+
+%%% 14
+\bibitem[\protect\citeauthoryear{Hou et~al.}{2018}]{hou2018genpu}
+\begin{bchapter}
+\bauthor{\bsnm{Hou}, \binits{M.}},
+\bauthor{\bsnm{Chaib-draa}, \binits{B.}},
+\bauthor{\bsnm{Li}, \binits{C.}},
+\bauthor{\bsnm{Zhao}, \binits{Q.}}:
+\bctitle{Generative adversarial positive-unlabelled learning}.
+In: \bbtitle{Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence (IJCAI-18)},
+pp. \bfpage{2255}--\blpage{2261}
+(\byear{2018}).
+\doiurl{10.24963/ijcai.2018/312} .
+\burl{https://www.ijcai.org/proceedings/2018/312}
+\end{bchapter}
+\endbibitem
+
+%%% 15
+\bibitem[\protect\citeauthoryear{Zhao et~al.}{2022}]{Zhao2022DistPUPL}
+\begin{botherref}
+\oauthor{\bsnm{Zhao}, \binits{Y.}},
+\oauthor{\bsnm{Xu}, \binits{Q.}},
+\oauthor{\bsnm{Jiang}, \binits{Y.}},
+\oauthor{\bsnm{Wen}, \binits{P.}},
+\oauthor{\bsnm{Huang}, \binits{Q.}}:
+Dist-pu: Positive-unlabeled learning from a label distribution perspective.
+2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR),
+14441--14450
+(2022)
+\end{botherref}
+\endbibitem
+
+%%% 16
+\bibitem[\protect\citeauthoryear{Yu et~al.}{2004}]{pebl}
+\begin{barticle}
+\bauthor{\bsnm{Yu}, \binits{H.}},
+\bauthor{\bsnm{Han}, \binits{J.}},
+\bauthor{\bsnm{Chang}, \binits{K.}}:
+\batitle{Pebl: Web page classification without negative examples}.
+\bjtitle{IEEE Transactions on Knowledge and Data Engineering}
+\bvolume{16}(\bissue{1}),
+\bfpage{70}--\blpage{81}
+(\byear{2004})
+\doiurl{10.1109/TKDE.2004.1264823}
+\end{barticle}
+\endbibitem
+
+%%% 17
+\bibitem[\protect\citeauthoryear{Hsieh et~al.}{2019}]{hsieh2019classificationpositiveunlabeledbiased}
+\begin{bchapter}
+\bauthor{\bsnm{Hsieh}, \binits{Y.-G.}},
+\bauthor{\bsnm{Niu}, \binits{G.}},
+\bauthor{\bsnm{Sugiyama}, \binits{M.}}:
+\bctitle{Classification from positive, unlabeled and biased negative data}.
+In: \bbtitle{Proceedings of the 36th International Conference on Machine Learning}.
+\bsertitle{Proceedings of Machine Learning Research},
+vol. \bseriesno{97},
+pp. \bfpage{2820}--\blpage{2829}.
+\bpublisher{PMLR}, \blocation{???}
+(\byear{2019}).
+\burl{https://proceedings.mlr.press/v97/hsieh19c.html}
+\end{bchapter}
+\endbibitem
+
+%%% 18
+\bibitem[\protect\citeauthoryear{Luo et~al.}{2021}]{2021PULNS}
+\begin{barticle}
+\bauthor{\bsnm{Luo}, \binits{C.}},
+\bauthor{\bsnm{Zhao}, \binits{P.}},
+\bauthor{\bsnm{Chen}, \binits{C.}},
+\bauthor{\bsnm{Qiao}, \binits{B.}},
+\bauthor{\bsnm{Du}, \binits{C.}},
+\bauthor{\bsnm{Zhang}, \binits{H.}},
+\bauthor{\bsnm{Wu}, \binits{W.}},
+\bauthor{\bsnm{Cai}, \binits{S.}},
+\bauthor{\bsnm{He}, \binits{B.}},
+\bauthor{\bsnm{Rajmohan}, \binits{S.}},
+\bauthor{\bsnm{Lin}, \binits{Q.}}:
+\batitle{Pulns: Positive-unlabeled learning with effective negative sample selector}.
+\bjtitle{Proceedings of the AAAI Conference on Artificial Intelligence}
+\bvolume{35},
+\bfpage{8784}--\blpage{8792}
+(\byear{2021})
+\doiurl{10.1609/aaai.v35i10.17064}
+\end{barticle}
+\endbibitem
+
+%%% 19
+\bibitem[\protect\citeauthoryear{Hu et~al.}{2021}]{2021PredictPU}
+\begin{barticle}
+\bauthor{\bsnm{Hu}, \binits{W.}},
+\bauthor{\bsnm{Le}, \binits{R.}},
+\bauthor{\bsnm{Liu}, \binits{B.}},
+\bauthor{\bsnm{Ji}, \binits{F.}},
+\bauthor{\bsnm{Ma}, \binits{J.}},
+\bauthor{\bsnm{Zhao}, \binits{D.}},
+\bauthor{\bsnm{Yan}, \binits{R.}}:
+\batitle{Predictive adversarial learning from positive and unlabeled data}.
+\bjtitle{Proceedings of the AAAI Conference on Artificial Intelligence}
+\bvolume{35},
+\bfpage{7806}--\blpage{7814}
+(\byear{2021})
+\doiurl{10.1609/aaai.v35i9.16953}
+\end{barticle}
+\endbibitem
+
+%%% 20
+\bibitem[\protect\citeauthoryear{Xiao et~al.}{2017}]{Xiao2017FashionMNIST}
+\begin{botherref}
+\oauthor{\bsnm{Xiao}, \binits{H.}},
+\oauthor{\bsnm{Rasul}, \binits{K.}},
+\oauthor{\bsnm{Vollgraf}, \binits{R.}}:
+Fashion-mnist: a novel image dataset for benchmarking machine learning algorithms.
+arXiv preprint arXiv:1708.07747
+(2017)
+\end{botherref}
+\endbibitem
+
+%%% 21
+\bibitem[\protect\citeauthoryear{Krizhevsky}{2009}]{krizhevsky2009learning}
+\begin{botherref}
+\oauthor{\bsnm{Krizhevsky}, \binits{A.}}:
+Learning multiple layers of features from tiny images.
+Technical report,
+University of Toronto
+(April 2009).
+Available at: cs.toronto.edu
+\end{botherref}
+\endbibitem
+
+%%% 22
+\bibitem[\protect\citeauthoryear{Goodfellow et~al.}{2016}]{Goodfellow-et-al-2016}
+\begin{bbook}
+\bauthor{\bsnm{Goodfellow}, \binits{I.}},
+\bauthor{\bsnm{Bengio}, \binits{Y.}},
+\bauthor{\bsnm{Courville}, \binits{A.}}:
+\bbtitle{Deep Learning}.
+\bpublisher{MIT Press},
+\blocation{Cambridge, MA}
+(\byear{2016}).
+\bcomment{\url{http://www.deeplearningbook.org}}
+\end{bbook}
+\endbibitem
+
+%%% 23
+\bibitem[\protect\citeauthoryear{He et~al.}{2016}]{He2016ResNet}
+\begin{bchapter}
+\bauthor{\bsnm{He}, \binits{K.}},
+\bauthor{\bsnm{Zhang}, \binits{X.}},
+\bauthor{\bsnm{Ren}, \binits{S.}},
+\bauthor{\bsnm{Sun}, \binits{J.}}:
+\bctitle{Deep residual learning for image recognition}.
+In: \bbtitle{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+pp. \bfpage{770}--\blpage{778}
+(\byear{2016}).
+\doiurl{10.1109/CVPR.2016.90}
+\end{bchapter}
+\endbibitem
+
+%%% 24
+\bibitem[\protect\citeauthoryear{Vapnik}{1998}]{Vapnik1998}
+\begin{bbook}
+\bauthor{\bsnm{Vapnik}, \binits{V.N.}}:
+\bbtitle{Statistical Learning Theory}.
+\bpublisher{Wiley},
+\blocation{New York}
+(\byear{1998})
+\end{bbook}
+\endbibitem
+
+\end{thebibliography}
