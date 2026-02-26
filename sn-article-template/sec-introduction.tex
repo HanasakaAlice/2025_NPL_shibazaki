@@ -13,7 +13,7 @@ This is because, although unlabeled data contain a mixture of true positives and
 As a result, the objectives of adversarial perturbation optimization and classification become misaligned, which destabilizes the updates associated with the unlabeled term. Figure~\ref{fig:cil} illustrates the relationship between clean accuracy and adversarial accuracy when PGD-based adversarial training is naively applied to PU learning.
 In particular, on CIFAR-10, adversarial accuracy improves while clean accuracy drops significantly. These observations indicate that, under the PU setting, introducing adversarial training may impair clean accuracy, which remains a key challenge.
 
-In this study, we extend the TRADES framework\cite{zhang2019theoretically}, a representative adversarial training method, and propose a new learning method, PU-TRADES, by integrating it with PU learning.
+In this study, we extend the TRADES framework\cite{zhang2019theoretically}, a representative adversarial training method, and propose a new learning method, PU+TRADES, by integrating it with PU learning.
 Our approach handles adversarial perturbations in a label-independent manner and combines a PU loss with a Kullback--Leibler loss, aiming to improve robustness while suppressing degradation in clean accuracy.
 
 
@@ -59,7 +59,7 @@ In addition, we performed a theoretical analysis to better understand robustness
 
 Our contributions are summarized as follows.
 \begin{itemize}
-\item We propose a new learning framework (PU-TRADES) that integrates TRADES-style regularization into PU learning, improving robustness to adversarial perturbations while maintaining classification accuracy on clean samples.
+\item We propose a new learning framework (PU+TRADES) that integrates TRADES-style regularization into PU learning, improving robustness to adversarial perturbations while maintaining classification accuracy on clean samples.
 \item Assuming linear classifiers under adversarial perturbations, we derive upper bounds on the estimation error of the risks minimized by supervised learning and PU learning, and theoretically identify conditions under which PU learning becomes more favorable than supervised learning.
 \item Through experiments on benchmark datasets and medical imaging data, we empirically demonstrate that the proposed method acquires robustness to adversarial samples while preserving clean accuracy.
 \end{itemize}

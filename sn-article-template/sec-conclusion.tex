@@ -1,22 +1,10 @@
-\section{Conclusion}\label{sec13}
+\section{Conclusion}\label{sec:conclusion}
 
-Conclusions may be used to restate your hypothesis or research question, restate your major findings, explain the relevance and the added value of your work, highlight any limitations of your study, describe future directions for research and recommendations. 
-
-In some disciplines use of Discussion or 'Conclusion' is interchangeable. It is not mandatory to use both. Please refer to Journal-level guidance for any specific requirements. 
-
-\backmatter
-
-\bmhead{Supplementary information}
-
-If your article has accompanying supplementary file/s please state so here. 
-
-Authors reporting data from electrophoretic gels and blots should supply the full unprocessed scans for key as part of their Supplementary information. This may be requested by the editorial team/s if it is missing.
-
-Please refer to Journal-level guidance for any specific requirements.
-
-\bmhead{Acknowledgements}
-
-Acknowledgements are not compulsory. Where included they should be brief. Grant or contribution numbers may be acknowledged.
-
-Please refer to Journal-level guidance for any specific requirements.
-
+In this study, we focus on Positive–Unlabeled (PU) learning, which trains a classifier using only positive and unlabeled data.
+Motivated by applications such as medical image analysis—where fully annotating data is difficult and even small perturbations can lead to critical misclassifications—we aim to improve robustness against adversarial perturbations.
+First, we confirm that naively applying adversarial training to PU learning can make optimization unstable and significantly degrade clean performance, because unlabeled data, despite containing a mixture of positive and negative samples, tends to be treated uniformly as negative in the loss.
+To address this issue, we propose \textbf{PU+TRADES}, an extension of TRADES, a representative adversarial training framework, by integrating a PU loss with a label-independent regularization term.
+Experiments on multiple benchmark datasets and medical imaging data demonstrate that while standard PU learning can achieve high clean accuracy, its adversarial accuracy may drop drastically; in contrast, the proposed method improves adversarial accuracy without substantially sacrificing clean accuracy.
+Moreover, we show that adjusting the TRADES coefficient allows one to control the trade-off between robustness and clean performance.
+In addition, we derive an upper bound on the estimation error for binary classification under adversarial perturbations, and by comparing supervised learning with PU learning, we theoretically clarify conditions under which PU learning is advantageous, expressed as an inequality involving the numbers of positive (P), negative (N), and unlabeled (U) samples.
+Future work includes designing robust learning schemes that incorporate estimation error when the class prior is unknown, and extending the theory to deep models beyond linear assumptions.

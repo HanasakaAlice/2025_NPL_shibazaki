@@ -57,6 +57,7 @@
 \usepackage{algorithmicx}%
 \usepackage{algpseudocode}%
 \usepackage{listings}%
+\usepackage{threeparttable}
 
 \usepackage{bm}
 \usepackage{amsmath,amssymb}
@@ -148,7 +149,7 @@
 %%==================================%%
 
 \abstract{Labeling costs are high in domains such as medical image analysis, where Positive and Unlabeled (PU) learning, which trains using only positive and unlabeled data, is effective. Medical images often contain small perturbations due to sensor noise and variations in acquisition conditions, which can cause a classifier to misclassify images that should be positive as negative. Therefore, in settings where even minor misclassifications may lead to critical misdiagnoses, high robustness is required.
-In this study, we focus on adversarial perturbations, which are known as worst-case noise among such perturbations, and aim to improve robustness within the PU learning framework. However, directly applying standard adversarial training methods to PU learning often severely degrades standard accuracy, making the trade-off between robustness and standard accuracy more pronounced. To address this issue, we propose PU-TRADES, a new learning method that extends the TRADES framework and integrates it with PU learning. Our method introduces label-independent adversarial perturbations and optimizes the balance between robustness and standard accuracy by combining a PU loss with a Kullback–Leibler loss.
+In this study, we focus on adversarial perturbations, which are known as worst-case noise among such perturbations, and aim to improve robustness within the PU learning framework. However, directly applying standard adversarial training methods to PU learning often severely degrades standard accuracy, making the trade-off between robustness and standard accuracy more pronounced. To address this issue, we propose PU+TRADES, a new learning method that extends the TRADES framework and integrates it with PU learning. Our method introduces label-independent adversarial perturbations and optimizes the balance between robustness and standard accuracy by combining a PU loss with a Kullback–Leibler loss.
 Furthermore, we theoretically derive an upper bound on the estimation error for the proposed loss and clarify conditions under which PU learning can outperform supervised learning when the number of unlabeled samples is sufficiently large. Finally, experiments on multiple benchmark datasets and a medical imaging dataset demonstrate that the proposed method provides an effective framework for robust learning in PU settings.}
 
 %%================================%%
@@ -182,6 +183,9 @@ Furthermore, we theoretically derive an upper bound on the estimation error for 
 \input{sec-theoretical}
 \input{sec-experiments}
 \input{sec-conclusion}
+
+\bibliography{sn-bibliography}
+
 \input{sec-appendix}
 
 
@@ -193,7 +197,7 @@ Furthermore, we theoretically derive an upper bound on the estimation error for 
 %% file, and delete the associated \verb+\bibliography+ commands.                            %%
 %%===========================================================================================%%
 
-\bibliography{sn-bibliography}% common bib file
+% \bibliography{sn-bibliography}% common bib file
 %% if required, the content of .bbl file can be included here once bbl is generated
 %%\input sn-article.bbl
 

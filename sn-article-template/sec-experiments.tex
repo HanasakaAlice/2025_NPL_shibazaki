@@ -58,37 +58,32 @@ We set the TRADES coefficient to $\beta\in\{6,12,18\}$, and other adversarial-pe
 
 % NOTE: CIFAR-100 / Alzheimer are evaluated only with nnPU variants (see Sec.~\ref{sec:main_results}).
 
-\section{Main Results}\label{sec:main_results}
+\subsection{Main Results}\label{sec:main_results}
 
-% ---------------------------------------------------------
-% Main results (FMNIST / CIFAR-10)
-% ---------------------------------------------------------
 \begin{table}[t]
- \centering
-    \caption{Main results on FashionMNIST (6-layer MLP) and CIFAR-10 (ResNet-18).
-We compare uPU/nnPU and their adversarially trained variants (PGD training and TRADES training), and report clean accuracy (Clean) and adversarial accuracy (Adv.) under PGD attacks ($\epsilon$ follows Table~\ref{tab:exp_settings}, 10 steps) on the test set.
-For each setting, we select the epoch that achieves the highest Clean Accuracy.
-While uPU/nnPU without adversarial training achieve almost zero Adv., TRADES improves robustness without severely degrading clean accuracy.}
- \label{tab:main_results_fm_c10}
- \vspace{5pt}
- \small
- \setlength{\tabcolsep}{4.2pt}
- \begin{tabular}{l|cc|cc}
- \toprule
-  \multirow{2}{*}{Method} & \multicolumn{2}{c|}{F-MNIST} & \multicolumn{2}{c}{CIFAR-10} \\
- \cmidrule{2-5}
-  & Clean & Adv. & Clean & Adv. \\
- \midrule
-  uPU  & 0.937 & 0.190 & 0.850 & 0.114 \\
-  nnPU  & \textbf{0.948} & 0.001 & \textbf{0.887} & 0.001 \\
-  uPU-PGD  & 0.935  & 0.843  & 0.802  & 0.714  \\
-  nnPU-PGD  & 0.930 & 0.860 & 0.732 & 0.686 \\
-  uPU+TRADES  & 0.934 & 0.914 & 0.845 & 0.711 \\
-  nnPU+TRADES & 0.944 & \textbf{0.928} & 0.850 & \textbf{0.723} \\
- \bottomrule
- \end{tabular}
-\end{table}
+  \caption{Main results on FashionMNIST (6-layer MLP) and CIFAR-10 (ResNet-18).
+  We compare uPU/nnPU and their adversarially trained variants (PGD training and TRADES training), and report clean accuracy (Clean) and adversarial accuracy (Adv.) under PGD attacks ($\epsilon$ follows Table~\ref{tab:exp_settings}, 10 steps) on the test set.
+  For each setting, we select the epoch that achieves the highest Clean Accuracy.
+  While uPU/nnPU without adversarial training achieve almost zero Adv., TRADES improves robustness without severely degrading clean accuracy.}
+  \label{tab:main_results_fm_c10}
+  \centering
+  \small
 
+  \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}} l cc cc}
+    \toprule
+    Method & \multicolumn{2}{c}{F-MNIST} & \multicolumn{2}{c}{CIFAR-10} \\
+    \cmidrule{2-5}
+     & Clean & Adv. & Clean & Adv. \\
+    \midrule
+    uPU          & 0.937 & 0.190 & 0.850 & 0.114 \\
+    nnPU         & \textbf{0.948} & 0.001 & \textbf{0.887} & 0.001 \\
+    uPU-PGD      & 0.935 & 0.843 & 0.802 & 0.714 \\
+    nnPU-PGD     & 0.930 & 0.860 & 0.732 & 0.686 \\
+    uPU+TRADES   & 0.934 & 0.914 & 0.845 & 0.711 \\
+    nnPU+TRADES  & 0.944 & \textbf{0.928} & 0.850 & \textbf{0.723} \\
+    \bottomrule
+  \end{tabular*}
+\end{table}
 % ---------------------------------------------------------
 % Main results (CIFAR-100 / Alzheimer): nnPU variants only
 % ---------------------------------------------------------
@@ -160,12 +155,12 @@ However, for nnPU+TRADES, setting $\beta$ too large slightly degrades adversaria
 % ---------------------------------------------------------
 % Additional experiments for validating theoretical analysis (n_U threshold)
 % ---------------------------------------------------------
-\section{Validation of Theoretical Analysis}\label{subsec:validate_theory}
+\subsection{Validation of Theoretical Analysis}\label{subsec:validate_theory}
 
 \paragraph{Objective.}
 In Section~\ref{ch:theory}, as a condition under which PU learning can become advantageous compared to supervised learning (PN),
-we compared the upper bounds on the estimation error of PN-TRADES and PU+TRADES,
-and derived a threshold on the number of unlabeled samples, $n_{\mathrm U}^{\star}$, which holds when the upper bound for PN-TRADES exceeds that of PU+TRADES (Theorem~\ref{thm:nu-threshold-trades}).
+we compared the upper bounds on the estimation error of PN+TRADES and PU+TRADES,
+and derived a threshold on the number of unlabeled samples, $n_{\mathrm U}^{\star}$, which holds when the upper bound for PN+TRADES exceeds that of PU+TRADES (Theorem~\ref{thm:nu-threshold-trades}).
 The aim of this section is to examine to what extent this theoretical threshold aligns with experimental results as a qualitative guideline:
 ``increasing the amount of unlabeled data can make PU methods preferable.''
 Note that the theoretical threshold is a sufficient condition based on upper-bound comparison; therefore, we do not generally expect it to exactly match the empirical turning point.
@@ -173,7 +168,7 @@ Note that the theoretical threshold is a sufficient condition based on upper-bou
 \paragraph{Validation procedure.}
 We validate the theory in three steps:
 (i) substitute constants into the theoretical expression to obtain a numerical value of $n_{\mathrm U}^{\star}$;
-(ii) sweep $n_{\mathrm U}$ over discrete values and compare the test losses of PU+TRADES and PN-TRADES;
+(ii) sweep $n_{\mathrm U}$ over discrete values and compare the test losses of PU+TRADES and PN+TRADES;
 (iii) compare the empirical turning point $\widehat n_{\mathrm U}^{\mathrm{emp}}$ with $n_{\mathrm U}^{\star}$ and discuss reasons for the discrepancy.
 
 % ---------------------------
@@ -257,8 +252,8 @@ and under this condition we obtain
 \ }
 \label{eq:nu_threshold_exp_simplified}
 \end{equation}
-When this condition is satisfied, comparing the estimation-error upper bounds of PN-TRADES and PU+TRADES shows that the upper bound for PN-TRADES exceeds that of PU+TRADES.
-That is, in theory, beyond this threshold PU+TRADES (uPU/nnPU) can become preferable to PN-TRADES.
+When this condition is satisfied, comparing the estimation-error upper bounds of PN+TRADES and PU+TRADES shows that the upper bound for PN+TRADES exceeds that of PU+TRADES.
+That is, in theory, beyond this threshold PU+TRADES (uPU/nnPU) can become preferable to PN+TRADES.
 
 \paragraph{Constants and settings.}
 The main symbols and constants used for numerical instantiation are summarized in Table~\ref{tab:validate_theory_constants}.
@@ -269,34 +264,33 @@ C_x d^{1/q}=\sqrt d\cdot \sqrt d=d.
 \label{eq:cx_d_simplify}
 \end{equation}
 Thus, we substitute $d=784$ for F-MNIST and $d=3072$ for CIFAR-10.
-
 \begin{table}[t]
- \centering
+  \centering
   \caption{Constants used to numerically instantiate the theoretical threshold $n_{\mathrm U}^{\star}$ derived in Theorem~\ref{thm:nu-threshold-trades} (FashionMNIST / CIFAR-10).
-We follow Table~\ref{tab:exp_settings} for the class priors and sample sizes, and summarize the input dimension $d$, norm bounds $C_x, C_x^{\mathrm{adv}}$, Lipschitz constants $L_\ell, L_{\mathrm{KL}}$, confidence level $\delta$, and so on.}
- \label{tab:validate_theory_constants}
- \vspace{4pt}
- \small
- \setlength{\tabcolsep}{4pt}
- \begin{tabular}{l l c c l}
- \toprule
-  \textbf{Symbol} & \textbf{Meaning} & \textbf{FashionMNIST} & \textbf{CIFAR-10} & \textbf{Remarks} \\
- \midrule
-  $\pi_{\mathrm P}$ & prior of the positive class & $0.4$ & $0.4$ & assumption \\
-  $\pi_{\mathrm N}$ & prior of the negative class & $0.6$ & $0.6$ & $\pi_{\mathrm N}=1-\pi_{\mathrm P}$ \\
-  $n_{\mathrm P}$ & \# positive samples & $1000$ & $1000$ & given setting \\
-  $n_{\mathrm N}$ & \# negative samples & $500$ & $500$ & given setting \\
-  $\beta$ & TRADES coefficient & $6$ & $6$ & representative value \\
-  $\epsilon$ & perturbation radius & $0.3$ & $0.031$ & experimental setting (attack radius) \\
-  $q$ & norm index & $2$ & $2$ & dual norm of $p=2$ \\
-  $d$ & input dimension & $784$ & $3072$ & $1\times 28\times 28$, $3\times 32\times 32$ \\
+  We follow Table~\ref{tab:exp_settings} for the class priors and sample sizes, and summarize the input dimension $d$, norm bounds $C_x, C_x^{\mathrm{adv}}$, Lipschitz constants $L_\ell, L_{\mathrm{KL}}$, confidence level $\delta$, and so on.}
+  \label{tab:validate_theory_constants}
+  \vspace{4pt}
+  \small
+  \setlength{\tabcolsep}{2.5pt}
+  \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}} l l c c l@{}}
+  \toprule
+  \textbf{Symbol} & \textbf{Meaning} & \textbf{F-MNIST} & \textbf{CIFAR-10} & \textbf{Remarks} \\
+  \midrule
+  $\pi_{\mathrm P}$ & prior of positive class & $0.4$ & $0.4$ & assumption \\
+  $\pi_{\mathrm N}$ & prior of negative class & $0.6$ & $0.6$ & $\pi_{\mathrm N}=1-\pi_{\mathrm P}$ \\
+  $n_{\mathrm P}$ & \# positive samples & $1000$ & $1000$ & given \\
+  $n_{\mathrm N}$ & \# negative samples & $500$ & $500$ & given \\
+  $\beta$ & TRADES coefficient & $6$ & $6$ & representative \\
+  $\epsilon$ & perturbation radius & $0.3$ & $0.031$ & attack radius \\
+  $q$ & norm index & $2$ & $2$ & dual of $p=2$ \\
+  $d$ & input dimension & $784$ & $3072$ & $28^2$, $32^2\times 3$ \\
   $C_x$ & input norm bound & $\sqrt d$ & $\sqrt d$ & $\|x\|_2\le \sqrt d$ \\
-  $C_x^{\mathrm{adv}}$ & perturbed-input bound & $C_x+\epsilon d^{1/q}$ & $C_x+\epsilon d^{1/q}$ & from \eqref{eq:ckl_def} \\
-  $L_\ell$ & Lipschitz constant of loss & $1$ & $1$ & logistic loss \\
-  $L_{\mathrm{KL}}$ & Lipschitz constant of KL term & $1$ & $1$ & setting in Section~\ref{ch:theory} \\
+  $C_x^{\mathrm{adv}}$ & perturbed bound & $C_x+\epsilon d^{1/q}$ & $C_x+\epsilon d^{1/q}$ & \eqref{eq:ckl_def} \\
+  $L_\ell$ & Lipschitz (loss) & $1$ & $1$ & logistic \\
+  $L_{\mathrm{KL}}$ & Lipschitz (KL) & $1$ & $1$ & Sec.~\ref{ch:theory} \\
   $\delta$ & confidence level & $0.05$ & $0.05$ & fixed \\
- \bottomrule
- \end{tabular}
+  \bottomrule
+  \end{tabular*}
 \end{table}
 
 Substituting the above settings into \eqref{eq:nu_threshold_exp_simplified}, we obtain
@@ -331,7 +325,7 @@ denote the epoch achieving the highest Clean Accuracy, and we compare the sum of
 \end{equation}
 Here, $\mathcal{L}_{\mathrm{clean}}$ is the clean loss on the test set, and $\mathcal{L}_{\mathrm{adv}}$ is the adversarial loss computed on adversarial examples generated from the same test set.
 We consider the following settings: (a) FMNIST: 6-layer MLP and a linear model; (b) CIFAR-10: a linear model and ResNet-18.
-For each setting, we train PU+TRADES and PN-TRADES and compare how $\mathcal{L}_{\mathrm{sum}}$ changes with $n_{\mathrm U}$.
+For each setting, we train PU+TRADES and PN+TRADES and compare how $\mathcal{L}_{\mathrm{sum}}$ changes with $n_{\mathrm U}$.
 
 \paragraph{Empirical turning point.}
 To relate to the theoretical threshold $n_{\mathrm U}^{\star}$, we define the empirical turning point as the smallest $n_{\mathrm U}$ at which the sign of
@@ -358,7 +352,7 @@ U_k
 % ---------------------------
 \paragraph{Results.}
 Figure~\ref{fig:validate_theory_loss_sum} shows the trajectories of $\mathcal{L}_{\mathrm{sum}}$ as a function of $n_{\mathrm U}$.
-The orange curve represents $\mathcal{L}_{\mathrm{sum}}(n_{\mathrm U})$ for PU+TRADES, the dashed gray line is the baseline value for PN-TRADES,
+The orange curve represents $\mathcal{L}_{\mathrm{sum}}(n_{\mathrm U})$ for PU+TRADES, the dashed gray line is the baseline value for PN+TRADES,
 and the blue vertical line indicates the theoretical threshold $n_{\mathrm U}^{\star}$.
 When a crossing is observed within the sweep range, we mark $\widehat n_{\mathrm U}^{\mathrm{emp}}$ estimated by \eqref{eq:nu_emp_def} as a point in the figure.
 
@@ -390,7 +384,7 @@ When a crossing is observed within the sweep range, we mark $\widehat n_{\mathrm
   \caption{Validation results for the theoretical threshold $n_{\mathrm U}^{\star}$ of the unlabeled sample size derived in our theoretical analysis.
 Each panel plots the test loss sum for PU+TRADES,
 $\mathcal{L}_{\mathrm{sum}}(n_{\mathrm U})=\mathcal{L}_{\mathrm{clean}}(t^{\star}(n_{\mathrm U});n_{\mathrm U})+\mathcal{L}_{\mathrm{adv}}(t^{\star}(n_{\mathrm U});n_{\mathrm U})$ (Eq.~\eqref{eq:loss_sum_def}),
-against $n_{\mathrm U}$, and compares it with the PN-TRADES baseline value (which does not depend on $n_{\mathrm U}$).
+against $n_{\mathrm U}$, and compares it with the PN+TRADES baseline value (which does not depend on $n_{\mathrm U}$).
 Here, $t^{\star}(n_{\mathrm U})$ denotes the epoch achieving the highest Clean Accuracy.
 The intersection $\widehat n_{\mathrm U}^{\mathrm{emp}}$ is estimated by linear interpolation.}
  \label{fig:validate_theory_loss_sum}
@@ -399,7 +393,7 @@ The intersection $\widehat n_{\mathrm U}^{\mathrm{emp}}$ is estimated by linear 
 \begin{table}[t]
  \centering
   \caption{Comparison between the theoretical threshold $n_{\mathrm U}^{\star}$ (Theorem~\ref{thm:nu-threshold-trades}) and the empirical turning point $\widehat n_{\mathrm U}^{\mathrm{emp}}$.
-$\widehat n_{\mathrm U}^{\mathrm{emp}}$ is estimated by linear interpolation from Fig.~\ref{fig:validate_theory_loss_sum} as the value of $n_{\mathrm U}$ where the loss sums $\mathcal{L}_{\mathrm{sum}}$ of PU+TRADES and PN-TRADES coincide.
+$\widehat n_{\mathrm U}^{\mathrm{emp}}$ is estimated by linear interpolation from Fig.~\ref{fig:validate_theory_loss_sum} as the value of $n_{\mathrm U}$ where the loss sums $\mathcal{L}_{\mathrm{sum}}$ of PU+TRADES and PN+TRADES coincide.
 ``---'' indicates that no intersection existed within the range of $n_{\mathrm U}$ evaluated in this study.}
  \label{tab:validate_theory_summary}
  \begin{tabular}{lcc}
@@ -416,7 +410,7 @@ $\widehat n_{\mathrm U}^{\mathrm{emp}}$ is estimated by linear interpolation fro
 
 \paragraph{Discussion.}
 From Fig.~\ref{fig:validate_theory_loss_sum} and Table~\ref{tab:validate_theory_summary}, for F-MNIST (both the linear model and the 6-layer MLP),
-$\mathcal{L}_{\mathrm{sum}}(n_{\mathrm U})$ decreases as $n_{\mathrm U}$ increases, and the intersection where the loss sums of PU+TRADES and PN-TRADES coincide is estimated as
+$\mathcal{L}_{\mathrm{sum}}(n_{\mathrm U})$ decreases as $n_{\mathrm U}$ increases, and the intersection where the loss sums of PU+TRADES and PN+TRADES coincide is estimated as
 $\widehat n_{\mathrm U}^{\mathrm{emp}}\approx 4247.13$ (linear model) and $\widehat n_{\mathrm U}^{\mathrm{emp}}\approx 4788.14$ (6-layer MLP).
 These values are larger than the theoretical threshold $n_{\mathrm U}^{\star}=1444$,
 which is consistent with the fact that $n_{\mathrm U}^{\star}$ is a sufficient condition derived from upper-bound comparison (and hence can be conservative).
